@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RWN — Ecosystem &amp; Innovation · Page 4</title>
+<link rel="stylesheet" href="shared.css">
+<style>
+/* Three-sided marketplace */
+.market-wrap { display: grid; grid-template-columns: 1fr 80px 1fr 80px 1fr; align-items: start; gap: 0; margin: 28px 0; }
+@media(max-width:860px){ .market-wrap { grid-template-columns: 1fr; gap: 16px; } .market-arrow { display: none !important; } }
+.market-side { border-radius: var(--radius); padding: 24px; }
+.ms-buy  { background: rgba(26,107,58,0.08); border: 2px solid var(--g-deep); }
+.ms-sell { background: rgba(21,101,192,0.08); border: 2px solid var(--blue); }
+.ms-fin  { background: rgba(194,24,91,0.08); border: 2px solid var(--mag); }
+.ms-title { font-family: var(--font-d); font-size: 18px; font-weight: 700; margin-bottom: 6px; }
+.ms-buy .ms-title  { color: var(--g-deep); }
+.ms-sell .ms-title { color: var(--blue); }
+.ms-fin .ms-title  { color: var(--mag); }
+.ms-icon { font-size: 28px; margin-bottom: 10px; }
+.ms-desc { font-size: 13px; color: var(--text-muted); line-height: 1.6; margin-bottom: 14px; }
+.ms-examples { list-style: none; }
+.ms-examples li { font-size: 12px; color: var(--text-body); padding: 5px 0; border-bottom: 1px solid rgba(0,0,0,0.06); display: flex; gap: 7px; }
+.ms-examples li:last-child { border-bottom: none; }
+.ms-examples li::before { content: '·'; font-weight: 900; flex-shrink: 0; }
+.ms-buy .ms-examples li::before  { color: var(--g-deep); }
+.ms-sell .ms-examples li::before { color: var(--blue); }
+.ms-fin .ms-examples li::before  { color: var(--mag); }
+.market-arrow { display: flex; align-items: center; justify-content: center; font-size: 22px; color: var(--text-muted); padding-top: 80px; }
+
+/* Innovation pill */
+.innov-pill {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: linear-gradient(135deg, var(--mag), #8B0037);
+  color: #FFFFFF; border-radius: 20px; padding: 4px 14px 4px 10px;
+  font-size: 12px; font-weight: 700; letter-spacing: 0.3px;
+  margin-bottom: 16px;
+}
+
+/* Stack layers */
+.stack-grid { display: grid; grid-template-columns: 1fr; gap: 2px; border-radius: var(--radius); overflow: hidden; }
+.stack-layer { display: grid; grid-template-columns: 180px 1fr; gap: 0; }
+.sl-label { padding: 16px 18px; font-family: var(--font-m); font-size: 11px; font-weight: 600; letter-spacing: 0.8px; text-transform: uppercase; display: flex; align-items: center; }
+.sl-content { padding: 16px 18px; font-size: 13px; color: var(--text-body); display: flex; align-items: center; }
+.sl-1 .sl-label { background: var(--g-deep); color: #A8EFCA; }
+.sl-1 .sl-content { background: var(--g-pale); }
+.sl-2 .sl-label { background: var(--g-mid); color: #FFFFFF; }
+.sl-2 .sl-content { background: rgba(26,107,58,0.05); }
+.sl-3 .sl-label { background: var(--blue); color: #FFFFFF; }
+.sl-3 .sl-content { background: var(--blue-lt); }
+.sl-4 .sl-label { background: var(--mag); color: #FFFFFF; }
+.sl-4 .sl-content { background: var(--mag-lt); }
+.sl-5 .sl-label { background: #333; color: #FFFFFF; }
+.sl-5 .sl-content { background: var(--surface-1); }
+@media(max-width:860px){ .stack-layer { grid-template-columns: 1fr; } .sl-label { padding: 10px 14px; } }
+
+/* Timeline */
+.timeline { position: relative; padding-left: 28px; }
+.timeline::before { content:''; position:absolute; left:10px; top:0; bottom:0; width:2px; background:var(--g-lt); }
+.tl-item { position: relative; margin-bottom: 28px; }
+.tl-dot { position: absolute; left: -24px; top: 4px; width: 14px; height: 14px; background: var(--g-deep); border-radius: 50%; border: 2px solid #FFFFFF; box-shadow: 0 0 0 2px var(--g-deep); }
+.tl-dot.mag { background: var(--mag); box-shadow: 0 0 0 2px var(--mag); }
+.tl-label { font-family: var(--font-m); font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-light); margin-bottom: 4px; }
+.tl-title { font-size: 14px; font-weight: 700; color: var(--text-head); margin-bottom: 6px; }
+.tl-desc  { font-size: 13px; color: var(--text-muted); line-height: 1.55; }
+</style>
+</head>
+<body>
+
+<div class="sb-topbar" id="sb-topbar">
+  <div class="sb-topbar-logo">RWN</div>
+  <div class="sb-topbar-title">Ecosystem &amp; Innovation</div>
+  <button class="sb-hamburger" id="sb-hbg" onclick="sbMobileToggle()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</div>
+<div class="sb-overlay" id="sb-overlay" onclick="sbMobileClose()"></div>
+
+<nav class="rwn-sidebar" id="rwn-sidebar">
+  <div class="sb-logo-block">
+    <div class="sb-logo">RWN</div>
+    <div><div class="sb-brand-main">Revolving Fund</div><div class="sb-brand-sub">Concept Platform</div></div>
+  </div>
+  <div class="sb-nav">
+    <span class="sb-section-label">Navigation</span>
+    <a href="index.html">🏠 Overview</a>
+    <div class="sb-divider"></div>
+    <span class="sb-section-label">Analysis</span>
+    <a href="what-is-there.html">✅ What Is There</a>
+    <a href="what-is-missing.html">⚠️ What Is Missing</a>
+    <a href="fund-structure.html">🏗️ Fund Structure</a>
+    <div class="sb-divider"></div>
+    <span class="sb-section-label">Innovation</span>
+    <a href="ecosystem.html" class="active sb-mag">🌐 Ecosystem &amp; Marketplace</a>
+    <a href="business-demo.html" class="sb-mag">📊 Business Case Demo</a>
+    <div class="sb-divider"></div>
+    <span class="sb-section-label">Reference</span>
+    <a href="abbreviations.html">📖 Abbreviations</a>
+    <a href="https://rwandawomensnetwork.org" target="_blank">🔗 RWN Website</a>
+  </div>
+</nav>
+
+<div class="page-wrap">
+
+  <!-- HERO -->
+  <div class="hero" style="background: linear-gradient(135deg, rgba(26,107,58,0.06) 0%, rgba(194,24,91,0.04) 100%);">
+    <div class="hero-bg-mesh"></div>
+    <div class="hero-grid"></div>
+    <div class="hero-content">
+      <div class="innov-pill">✨ Innovation Proposal</div>
+      <div class="eyebrow mag fade-up au-1">Page 04 of 04</div>
+      <h1 class="hero-title fade-up au-2">🌐 A Powerful <span class="accent">Ecosystem</span> for the <span class="mag-accent">Revolving Fund</span></h1>
+      <p class="hero-lead fade-up au-3">
+        How we understand RWN's revolving fund and how we propose to enhance it conceptually and technologically — closing every critical gap with a coherent, integrated ecosystem that leverages what exists and adds only what is genuinely needed.
+      </p>
+      <p class="hero-meta fade-up au-4">Proposal · Not in source documents · All elements flagged as proposals · Subject to RWN validation</p>
+    </div>
+  </div>
+
+  <!-- ECOSYSTEM OVERVIEW -->
+  <div class="section">
+    <div class="eyebrow">Ecosystem Architecture</div>
+    <h2 class="section-title">Six integrated components</h2>
+    <p class="section-lead">The ecosystem is designed to fill every critical and important gap identified — without reinventing what already works, and without overloading beneficiaries with complexity they can't absorb.</p>
+    <div class="grid-3" style="margin-bottom:16px;">
+      <div class="innov-card green">
+        <div class="innov-icon">🏛️</div>
+        <div class="innov-title">1. SPV — Non-deposit Lending</div>
+        <div class="innov-body">A dedicated legal entity managing the fund capital, attracting institutional investment, and providing ring-fenced governance. Regulated by BNR as a non-deposit lending institution.</div>
+        <div class="innov-tag">Closes: capital governance, donor confidence, scale financing</div>
+      </div>
+      <div class="innov-card green">
+        <div class="innov-icon">🤖</div>
+        <div class="innov-title">2. AI Business Plan Builder</div>
+        <div class="innov-body">Guided, multilingual (Kinyarwanda, French) AI tool that helps WSSFs build realistic, market-grounded business plans — removing the key barrier to fund eligibility for less-educated women.</div>
+        <div class="innov-tag">Closes: eligibility barrier, quality of loan applications</div>
+      </div>
+      <div class="innov-card" style="border-top-color:var(--mag);position:relative;">
+        <div style="position:absolute;top:-1px;right:12px;background:var(--mag);color:#FFFFFF;font-size:10px;font-weight:700;padding:2px 10px;border-radius:0 0 6px 6px;letter-spacing:0.5px;">KEY INNOVATION</div>
+        <div class="innov-icon">🌐</div>
+        <div class="innov-title">3. Four-sided Marketplace &amp; Strategic Partnerships</div>
+        <div class="innov-body">Buy-side (inputs), sell-side (outputs), strategic processing partners (value-add), finance-side (sponsors/lenders). Not just a marketplace — a full accompaniment ecosystem that makes borrowers' businesses profitable, not merely financed.</div>
+        <div class="innov-tag">Closes: market linkage gap, production-as-collateral, post-harvest losses, value-chain access</div>
+      </div>
+      <div class="innov-card">
+        <div class="innov-icon">📱</div>
+        <div class="innov-title">4. Digital Fund Management</div>
+        <div class="innov-body">Mobile-first loan tracking, repayment recording, field staff dashboards, and portfolio analytics — replacing paper-based systems. Integrates with existing mobile money (MoMo, bank transfers) in Rwanda.</div>
+        <div class="innov-tag">Closes: digital tracking gap, portfolio health monitoring</div>
+      </div>
+      <div class="innov-card">
+        <div class="innov-icon">📊</div>
+        <div class="innov-title">5. Impact &amp; Financial Dashboard</div>
+        <div class="innov-body">Real-time fund performance metrics (recovery rate, capital deployed, net benefit) + social impact indicators (women served, IGA growth, leadership uptake) for donor reporting and internal management.</div>
+        <div class="innov-tag">Closes: empty projections table, quarterly reporting burden</div>
+      </div>
+      <div class="innov-card green">
+        <div class="innov-icon">🎓</div>
+        <div class="innov-title">6. Pre-eligibility Programme</div>
+        <div class="innov-body">A structured pathway for WSSFs who don't yet qualify — bank account opening support, IGA launch assistance, financial literacy, and mentoring — bringing the most vulnerable into the fund funnel within 6–12 months.</div>
+        <div class="innov-tag">Closes: eligibility exclusion of most vulnerable</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RWN DIFFERENTIATED MODEL -->
+  <div class="section section-green">
+    <div style="position:absolute;inset:0;opacity:0.06;background:radial-gradient(ellipse 60% 80% at 20% 50%, rgba(255,255,255,1), transparent);pointer-events:none;"></div>
+    <div style="position:relative;z-index:2;">
+      <div class="eyebrow" style="color:#A8EFCA;">RWN's Differentiated Model</div>
+      <h2 class="section-title" style="color:#FFFFFF;">Not a bank. Not a classic NGO. Something more powerful.</h2>
+      <p style="font-size:15px;color:rgba(255,255,255,0.82);margin-bottom:36px;line-height:1.7;">
+        Classic financial institutions lend money and monitor repayment. Classic NGOs distribute grants or provide training. RWN's revolving fund does neither of these alone — it does both together, and adds a third dimension: <strong style="color:#A8EFCA;">active accompaniment of each borrower's business journey</strong>, from loan application through growth to graduation. This is RWN's core competitive advantage and the reason repayment rates can sustainably exceed what standalone microfinance achieves in comparable contexts.
+      </p>
+
+      <!-- Comparison table -->
+      <div style="overflow-x:auto;margin-bottom:36px;">
+        <table style="width:100%;border-collapse:collapse;font-size:13px;min-width:560px;">
+          <thead>
+            <tr>
+              <th style="padding:12px 16px;text-align:left;background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.5);font-family:var(--font-m);font-size:10px;letter-spacing:1.2px;text-transform:uppercase;border-bottom:1px solid rgba(255,255,255,0.12);">Dimension</th>
+              <th style="padding:12px 16px;text-align:center;background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.5);font-family:var(--font-m);font-size:10px;letter-spacing:1.2px;text-transform:uppercase;border-bottom:1px solid rgba(255,255,255,0.12);">Classic Bank / MFI</th>
+              <th style="padding:12px 16px;text-align:center;background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.5);font-family:var(--font-m);font-size:10px;letter-spacing:1.2px;text-transform:uppercase;border-bottom:1px solid rgba(255,255,255,0.12);">Classic NGO</th>
+              <th style="padding:12px 16px;text-align:center;background:rgba(168,239,202,0.15);color:#A8EFCA;font-family:var(--font-m);font-size:10px;letter-spacing:1.2px;text-transform:uppercase;border-bottom:1px solid rgba(168,239,202,0.3);">RWN Revolving Fund</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="padding:11px 16px;color:rgba(255,255,255,0.7);border-bottom:1px solid rgba(255,255,255,0.07);">Access to capital</td>
+              <td style="padding:11px 16px;text-align:center;color:rgba(255,255,255,0.6);border-bottom:1px solid rgba(255,255,255,0.07);">✅ Yes (with traditional collateral)</td>
+              <td style="padding:11px 16px;text-align:center;color:rgba(255,255,255,0.6);border-bottom:1px solid rgba(255,255,255,0.07);">⚠️ Grants only (no repayment)</td>
+              <td style="padding:11px 16px;text-align:center;color:#A8EFCA;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.07);background:rgba(168,239,202,0.06);">✅ Yes (community guarantee)</td>
+            </tr>
+            <tr>
+              <td style="padding:11px 16px;color:rgba(255,255,255,0.7);border-bottom:1px solid rgba(255,255,255,0.07);">Business plan support</td>
+              <td style="padding:11px 16px;text-align:center;color:rgba(255,255,255,0.6);border-bottom:1px solid rgba(255,255,255,0.07);">❌ Client's own responsibility</td>
+              <td style="padding:11px 16px;text-align:center;color:rgba(255,255,255,0.6);border-bottom:1px solid rgba(255,255,255,0.07);">⚠️ Occasional training only</td>
+              <td style="padding:11px 16px;text-align:center;color:#A8EFCA;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.07);background:rgba(168,239,202,0.06);">✅ AI-guided builder + field review</td>
+            </tr>
+            <tr>
+              <td style="padding:11px 16px;color:rgba(255,255,255,0.7);border-bottom:1px solid rgba(255,255,255,0.07);">Input market access</td>
+              <td style="padding:11px 16px;text-align:center;color:rgba(255,255,255,0.6);border-bottom:1px solid rgba(255,255,255,0.07);">❌ None</td>
+              <td style="padding:11px 16px;text-align:center;color:rgba(255,255,255,0.6);border-bottom:1px solid rgba(255,255,255,0.07);">❌ None</td>
+              <td style="padding:11px 16px;text-align:center;color:#A8EFCA;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.07);background:rgba(168,239,202,0.06);">✅ Collective purchasing platform</td>
+            </tr>
+            <tr>
+              <td style="padding:11px 16px;color:rgba(255,255,255,0.7);border-bottom:1px solid rgba(255,255,255,0.07);">Output market access</td>
+              <td style="padding:11px 16px;text-align:center;color:rgba(255,255,255,0.6);border-bottom:1px solid rgba(255,255,255,0.07);">❌ None</td>
+              <td style="padding:11px 16px;text-align:center;color:rgba(255,255,255,0.6);border-bottom:1px solid rgba(255,255,255,0.07);">⚠️ Occasional market linkage</td>
+              <td style="padding:11px 16px;text-align:center;color:#A8EFCA;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.07);background:rgba(168,239,202,0.06);">✅ Digital catalogue + buyer network</td>
+            </tr>
+            <tr>
+              <td style="padding:11px 16px;color:rgba(255,255,255,0.7);border-bottom:1px solid rgba(255,255,255,0.07);">Value-add / processing</td>
+              <td style="padding:11px 16px;text-align:center;color:rgba(255,255,255,0.6);border-bottom:1px solid rgba(255,255,255,0.07);">❌ None</td>
+              <td style="padding:11px 16px;text-align:center;color:rgba(255,255,255,0.6);border-bottom:1px solid rgba(255,255,255,0.07);">❌ None</td>
+              <td style="padding:11px 16px;text-align:center;color:#A8EFCA;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.07);background:rgba(168,239,202,0.06);">✅ Strategic processing partnerships</td>
+            </tr>
+            <tr>
+              <td style="padding:11px 16px;color:rgba(255,255,255,0.7);border-bottom:1px solid rgba(255,255,255,0.07);">Ongoing accompaniment</td>
+              <td style="padding:11px 16px;text-align:center;color:rgba(255,255,255,0.6);border-bottom:1px solid rgba(255,255,255,0.07);">❌ Repayment monitoring only</td>
+              <td style="padding:11px 16px;text-align:center;color:rgba(255,255,255,0.6);border-bottom:1px solid rgba(255,255,255,0.07);">⚠️ Project-duration only</td>
+              <td style="padding:11px 16px;text-align:center;color:#A8EFCA;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.07);background:rgba(168,239,202,0.06);">✅ Monthly coaching + peer learning</td>
+            </tr>
+            <tr>
+              <td style="padding:11px 16px;color:rgba(255,255,255,0.7);border-bottom:1px solid rgba(255,255,255,0.07);">Volatility resilience support</td>
+              <td style="padding:11px 16px;text-align:center;color:rgba(255,255,255,0.6);border-bottom:1px solid rgba(255,255,255,0.07);">❌ Penalise (late payment fees)</td>
+              <td style="padding:11px 16px;text-align:center;color:rgba(255,255,255,0.6);border-bottom:1px solid rgba(255,255,255,0.07);">⚠️ Ad hoc, if funding permits</td>
+              <td style="padding:11px 16px;text-align:center;color:#A8EFCA;font-weight:600;background:rgba(168,239,202,0.06);">✅ Built-in grace periods + early alert system</td>
+            </tr>
+            <tr>
+              <td style="padding:11px 16px;color:rgba(255,255,255,0.7);">Graduation pathway</td>
+              <td style="padding:11px 16px;text-align:center;color:rgba(255,255,255,0.6);">N/A (already formal)</td>
+              <td style="padding:11px 16px;text-align:center;color:rgba(255,255,255,0.6);">❌ End of project = end of support</td>
+              <td style="padding:11px 16px;text-align:center;color:#A8EFCA;font-weight:600;background:rgba(168,239,202,0.06);">✅ Progressive loans → formal MFI/SACCO</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Volatility block -->
+      <div style="background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.15);border-left:4px solid #A8EFCA;border-radius:var(--radius);padding:22px 24px;">
+        <div style="font-size:13px;font-weight:700;color:#A8EFCA;margin-bottom:10px;display:flex;align-items:center;gap:8px;">⚡ Why customised accompaniment is especially critical right now</div>
+        <p style="font-size:13px;color:rgba(255,255,255,0.78);line-height:1.7;margin-bottom:12px;">
+          We are in an era of <strong style="color:#FFFFFF;">simultaneous multi-variable volatility</strong> that disproportionately impacts grassroots women entrepreneurs in Rwanda. Input prices (fertilisers, seeds, fuel), output prices (commodity markets), financing conditions (ODA contraction, exchange rates), and geopolitical disruptions (trade routes, regional conflicts) can all shift rapidly and simultaneously — compressing margins to zero or negative within a single production cycle.
+        </p>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;">
+          <div style="background:rgba(255,255,255,0.06);border-radius:6px;padding:14px;">
+            <div style="font-size:12px;font-weight:700;color:#A8EFCA;margin-bottom:6px;">📈 Price volatility</div>
+            <div style="font-size:12px;color:rgba(255,255,255,0.65);line-height:1.5;">Fertiliser prices +80% post-2022. Output commodity prices unstable. A WSSF farmer who planned her loan repayment on last season's prices can face insolvency through no fault of her own.</div>
+          </div>
+          <div style="background:rgba(255,255,255,0.06);border-radius:6px;padding:14px;">
+            <div style="font-size:12px;font-weight:700;color:#A8EFCA;margin-bottom:6px;">🌍 Geopolitical shocks</div>
+            <div style="font-size:12px;color:rgba(255,255,255,0.65);line-height:1.5;">Supply chain disruptions, regional conflict spillovers (DRC proximity), ODA funding freezes. Each can change the operating environment overnight — with no warning to individual entrepreneurs.</div>
+          </div>
+          <div style="background:rgba(255,255,255,0.06);border-radius:6px;padding:14px;">
+            <div style="font-size:12px;font-weight:700;color:#A8EFCA;margin-bottom:6px;">🌱 Climate shocks</div>
+            <div style="font-size:12px;color:rgba(255,255,255,0.65);line-height:1.5;">Irregular rainfall, floods, and drought increasingly threaten agricultural IGAs. A bad season without support turns a productive borrower into a defaulter — and can destroy years of accumulated financial trust.</div>
+          </div>
+        </div>
+        <p style="font-size:13px;color:rgba(255,255,255,0.78);line-height:1.7;margin-top:14px;">
+          <strong style="color:#FFFFFF;">RWN's response:</strong> field staff monthly visits are not just repayment check-ins — they are early warning systems. When a WSSF reports input price spikes or crop failure, the fund can activate grace period extensions, connect her to alternative input suppliers via the buy-side marketplace, or link her production to a processing partner to reduce losses. This turns loan accompaniment into <strong style="color:#A8EFCA;">active business resilience management</strong> — something no bank and no classic grant programme provides.
+        </p>
+      </div>
+
+      <!-- Virtuous cycle -->
+      <div style="margin-top:32px;text-align:center;">
+        <div style="font-family:var(--font-d);font-size:16px;font-weight:700;color:#FFFFFF;margin-bottom:20px;">The Virtuous Cycle RWN aims to create</div>
+        <div style="display:flex;align-items:center;justify-content:center;gap:0;flex-wrap:wrap;">
+          <div style="background:rgba(168,239,202,0.15);border:1px solid rgba(168,239,202,0.3);border-radius:8px;padding:14px 18px;text-align:center;min-width:140px;">
+            <div style="font-size:20px;margin-bottom:4px;">💡</div>
+            <div style="font-size:12px;font-weight:700;color:#A8EFCA;">Supported loan</div>
+            <div style="font-size:11px;color:rgba(255,255,255,0.55);margin-top:2px;">BP + coaching + market access</div>
+          </div>
+          <div style="font-size:20px;color:rgba(255,255,255,0.3);padding:0 8px;">→</div>
+          <div style="background:rgba(168,239,202,0.15);border:1px solid rgba(168,239,202,0.3);border-radius:8px;padding:14px 18px;text-align:center;min-width:140px;">
+            <div style="font-size:20px;margin-bottom:4px;">📈</div>
+            <div style="font-size:12px;font-weight:700;color:#A8EFCA;">Profitable IGA</div>
+            <div style="font-size:11px;color:rgba(255,255,255,0.55);margin-top:2px;">Higher margins, lower losses</div>
+          </div>
+          <div style="font-size:20px;color:rgba(255,255,255,0.3);padding:0 8px;">→</div>
+          <div style="background:rgba(168,239,202,0.15);border:1px solid rgba(168,239,202,0.3);border-radius:8px;padding:14px 18px;text-align:center;min-width:140px;">
+            <div style="font-size:20px;margin-bottom:4px;">✅</div>
+            <div style="font-size:12px;font-weight:700;color:#A8EFCA;">Repayment</div>
+            <div style="font-size:11px;color:rgba(255,255,255,0.55);margin-top:2px;">Capital returns to fund</div>
+          </div>
+          <div style="font-size:20px;color:rgba(255,255,255,0.3);padding:0 8px;">→</div>
+          <div style="background:rgba(168,239,202,0.15);border:1px solid rgba(168,239,202,0.3);border-radius:8px;padding:14px 18px;text-align:center;min-width:140px;">
+            <div style="font-size:20px;margin-bottom:4px;">🔄</div>
+            <div style="font-size:12px;font-weight:700;color:#A8EFCA;">More women served</div>
+            <div style="font-size:11px;color:rgba(255,255,255,0.55);margin-top:2px;">Fund grows with each cycle</div>
+          </div>
+          <div style="font-size:20px;color:rgba(255,255,255,0.3);padding:0 8px;">→</div>
+          <div style="background:rgba(168,239,202,0.15);border:1px solid rgba(168,239,202,0.3);border-radius:8px;padding:14px 18px;text-align:center;min-width:140px;">
+            <div style="font-size:20px;margin-bottom:4px;">🚀</div>
+            <div style="font-size:12px;font-weight:700;color:#A8EFCA;">Larger loans</div>
+            <div style="font-size:11px;color:rgba(255,255,255,0.55);margin-top:2px;">Track record → graduation</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOUR-SIDED MARKETPLACE — HIGHLIGHTED -->
+  <div class="section" style="background:#F0F9F4;border-top:3px solid var(--g-deep);border-bottom:3px solid var(--g-deep);">
+    <div class="innov-pill">🌟 Key Innovation</div>
+    <div class="eyebrow">Four-sided marketplace</div>
+    <h2 class="section-title">The market that doesn't exist yet — and should</h2>
+    <p class="section-lead">
+      Existing market access programmes for women focus almost exclusively on the <em>selling side</em> — helping women find buyers for their products. RWN's marketplace proposal goes further: a <strong>four-sided market</strong> connecting WSSFs to <strong>input suppliers</strong>, <strong>buyers</strong>, <strong>strategic processing partners</strong>, and <strong>financiers</strong> — a genuine innovation in Rwanda's development ecosystem that no NGO has yet built at this scale.
+    </p>
+
+    <!-- SVG SCHEMA -->
+    <div style="background:#FFFFFF;border:1px solid var(--border-lt);border-radius:var(--radius);padding:24px;margin-bottom:32px;overflow-x:auto;">
+      <svg viewBox="0 0 780 420" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:780px;display:block;margin:0 auto;" font-family="'DM Sans',sans-serif">
+        <!-- Central hub -->
+        <circle cx="390" cy="210" r="68" fill="#1A6B3A" opacity="0.95"/>
+        <text x="390" y="200" text-anchor="middle" fill="#FFFFFF" font-weight="700" font-size="13">RWN</text>
+        <text x="390" y="216" text-anchor="middle" fill="#A8EFCA" font-size="11">Marketplace</text>
+        <text x="390" y="232" text-anchor="middle" fill="rgba(255,255,255,0.7)" font-size="10">Platform</text>
+
+        <!-- WSSF Women (center-inner ring) -->
+        <circle cx="390" cy="210" r="38" fill="none" stroke="#A8EFCA" stroke-width="1.5" stroke-dasharray="4 3"/>
+        <text x="390" y="207" text-anchor="middle" fill="#A8EFCA" font-size="9" font-weight="600">WSSF</text>
+        <text x="390" y="219" text-anchor="middle" fill="#A8EFCA" font-size="9">Women</text>
+
+        <!-- BUY SIDE — Left -->
+        <rect x="20" y="155" width="145" height="110" rx="10" fill="#E8F5EE" stroke="#1A6B3A" stroke-width="2"/>
+        <text x="93" y="178" text-anchor="middle" fill="#1A6B3A" font-weight="700" font-size="13">🛒 BUY SIDE</text>
+        <text x="93" y="195" text-anchor="middle" fill="#1A6B3A" font-size="10" font-weight="600">Input Suppliers</text>
+        <text x="93" y="213" text-anchor="middle" fill="#5A6E61" font-size="9.5">Seeds, fertilisers</text>
+        <text x="93" y="227" text-anchor="middle" fill="#5A6E61" font-size="9.5">Equipment &amp; tools</text>
+        <text x="93" y="241" text-anchor="middle" fill="#5A6E61" font-size="9.5">Raw materials</text>
+        <text x="93" y="255" text-anchor="middle" fill="#1A6B3A" font-size="9" font-style="italic">Group bulk discounts</text>
+        <!-- Arrow buy→center -->
+        <line x1="165" y1="210" x2="318" y2="210" stroke="#1A6B3A" stroke-width="2" marker-end="url(#arr-g)"/>
+        <line x1="322" y1="210" x2="169" y2="210" stroke="#1A6B3A" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#arr-g2)"/>
+
+        <!-- SELL SIDE — Right -->
+        <rect x="615" y="155" width="145" height="110" rx="10" fill="#E3F2FD" stroke="#1565C0" stroke-width="2"/>
+        <text x="688" y="178" text-anchor="middle" fill="#1565C0" font-weight="700" font-size="13">🏪 SELL SIDE</text>
+        <text x="688" y="195" text-anchor="middle" fill="#1565C0" font-size="10" font-weight="600">Buyers &amp; Markets</text>
+        <text x="688" y="213" text-anchor="middle" fill="#5A6E61" font-size="9.5">Hotels, restaurants</text>
+        <text x="688" y="227" text-anchor="middle" fill="#5A6E61" font-size="9.5">Supermarkets</text>
+        <text x="688" y="241" text-anchor="middle" fill="#5A6E61" font-size="9.5">Export cooperatives</text>
+        <text x="688" y="255" text-anchor="middle" fill="#1565C0" font-size="9" font-style="italic">Digital catalogue + SMS orders</text>
+        <!-- Arrow center→sell -->
+        <line x1="462" y1="210" x2="611" y2="210" stroke="#1565C0" stroke-width="2" marker-end="url(#arr-b)"/>
+        <line x1="607" y1="210" x2="466" y2="210" stroke="#1565C0" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#arr-b2)"/>
+
+        <!-- STRATEGIC PARTNERS — Top -->
+        <rect x="265" y="18" width="250" height="105" rx="10" fill="#FFF8E1" stroke="#E65100" stroke-width="2"/>
+        <text x="390" y="42" text-anchor="middle" fill="#E65100" font-weight="700" font-size="13">🏭 STRATEGIC PARTNERS</text>
+        <text x="390" y="58" text-anchor="middle" fill="#E65100" font-size="10" font-weight="600">Processing &amp; Value-Add Partners</text>
+        <text x="390" y="75" text-anchor="middle" fill="#5A6E61" font-size="9.5">Food processors &amp; cold storage</text>
+        <text x="390" y="89" text-anchor="middle" fill="#5A6E61" font-size="9.5">Packaging &amp; branding companies</text>
+        <text x="390" y="103" text-anchor="middle" fill="#E65100" font-size="9" font-style="italic">Value-add · Post-harvest loss reduction · Long conservation</text>
+        <!-- Arrow top↔center -->
+        <line x1="390" y1="123" x2="390" y2="142" stroke="#E65100" stroke-width="2" marker-end="url(#arr-a)"/>
+        <line x1="393" y1="142" x2="393" y2="123" stroke="#E65100" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#arr-a2)"/>
+
+        <!-- FINANCE SIDE — Bottom -->
+        <rect x="265" y="298" width="250" height="108" rx="10" fill="#FCE4EC" stroke="#C2185B" stroke-width="2"/>
+        <text x="390" y="322" text-anchor="middle" fill="#C2185B" font-weight="700" font-size="13">💰 FINANCE SIDE</text>
+        <text x="390" y="338" text-anchor="middle" fill="#C2185B" font-size="10" font-weight="600">Sponsors, Investors &amp; Lenders</text>
+        <text x="390" y="356" text-anchor="middle" fill="#5A6E61" font-size="9.5">Impact investors (orders as collateral)</text>
+        <text x="390" y="370" text-anchor="middle" fill="#5A6E61" font-size="9.5">Green finance · CSR sponsors</text>
+        <text x="390" y="384" text-anchor="middle" fill="#5A6E61" font-size="9.5">Diaspora &amp; government programmes</text>
+        <text x="390" y="398" text-anchor="middle" fill="#C2185B" font-size="9" font-style="italic">Production-as-collateral financing</text>
+        <!-- Arrow center↔bottom -->
+        <line x1="390" y1="278" x2="390" y2="294" stroke="#C2185B" stroke-width="2" marker-end="url(#arr-m)"/>
+        <line x1="393" y1="294" x2="393" y2="278" stroke="#C2185B" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#arr-m2)"/>
+
+        <!-- Arrow markers -->
+        <defs>
+          <marker id="arr-g"  markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#1A6B3A"/></marker>
+          <marker id="arr-g2" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#1A6B3A" opacity="0.4"/></marker>
+          <marker id="arr-b"  markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#1565C0"/></marker>
+          <marker id="arr-b2" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#1565C0" opacity="0.4"/></marker>
+          <marker id="arr-a"  markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#E65100"/></marker>
+          <marker id="arr-a2" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#E65100" opacity="0.4"/></marker>
+          <marker id="arr-m"  markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#C2185B"/></marker>
+          <marker id="arr-m2" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#C2185B" opacity="0.4"/></marker>
+        </defs>
+      </svg>
+      <p style="text-align:center;font-size:11px;color:var(--text-light);margin-top:8px;font-family:var(--font-m);">Solid arrows = primary flow · Dashed arrows = feedback / return flow · Managed by RWN Platform</p>
+    </div>
+
+    <!-- 4 CARDS -->
+    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:16px;">
+
+      <div style="background:#FFFFFF;border:2px solid var(--g-deep);border-radius:var(--radius);padding:22px;">
+        <div style="font-size:22px;margin-bottom:8px;">🛒</div>
+        <div style="font-family:var(--font-d);font-size:16px;font-weight:700;color:var(--g-deep);margin-bottom:4px;">BUY SIDE — Input Market Access</div>
+        <div style="font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--g-deep);margin-bottom:10px;font-family:var(--font-m);">What WSSFs need to produce</div>
+        <p style="font-size:13px;color:var(--text-muted);line-height:1.6;margin-bottom:12px;">WSSFs connect to verified suppliers of inputs and raw materials. RWN negotiates collective bulk pricing — leveraging the network's scale for discounts unavailable to individual women.</p>
+        <ul style="list-style:none;font-size:13px;">
+          <li style="padding:5px 0;border-bottom:1px solid var(--border-lt);">🌱 Fertilisers, seeds, agri-tools</li>
+          <li style="padding:5px 0;border-bottom:1px solid var(--border-lt);">🧵 Fabric, thread, sewing equipment</li>
+          <li style="padding:5px 0;border-bottom:1px solid var(--border-lt);">📦 Food processing inputs &amp; packaging</li>
+          <li style="padding:5px 0;border-bottom:1px solid var(--border-lt);">🔥 Improved cookstoves &amp; clean energy</li>
+          <li style="padding:5px 0;">🐄 Animal feed &amp; veterinary products</li>
+        </ul>
+      </div>
+
+      <div style="background:#FFFFFF;border:2px solid var(--blue);border-radius:var(--radius);padding:22px;">
+        <div style="font-size:22px;margin-bottom:8px;">🏪</div>
+        <div style="font-family:var(--font-d);font-size:16px;font-weight:700;color:var(--blue);margin-bottom:4px;">SELL SIDE — Output Market Access</div>
+        <div style="font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--blue);margin-bottom:10px;font-family:var(--font-m);">Who buys what WSSFs produce</div>
+        <p style="font-size:13px;color:var(--text-muted);line-height:1.6;margin-bottom:12px;">WSSFs connect digitally to buyers — opening markets well beyond the immediate community. Digital catalogue, order management, SMS/WhatsApp order notifications. RWN facilitates first-buyer introductions.</p>
+        <ul style="list-style:none;font-size:13px;">
+          <li style="padding:5px 0;border-bottom:1px solid var(--border-lt);">🏨 Hotels, restaurants, institutions</li>
+          <li style="padding:5px 0;border-bottom:1px solid var(--border-lt);">🛒 Urban markets &amp; supermarkets</li>
+          <li style="padding:5px 0;border-bottom:1px solid var(--border-lt);">✈️ Export cooperatives (coffee, tea, crafts)</li>
+          <li style="padding:5px 0;border-bottom:1px solid var(--border-lt);">📱 Online catalogue with pricing &amp; photos</li>
+          <li style="padding:5px 0;">📲 Orders via SMS/WhatsApp</li>
+        </ul>
+      </div>
+
+      <div style="background:#FFFFFF;border:2px solid var(--amber);border-radius:var(--radius);padding:22px;">
+        <div style="font-size:22px;margin-bottom:8px;">🏭</div>
+        <div style="font-family:var(--font-d);font-size:16px;font-weight:700;color:var(--amber);margin-bottom:4px;">STRATEGIC PARTNERS — Value-Add &amp; Processing</div>
+        <div style="font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--amber);margin-bottom:10px;font-family:var(--font-m);">🌟 The missing link — a genuine innovation</div>
+        <p style="font-size:13px;color:var(--text-muted);line-height:1.6;margin-bottom:12px;">Processing companies cooperate with WSSF entrepreneurs to transform raw production into higher-value products. Women sell finished goods at better prices AND reduce post-harvest losses — critical for agribusiness where up to 40% of produce is lost without cold storage or processing.</p>
+        <ul style="list-style:none;font-size:13px;">
+          <li style="padding:5px 0;border-bottom:1px solid var(--border-lt);">🥫 Food processors (drying, milling, canning)</li>
+          <li style="padding:5px 0;border-bottom:1px solid var(--border-lt);">❄️ Cold storage &amp; logistics partners</li>
+          <li style="padding:5px 0;border-bottom:1px solid var(--border-lt);">📦 Packaging &amp; branding companies</li>
+          <li style="padding:5px 0;border-bottom:1px solid var(--border-lt);">🌿 Organic certification bodies</li>
+          <li style="padding:5px 0;">📊 Revenue/profit-sharing agreements with women</li>
+        </ul>
+        <div style="margin-top:12px;padding:10px;background:var(--amber-lt);border-radius:6px;font-size:12px;color:var(--amber);font-weight:600;">Why this matters: unprocessed maize sells for RWF 250/kg. Milled flour sells for RWF 600/kg. Processing triples revenue — without increasing farm area.</div>
+      </div>
+
+      <div style="background:#FFFFFF;border:2px solid var(--mag);border-radius:var(--radius);padding:22px;">
+        <div style="font-size:22px;margin-bottom:8px;">💰</div>
+        <div style="font-family:var(--font-d);font-size:16px;font-weight:700;color:var(--mag);margin-bottom:4px;">FINANCE SIDE — Production-as-Collateral</div>
+        <div style="font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--mag);margin-bottom:10px;font-family:var(--font-m);">Finance beyond the revolving fund</div>
+        <p style="font-size:13px;color:var(--text-muted);line-height:1.6;margin-bottom:12px;">WSSFs connect to impact investors, sponsors, and lenders who can accept confirmed orders, contracts, or harvest commitments as collateral — unlocking capital beyond what the revolving fund can provide, without requiring traditional assets.</p>
+        <ul style="list-style:none;font-size:13px;">
+          <li style="padding:5px 0;border-bottom:1px solid var(--border-lt);">📈 Impact investors (lending against confirmed orders)</li>
+          <li style="padding:5px 0;border-bottom:1px solid var(--border-lt);">🌱 Green finance (sustainable/eco-friendly IGAs)</li>
+          <li style="padding:5px 0;border-bottom:1px solid var(--border-lt);">💼 CSR sponsors for specific production projects</li>
+          <li style="padding:5px 0;border-bottom:1px solid var(--border-lt);">🏛️ BDF, RDB government programmes</li>
+          <li style="padding:5px 0;">🌍 Diaspora investment networks</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="callout callout-green" style="margin-top:24px;">
+      <div class="callout-title">Why this is a genuine innovation for RWN — and why now</div>
+      <div class="callout-body">No comparable NGO-led four-sided marketplace exists in Rwanda at this scale. VSLAs and SACCOs handle savings and credit only — no market connectivity. Government programmes focus on single value chains. RWN's network of 24 WSS across 12 districts plus 53 grassroots groups creates unique supply-side aggregation that justifies the platform. The buy-side collective purchasing alone could reduce WSSF input costs by 10–25%. Adding the Strategic Partners dimension — processing and value-add — is the element that can most dramatically increase WSSF incomes and loan repayment capacity: it shifts women from price-takers in raw commodity markets to value-chain participants with real pricing power.</div>
+    </div>
+  </div>
+
+  <!-- AI TOOLS -->
+  <div class="section">
+    <div class="eyebrow" style="color:var(--mag);">AI-Powered Tools</div>
+    <h2 class="section-title">Technology that serves, not replaces, community leaders</h2>
+    <p class="section-lead">AI tools designed specifically for the Rwandan context and the WSSF profile — low formal education, Kinyarwanda as primary language, mobile-first access, no money for consultants.</p>
+    <div class="grid-2">
+      <div>
+        <h3 style="font-family:var(--font-d);font-size:17px;font-weight:700;color:var(--text-head);margin-bottom:14px;">🤖 AI Business Plan Builder</h3>
+        <div class="innov-card" style="margin-bottom:12px;">
+          <div class="innov-title">What it does</div>
+          <div class="innov-body">A conversational, guided tool that asks WSSFs questions about their business idea and generates a formatted, realistic business plan — calibrated to Rwandan input prices, seasonal cycles, and market conditions. Output matches RWN's existing template.</div>
+        </div>
+        <div class="innov-card" style="margin-bottom:12px;">
+          <div class="innov-title">Language &amp; access</div>
+          <div class="innov-body">Available in Kinyarwanda, French, and English. Mobile-first (WhatsApp or SMS-based interface for feature phones). Can also be used by field staff on behalf of applicants.</div>
+        </div>
+        <div class="innov-card">
+          <div class="innov-title">Validation layer</div>
+          <div class="innov-body">AI flags unrealistic cost assumptions, checks that projected revenues cover loan repayment, and warns about common IGA sector risks (seasonal demand, input price volatility). Produces a "realism score" to guide field staff review.</div>
+        </div>
+      </div>
+      <div>
+        <h3 style="font-family:var(--font-d);font-size:17px;font-weight:700;color:var(--text-head);margin-bottom:14px;">📊 AI Fund Management Dashboard</h3>
+        <div class="innov-card" style="margin-bottom:12px;">
+          <div class="innov-title">Portfolio health monitoring</div>
+          <div class="innov-body">Real-time view of: total capital deployed, repayments received, overdue loans, recovery rate, interest earned vs. operational costs. Alerts for loans approaching default threshold.</div>
+        </div>
+        <div class="innov-card" style="margin-bottom:12px;">
+          <div class="innov-title">Field staff mobile app</div>
+          <div class="innov-body">Field staff record monthly monitoring visits digitally: business status, repayment likelihood, issues identified, support provided. Data aggregates automatically to district and national level.</div>
+        </div>
+        <div class="innov-card">
+          <div class="innov-title">Donor reporting auto-generation</div>
+          <div class="innov-body">Quarterly narrative reports generated automatically from real data — number of loans, women served, recovery rates, success stories flagged by field staff. Massively reduces reporting burden.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TECHNOLOGY STACK -->
+  <div class="section section-alt">
+    <div class="eyebrow">Technology Architecture</div>
+    <h2 class="section-title">Build on what exists — add what is required</h2>
+    <p class="section-lead">The platform leverages RWN's existing infrastructure (WSS network, field staff, mobile money ecosystem in Rwanda) and adds a minimal but powerful digital layer — avoiding over-engineering.</p>
+    <div class="stack-grid">
+      <div class="stack-layer sl-1">
+        <div class="sl-label">User Layer</div>
+        <div class="sl-content">WSSFs (mobile / WhatsApp / SMS) · Field staff (Android app) · RWN management (web dashboard) · Donors (reporting portal)</div>
+      </div>
+      <div class="stack-layer sl-2">
+        <div class="sl-label">Application Layer</div>
+        <div class="sl-content">AI Business Plan Builder · Three-sided Marketplace · Fund Management Platform · Impact Dashboard · Pre-eligibility Programme tracker</div>
+      </div>
+      <div class="stack-layer sl-3">
+        <div class="sl-label">Integration Layer</div>
+        <div class="sl-content">MTN/Airtel Mobile Money API (repayments) · Bank transfer reconciliation · SMS gateway (Kinyarwanda notifications) · RDB/BDF programme APIs (green finance links)</div>
+      </div>
+      <div class="stack-layer sl-4">
+        <div class="sl-label">AI / Data Layer</div>
+        <div class="sl-content">LLM for business plan generation (Kinyarwanda) · Market price database (Rwandan inputs/outputs) · Portfolio risk scoring · Impact indicator computation</div>
+      </div>
+      <div class="stack-layer sl-5">
+        <div class="sl-label">Infrastructure</div>
+        <div class="sl-content">Cloud-hosted (Rwanda data residency preferred) · Offline-capable for low-connectivity field areas · Open source core where possible · Designed for handover and local maintenance</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GLOBAL SHIFTS -->
+  <div class="section">
+    <div class="eyebrow">Global Context</div>
+    <h2 class="section-title">Shifts that shape the ecosystem — and those coming</h2>
+    <div class="grid-2">
+      <div>
+        <h3 style="font-family:var(--font-d);font-size:16px;font-weight:700;color:var(--text-head);margin-bottom:14px;">Happening Now</h3>
+        <div class="timeline">
+          <div class="tl-item"><div class="tl-dot"></div><div class="tl-label">ODA</div><div class="tl-title">Aid contraction &amp; competition</div><div class="tl-desc">USAID freeze, tighter EU development budgets. Donors moving toward results-based financing and fewer, larger grants. RWN needs a diversified funding base — the SPV and marketplace reduce grant dependency.</div></div>
+          <div class="tl-item"><div class="tl-dot"></div><div class="tl-label">Finance</div><div class="tl-title">Rise of impact investing in Africa</div><div class="tl-desc">DFIs (IFC, AfDB, Proparco) and private impact investors actively seeking women-led financial inclusion opportunities in East Africa. An SPV gives RWN the legal vehicle to engage them.</div></div>
+          <div class="tl-item"><div class="tl-dot"></div><div class="tl-label">Technology</div><div class="tl-title">AI in African languages</div><div class="tl-desc">LLMs now capable of high-quality Kinyarwanda output. Mobile penetration in Rwanda exceeds 80%. The moment for an AI-powered, mobile-first financial inclusion tool has arrived.</div></div>
+        </div>
+      </div>
+      <div>
+        <h3 style="font-family:var(--font-d);font-size:16px;font-weight:700;color:var(--text-head);margin-bottom:14px;">Coming Soon</h3>
+        <div class="timeline">
+          <div class="tl-item"><div class="tl-dot mag"></div><div class="tl-label">Climate Finance</div><div class="tl-title">Green finance for grassroots IGAs</div><div class="tl-desc">Rwanda's Climate and Nature Finance Strategy (2024–2030) opens new funding streams for women-led green businesses. The marketplace's finance side can channel this to WSSF green IGAs specifically.</div></div>
+          <div class="tl-item"><div class="tl-dot mag"></div><div class="tl-label">Regulation</div><div class="tl-title">Rwanda fintech regulation maturing</div><div class="tl-desc">BNR's sandbox approach to fintech and microfinance creates a window for an SPV to register as a non-deposit lending institution before regulation tightens. First-mover advantage is real.</div></div>
+          <div class="tl-item"><div class="tl-dot mag"></div><div class="tl-label">Trade</div><div class="tl-title">AfCFTA market access expanding</div><div class="tl-desc">African Continental Free Trade Area is progressively opening. Rwandan women-owned enterprises producing at scale could access regional markets. The sell-side marketplace is the digital bridge.</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- IMPLEMENTATION ROADMAP -->
+  <div class="section section-alt">
+    <div class="eyebrow">Implementation Path</div>
+    <h2 class="section-title">Phased approach — leverage before build</h2>
+    <div class="grid-3">
+      <div class="card" style="border-top: 3px solid var(--g-deep);">
+        <div style="font-family:var(--font-m);font-size:10px;color:var(--text-light);margin-bottom:8px;">PHASE 1 · Months 1–6</div>
+        <div class="card-title">Foundation &amp; Baseline</div>
+        <div class="card-body">
+          <ul style="list-style:none;font-size:13px;">
+            <li style="padding:4px 0;border-bottom:1px solid var(--border-lt);">✅ WSSF population census</li>
+            <li style="padding:4px 0;border-bottom:1px solid var(--border-lt);">✅ IGA sector mapping (12 districts)</li>
+            <li style="padding:4px 0;border-bottom:1px solid var(--border-lt);">✅ Fund capital and projections model</li>
+            <li style="padding:4px 0;border-bottom:1px solid var(--border-lt);">✅ Default &amp; dispute procedures written</li>
+            <li style="padding:4px 0;">✅ SPV legal structure initiated with BNR</li>
+          </ul>
+        </div>
+      </div>
+      <div class="card" style="border-top: 3px solid var(--blue);">
+        <div style="font-family:var(--font-m);font-size:10px;color:var(--text-light);margin-bottom:8px;">PHASE 2 · Months 7–18</div>
+        <div class="card-title">Digital Layer</div>
+        <div class="card-body">
+          <ul style="list-style:none;font-size:13px;">
+            <li style="padding:4px 0;border-bottom:1px solid var(--border-lt);">🔨 Digital fund management platform</li>
+            <li style="padding:4px 0;border-bottom:1px solid var(--border-lt);">🔨 Field staff mobile app (repayment tracking)</li>
+            <li style="padding:4px 0;border-bottom:1px solid var(--border-lt);">🔨 AI Business Plan Builder (Kinyarwanda)</li>
+            <li style="padding:4px 0;border-bottom:1px solid var(--border-lt);">🔨 Marketplace buy-side (supplier catalogue)</li>
+            <li style="padding:4px 0;">🔨 First SPV loans disbursed</li>
+          </ul>
+        </div>
+      </div>
+      <div class="card" style="border-top: 3px solid var(--mag);">
+        <div style="font-family:var(--font-m);font-size:10px;color:var(--text-light);margin-bottom:8px;">PHASE 3 · Year 2–3</div>
+        <div class="card-title">Full Ecosystem</div>
+        <div class="card-body">
+          <ul style="list-style:none;font-size:13px;">
+            <li style="padding:4px 0;border-bottom:1px solid var(--border-lt);">🌐 Sell-side marketplace live</li>
+            <li style="padding:4px 0;border-bottom:1px solid var(--border-lt);">🌐 Finance-side marketplace (impact investors)</li>
+            <li style="padding:4px 0;border-bottom:1px solid var(--border-lt);">🌐 Impact dashboard for donors</li>
+            <li style="padding:4px 0;border-bottom:1px solid var(--border-lt);">🌐 Graduation pathway to formal MFIs</li>
+            <li style="padding:4px 0;">🌐 Replication to other NGO partners</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- NAV FOOTER -->
+  <div class="section" style="padding-top:20px;padding-bottom:20px;background:var(--surface-1);border-top:1px solid var(--border-lt);">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
+      <span style="font-size:13px;"><a href="fund-structure.html" style="color:var(--blue);font-weight:600;text-decoration:none;">← 🏗️ Fund Structure</a></span>
+      <span style="font-size:13px;"><a href="index.html" style="color:var(--g-deep);font-weight:600;text-decoration:none;">🏠 Back to Overview</a></span>
+    </div>
+  </div>
+
+  <footer class="rwn-footer">
+    <div class="footer-brand">Rwanda Women's <span>Network</span></div>
+    <div class="footer-meta">Page 04 — Ecosystem &amp; Innovation · Proposal only — subject to RWN validation · May 2026</div>
+  </footer>
+</div>
+
+<script src="nav.js"></script>
+</body>
+</html>

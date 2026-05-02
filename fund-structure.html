@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RWN — Fund Structure · Page 3</title>
+<link rel="stylesheet" href="shared.css">
+<style>
+.flow-step { display: flex; gap: 0; margin-bottom: 4px; }
+.flow-box { flex: 1; background: #FFFFFF; border: 1px solid var(--border-lt); border-radius: var(--radius); padding: 16px 14px; text-align: center; position: relative; box-shadow: var(--shadow-sm); }
+.flow-box .f-num { font-family: var(--font-m); font-size: 10px; color: var(--text-light); margin-bottom: 6px; }
+.flow-box .f-title { font-size: 13px; font-weight: 700; color: var(--text-head); margin-bottom: 4px; }
+.flow-box .f-desc { font-size: 11px; color: var(--text-muted); line-height: 1.45; }
+.flow-arrow { width: 32px; display: flex; align-items: center; justify-content: center; font-size: 18px; color: var(--g-deep); flex-shrink: 0; }
+.cycle-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+@media(max-width:860px){ .cycle-grid { grid-template-columns: 1fr 1fr; } }
+.cycle-step { background: #FFFFFF; border: 1px solid var(--border-lt); border-radius: var(--radius); padding: 18px 14px; text-align: center; box-shadow: var(--shadow-sm); position: relative; }
+.cycle-step::after { content: attr(data-step); position: absolute; top: -10px; left: 50%; transform: translateX(-50%); width: 22px; height: 22px; background: var(--g-deep); color: #FFFFFF; border-radius: 50%; font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+.cycle-icon { font-size: 24px; margin: 8px 0 8px; }
+.cycle-title { font-size: 12px; font-weight: 700; color: var(--text-head); margin-bottom: 4px; }
+.cycle-desc  { font-size: 11px; color: var(--text-muted); line-height: 1.4; }
+.spv-card { background: var(--g-deep); color: #FFFFFF; border-radius: var(--radius); padding: 28px 24px; }
+.spv-card h3 { font-family: var(--font-d); font-size: 18px; font-weight: 700; color: #A8EFCA; margin-bottom: 12px; }
+.spv-card p { font-size: 13px; color: rgba(255,255,255,0.8); line-height: 1.65; margin-bottom: 14px; }
+.spv-list { list-style: none; }
+.spv-list li { font-size: 13px; color: rgba(255,255,255,0.75); padding: 7px 0; border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; gap: 10px; }
+.spv-list li:last-child { border-bottom: none; }
+.spv-list li::before { content: '→'; color: #A8EFCA; flex-shrink: 0; }
+.proj-row { display: grid; grid-template-columns: 100px repeat(6,1fr); gap: 1px; background: var(--border-lt); }
+.proj-cell { background: #FFFFFF; padding: 11px 10px; font-size: 12px; text-align: center; }
+.proj-cell.hdr { background: var(--surface-1); font-family: var(--font-m); font-size: 10px; letter-spacing: 0.8px; text-transform: uppercase; color: var(--text-muted); font-weight: 600; }
+.proj-cell.lbl { text-align: left; font-weight: 600; color: var(--text-head); font-size: 12px; }
+.proj-cell.empty { color: var(--amber); font-style: italic; font-size: 11px; }
+.proj-table { border-radius: var(--radius); overflow: hidden; border: 1px solid var(--border-lt); }
+@media(max-width:860px){ .proj-row { grid-template-columns: 120px repeat(3,1fr); } }
+</style>
+</head>
+<body>
+
+<div class="sb-topbar" id="sb-topbar">
+  <div class="sb-topbar-logo">RWN</div>
+  <div class="sb-topbar-title">Fund Structure</div>
+  <button class="sb-hamburger" id="sb-hbg" onclick="sbMobileToggle()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</div>
+<div class="sb-overlay" id="sb-overlay" onclick="sbMobileClose()"></div>
+
+<nav class="rwn-sidebar" id="rwn-sidebar">
+  <div class="sb-logo-block">
+    <div class="sb-logo">RWN</div>
+    <div><div class="sb-brand-main">Revolving Fund</div><div class="sb-brand-sub">Concept Platform</div></div>
+  </div>
+  <div class="sb-nav">
+    <span class="sb-section-label">Navigation</span>
+    <a href="index.html">🏠 Overview</a>
+    <div class="sb-divider"></div>
+    <span class="sb-section-label">Analysis</span>
+    <a href="what-is-there.html">✅ What Is There</a>
+    <a href="what-is-missing.html">⚠️ What Is Missing</a>
+    <a href="fund-structure.html" class="active">🏗️ Fund Structure</a>
+    <div class="sb-divider"></div>
+    <span class="sb-section-label">Innovation</span>
+    <a href="ecosystem.html" class="sb-mag">🌐 Ecosystem &amp; Marketplace</a>
+    <div class="sb-divider"></div>
+    <span class="sb-section-label">Reference</span>
+    <a href="abbreviations.html">📖 Abbreviations</a>
+    <a href="https://rwandawomensnetwork.org" target="_blank">🔗 RWN Website</a>
+  </div>
+</nav>
+
+<div class="page-wrap">
+
+  <div class="hero">
+    <div class="hero-bg-mesh"></div>
+    <div class="hero-grid"></div>
+    <div class="hero-content">
+      <div class="eyebrow fade-up au-1">Page 03 of 04</div>
+      <h1 class="hero-title fade-up au-2">🏗️ Fund Structure &amp; <span class="accent">Key Concepts</span></h1>
+      <p class="hero-lead fade-up au-3">Detailed architecture of the revolving fund as documented — loan cycle, governance, financial projections structure — plus the SPV concept and what must be built to close operational gaps.</p>
+    </div>
+  </div>
+
+  <!-- LOAN CYCLE -->
+  <div class="section">
+    <div class="eyebrow">Loan Cycle — as documented</div>
+    <h2 class="section-title">7-step process <span class="src src-rf" style="font-size:13px;vertical-align:middle;">RF</span></h2>
+    <p class="section-lead">From application to re-loaning — the full cycle as described in the Revolving Fund Strategy.</p>
+    <div class="cycle-grid">
+      <div class="cycle-step" data-step="1"><div class="cycle-icon">📝</div><div class="cycle-title">Application</div><div class="cycle-desc">Business plan + loan request. Template / hard copy / email / online / in-person</div></div>
+      <div class="cycle-step" data-step="2"><div class="cycle-icon">🔎</div><div class="cycle-title">Appraisal</div><div class="cycle-desc">Field staff verification · 1 week</div></div>
+      <div class="cycle-step" data-step="3"><div class="cycle-icon">✅</div><div class="cycle-title">Approval</div><div class="cycle-desc">Loan Committee · 1 week · 2-level review</div></div>
+      <div class="cycle-step" data-step="4"><div class="cycle-icon">🏦</div><div class="cycle-title">Disbursement</div><div class="cycle-desc">Bank transfer to beneficiary account</div></div>
+      <div class="cycle-step" data-step="5"><div class="cycle-icon">📅</div><div class="cycle-title">Follow-up</div><div class="cycle-desc">Monthly monitoring + business coaching by field staff</div></div>
+      <div class="cycle-step" data-step="6"><div class="cycle-icon">💳</div><div class="cycle-title">Repayment</div><div class="cycle-desc">Scheduled payments with receipts. Interest from day 1; principal after grace period</div></div>
+      <div class="cycle-step" data-step="7"><div class="cycle-icon">🔄</div><div class="cycle-title">Re-loaning</div><div class="cycle-desc">After full repayment + impact review + new business plan + insurance</div></div>
+    </div>
+    <div class="callout callout-amber" style="margin-top:24px;">
+      <div class="callout-title">⚠️ Grace period calibration needed</div>
+      <div class="callout-body">The grace period is 3–6 months "depending on income-generating activities." Without a sector map of WSSFs' IGAs, this cannot be calibrated. Agricultural businesses have seasonal cash flows that may require longer or differently structured grace periods than retail or service businesses.</div>
+    </div>
+  </div>
+
+  <!-- GOVERNANCE -->
+  <div class="section section-alt">
+    <div class="eyebrow">Governance Structure</div>
+    <h2 class="section-title">Management and oversight — as documented <span class="src src-rf" style="font-size:13px;vertical-align:middle;">RF</span></h2>
+    <div class="grid-2" style="margin-bottom:24px;">
+      <div class="card" style="border-top: 3px solid var(--g-deep);">
+        <div class="card-title">Management Body</div>
+        <div class="card-body">
+          <ul style="list-style:none;margin-top:8px;">
+            <li style="padding:6px 0;border-bottom:1px solid var(--border-lt);font-size:13px;">👤 Program Manager</li>
+            <li style="padding:6px 0;border-bottom:1px solid var(--border-lt);font-size:13px;">📊 M&amp;E Officer</li>
+            <li style="padding:6px 0;border-bottom:1px solid var(--border-lt);font-size:13px;">🗂️ Project Coordinator Representative</li>
+            <li style="padding:6px 0;font-size:13px;">🌍 Field Staff Representative</li>
+          </ul>
+        </div>
+      </div>
+      <div class="card" style="border-top: 3px solid var(--mag);">
+        <div class="card-title">Oversight Body</div>
+        <div class="card-body">
+          <ul style="list-style:none;margin-top:8px;">
+            <li style="padding:6px 0;border-bottom:1px solid var(--border-lt);font-size:13px;">🔍 Finance Manager</li>
+            <li style="padding:6px 0;border-bottom:1px solid var(--border-lt);font-size:13px;">📋 Finance Officer × 2</li>
+            <li style="padding:6px 0;font-size:13px;">🏛️ External Evaluator (if needed — quarterly)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="callout callout-amber">
+      <div class="callout-title">⚠️ Gap: No dedicated Fund Manager role</div>
+      <div class="callout-body">The current governance structure assigns fund management to existing RWN staff (Program Manager, M&amp;E Officer) on top of their regular responsibilities. As the fund grows to cover multiple districts and dozens of loans simultaneously, this will become a capacity bottleneck. A dedicated Fund Manager role should be planned.</div>
+    </div>
+  </div>
+
+  <!-- SPV CONCEPT -->
+  <div class="section">
+    <div class="eyebrow" style="color:var(--mag);">Proposal — SPV Structure</div>
+    <h2 class="section-title">Managing the fund through an <span style="color:var(--mag);">SPV</span></h2>
+    <p class="section-lead">This is a conceptual proposal — not in the source documents — to strengthen the fund's governance, unlock institutional capital, and protect RWN's organisational balance sheet.</p>
+    <div class="grid-2">
+      <div class="spv-card">
+        <h3>What is an SPV and why here?</h3>
+        <p>A Special Purpose Vehicle (SPV) is a legally separate entity created by RWN specifically to own and manage the revolving fund. It ring-fences the fund's capital from RWN's operational budget, making it more attractive to institutional investors and protecting RWN from fund liabilities.</p>
+        <ul class="spv-list">
+          <li>Ring-fenced capital — fund losses don't touch RWN operations</li>
+          <li>Non-deposit lending institution status — regulated by BNR, lending credibility</li>
+          <li>Can attract concessional loans from development finance institutions (AfDB, IFC, etc.)</li>
+          <li>Separate auditing — cleaner donor reporting and fund performance tracking</li>
+          <li>Enables blended finance structures (grant + concessional debt + equity)</li>
+          <li>Replicable: other NGOs could inject capital into the SPV as co-investors</li>
+        </ul>
+      </div>
+      <div>
+        <h3 style="font-family:var(--font-d);font-size:17px;font-weight:700;color:var(--text-head);margin-bottom:14px;">SPV — Key design questions to answer</h3>
+        <div class="callout callout-green" style="margin-bottom:12px;">
+          <div class="callout-title">Legal form in Rwanda</div>
+          <div class="callout-body">What legal form? Limited company (Sarl), cooperative, or registered microfinance institution under BNR? Each has different capital requirements, governance rules, and tax treatment.</div>
+        </div>
+        <div class="callout callout-green" style="margin-bottom:12px;">
+          <div class="callout-title">Capital structure</div>
+          <div class="callout-body">What share of initial capital comes from: RWN reserves, donor grants, concessional loans, impact investors? What is the target fund size at Year 1, Year 3, Year 5?</div>
+        </div>
+        <div class="callout callout-green" style="margin-bottom:12px;">
+          <div class="callout-title">Revenue flow</div>
+          <div class="callout-body">How does interest income flow? What percentage stays in fund for recapitalisation, goes to SPV operations, and goes back to RWN as the fund manager?</div>
+        </div>
+        <div class="callout callout-green">
+          <div class="callout-title">Regulatory engagement</div>
+          <div class="callout-body">BNR (National Bank of Rwanda) engagement plan: when, how, and with which legal advisors. Non-deposit lending institutions in Rwanda require specific licensing.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FINANCIAL PROJECTIONS: WHAT EXISTS -->
+  <div class="section section-alt">
+    <div class="eyebrow">Financial Projections</div>
+    <h2 class="section-title">The structure that exists — waiting to be filled</h2>
+    <p class="section-lead">The revolving fund document includes this table structure correctly. All data rows are currently empty. This is the single most critical gap to fill before the fund can be presented to any donor or investor.</p>
+    <div class="proj-table" style="overflow-x:auto;">
+      <div class="proj-row">
+        <div class="proj-cell hdr lbl">Metric</div>
+        <div class="proj-cell hdr">Year 1</div>
+        <div class="proj-cell hdr">Year 2</div>
+        <div class="proj-cell hdr">Year 3</div>
+        <div class="proj-cell hdr">Year 4</div>
+        <div class="proj-cell hdr">Year 5</div>
+      </div>
+      <div class="proj-row">
+        <div class="proj-cell lbl">Capital Disbursed (RWF)</div>
+        <div class="proj-cell empty">— to fill</div><div class="proj-cell empty">— to fill</div><div class="proj-cell empty">— to fill</div><div class="proj-cell empty">— to fill</div><div class="proj-cell empty">— to fill</div>
+      </div>
+      <div class="proj-row">
+        <div class="proj-cell lbl">Interest Income (RWF)</div>
+        <div class="proj-cell empty">— to fill</div><div class="proj-cell empty">— to fill</div><div class="proj-cell empty">— to fill</div><div class="proj-cell empty">— to fill</div><div class="proj-cell empty">— to fill</div>
+      </div>
+      <div class="proj-row">
+        <div class="proj-cell lbl">Loan Recovery Rate (%)</div>
+        <div class="proj-cell empty">— to fill</div><div class="proj-cell empty">— to fill</div><div class="proj-cell empty">— to fill</div><div class="proj-cell empty">— to fill</div><div class="proj-cell empty">— to fill</div>
+      </div>
+      <div class="proj-row">
+        <div class="proj-cell lbl">Gross Benefit (RWF)</div>
+        <div class="proj-cell empty">— to fill</div><div class="proj-cell empty">— to fill</div><div class="proj-cell empty">— to fill</div><div class="proj-cell empty">— to fill</div><div class="proj-cell empty">— to fill</div>
+      </div>
+      <div class="proj-row">
+        <div class="proj-cell lbl">Operational Costs (RWF)</div>
+        <div class="proj-cell empty">— to fill</div><div class="proj-cell empty">— to fill</div><div class="proj-cell empty">— to fill</div><div class="proj-cell empty">— to fill</div><div class="proj-cell empty">— to fill</div>
+      </div>
+      <div class="proj-row">
+        <div class="proj-cell lbl" style="color:var(--g-deep);font-weight:700;">Net Benefit (RWF)</div>
+        <div class="proj-cell empty">— to fill</div><div class="proj-cell empty">— to fill</div><div class="proj-cell empty">— to fill</div><div class="proj-cell empty">— to fill</div><div class="proj-cell empty">— to fill</div>
+      </div>
+    </div>
+    <div class="callout callout-amber" style="margin-top:20px;">
+      <div class="callout-title">⚠️ Assumptions needed to fill this table</div>
+      <div class="callout-body">
+        Before any numbers can be entered, these must be established: (1) Initial fund capital amount, (2) Number of eligible WSSFs and projected take-up rate, (3) Average loan size and average term, (4) Projected default rate based on WSSF profile and comparable programmes, (5) Operational cost per loan (field staff time, monitoring, training), (6) Inflation rate assumption for RWF real value erosion, (7) Growth trajectory (how many new WSS per year?).
+      </div>
+    </div>
+  </div>
+
+  <!-- BUSINESS PLAN SUPPORT -->
+  <div class="section">
+    <div class="eyebrow" style="color:var(--mag);">Proposal — Business Plan Programme</div>
+    <h2 class="section-title">Helping WSSFs build solid, realistic business plans</h2>
+    <p class="section-lead">A critical gap: WSSFs have no advanced business skills and no money to pay consultants. A business plan is required for eligibility. Without support, this becomes a barrier that excludes the most motivated but least-resourced women.</p>
+    <div class="grid-3">
+      <div class="innov-card">
+        <div class="innov-icon">👩‍🏫</div>
+        <div class="innov-title">Structured BP Training</div>
+        <div class="innov-body">Group workshops facilitated by RWN field staff, using the existing business plan template. Covers each section step-by-step, with real examples from Rwandan market context.</div>
+        <div class="innov-tag">Builds on existing RWN capacity building infrastructure</div>
+      </div>
+      <div class="innov-card">
+        <div class="innov-icon">🤖</div>
+        <div class="innov-title">AI Business Plan Builder</div>
+        <div class="innov-body">A guided, conversational AI tool (in Kinyarwanda and French) that walks a WSSF through building her business plan — asking questions, generating cost estimates, checking market realism, and producing a formatted document.</div>
+        <div class="innov-tag">→ See Ecosystem page for technical design</div>
+      </div>
+      <div class="innov-card">
+        <div class="innov-icon">✅</div>
+        <div class="innov-title">BP Review &amp; Quality Gate</div>
+        <div class="innov-body">Field staff + program team review of submitted business plans before loan committee. Standardised scoring rubric to ensure consistency across districts and reduce subjectivity in approval decisions.</div>
+        <div class="innov-tag">Closes the "re-loaning impact review" gap too</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- NAV FOOTER -->
+  <div class="section" style="padding-top:20px;padding-bottom:20px;background:var(--surface-1);border-top:1px solid var(--border-lt);">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
+      <span style="font-size:13px;"><a href="what-is-missing.html" style="color:var(--mag);font-weight:600;text-decoration:none;">← ⚠️ What Is Missing</a></span>
+      <span style="font-size:13px;"><a href="ecosystem.html" style="color:var(--mag);font-weight:600;text-decoration:none;">🌐 Ecosystem &amp; Marketplace →</a></span>
+    </div>
+  </div>
+
+  <footer class="rwn-footer">
+    <div class="footer-brand">Rwanda Women's <span>Network</span></div>
+    <div class="footer-meta">Page 03 — Fund Structure · May 2026</div>
+  </footer>
+</div>
+
+<script src="nav.js"></script>
+</body>
+</html>

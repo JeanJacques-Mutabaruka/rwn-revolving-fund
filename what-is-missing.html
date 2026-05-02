@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RWN — What Is Missing · Page 2</title>
+<link rel="stylesheet" href="shared.css">
+<style>
+.gap-card { background: #FFFFFF; border: 1px solid var(--border-lt); border-radius: var(--radius); padding: 22px; box-shadow: var(--shadow-sm); border-left: 4px solid var(--amber); margin-bottom: 14px; }
+.gap-card.critical { border-left-color: #C00000; }
+.gap-card.important { border-left-color: var(--amber); }
+.gap-card.strategic { border-left-color: var(--blue); }
+.gap-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 8px; }
+.gap-title { font-size: 14px; font-weight: 700; color: var(--text-head); }
+.gap-desc  { font-size: 13px; color: var(--text-muted); line-height: 1.6; }
+.gap-impact{ font-size: 12px; font-style: italic; color: var(--amber); margin-top: 6px; }
+.gap-impact.critical { color: #C00000; }
+.legend { display: flex; gap: 20px; flex-wrap: wrap; margin-bottom: 28px; }
+.legend-item { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--text-muted); }
+.legend-dot { width: 12px; height: 14px; border-radius: 2px; }
+.ld-c { background: #C00000; } .ld-i { background: var(--amber); } .ld-s { background: var(--blue); }
+.missing-count { font-family: var(--font-d); font-size: 40px; font-weight: 900; color: var(--amber); }
+.swot-quad { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; border-radius: var(--radius); overflow: hidden; }
+@media(max-width:860px){ .swot-quad { grid-template-columns: 1fr; } }
+.sq { padding: 28px 24px; }
+.sq-s { background: rgba(26,107,58,0.08); border: 1px solid var(--g-lt); }
+.sq-w { background: rgba(194,24,91,0.06); border: 1px solid #F8BBD9; }
+.sq-o { background: rgba(21,101,192,0.07); border: 1px solid #BBDEFB; }
+.sq-t { background: rgba(230,81,0,0.06); border: 1px solid #FFCC80; }
+.sq-label { font-family: var(--font-d); font-size: 17px; font-weight: 700; margin-bottom: 14px; }
+.sq-s .sq-label { color: var(--g-deep); }
+.sq-w .sq-label { color: var(--mag); }
+.sq-o .sq-label { color: var(--blue); }
+.sq-t .sq-label { color: var(--amber); }
+.sq-list { list-style: none; }
+.sq-list li { font-size: 13px; color: var(--text-body); padding: 6px 0; border-bottom: 1px solid rgba(0,0,0,0.06); line-height: 1.5; display: flex; gap: 8px; }
+.sq-list li:last-child { border-bottom: none; }
+.sq-list li::before { flex-shrink: 0; margin-top: 1px; }
+.sq-s li::before { content:'✅'; }
+.sq-w li::before { content:'⚠️'; }
+.sq-o li::before { content:'💡'; }
+.sq-t li::before { content:'🔴'; }
+</style>
+</head>
+<body>
+
+<div class="sb-topbar" id="sb-topbar">
+  <div class="sb-topbar-logo">RWN</div>
+  <div class="sb-topbar-title">What Is Missing</div>
+  <button class="sb-hamburger" id="sb-hbg" onclick="sbMobileToggle()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</div>
+<div class="sb-overlay" id="sb-overlay" onclick="sbMobileClose()"></div>
+
+<nav class="rwn-sidebar" id="rwn-sidebar">
+  <div class="sb-logo-block">
+    <div class="sb-logo">RWN</div>
+    <div><div class="sb-brand-main">Revolving Fund</div><div class="sb-brand-sub">Concept Platform</div></div>
+  </div>
+  <div class="sb-nav">
+    <span class="sb-section-label">Navigation</span>
+    <a href="index.html">🏠 Overview</a>
+    <div class="sb-divider"></div>
+    <span class="sb-section-label">Analysis</span>
+    <a href="what-is-there.html">✅ What Is There</a>
+    <a href="what-is-missing.html" class="active">⚠️ What Is Missing</a>
+    <a href="fund-structure.html">🏗️ Fund Structure</a>
+    <div class="sb-divider"></div>
+    <span class="sb-section-label">Innovation</span>
+    <a href="ecosystem.html" class="sb-mag">🌐 Ecosystem &amp; Marketplace</a>
+    <div class="sb-divider"></div>
+    <span class="sb-section-label">Reference</span>
+    <a href="abbreviations.html">📖 Abbreviations</a>
+    <a href="https://rwandawomensnetwork.org" target="_blank">🔗 RWN Website</a>
+  </div>
+</nav>
+
+<div class="page-wrap">
+
+  <div class="hero">
+    <div class="hero-bg-mesh"></div>
+    <div class="hero-grid"></div>
+    <div class="hero-content">
+      <div class="eyebrow mag fade-up au-1">Page 02 of 04</div>
+      <h1 class="hero-title fade-up au-2">⚠️ What Is <span class="mag-accent">Missing</span></h1>
+      <p class="hero-lead fade-up au-3">Critical gaps identified from the source documents. These are elements that must be built to make the fund solid, efficient, and effective — none invented, all derived from what is explicitly absent or incomplete.</p>
+      <div class="stats-bar fade-up au-4">
+        <div class="stat"><div class="stat-n" style="color:#C00000;">4</div><div class="stat-l">Critical blockers</div></div>
+        <div class="stat"><div class="stat-n mag">7</div><div class="stat-l">Important gaps</div></div>
+        <div class="stat"><div class="stat-n" style="color:var(--blue);">6</div><div class="stat-l">Strategic gaps</div></div>
+        <div class="stat"><div class="stat-n">0</div><div class="stat-l">Rows filled in financial projections table</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LEGEND -->
+  <div class="section" style="padding-bottom:0;">
+    <div class="legend">
+      <div class="legend-item"><div class="legend-dot ld-c"></div><strong>Critical</strong> — blocks the fund from functioning</div>
+      <div class="legend-item"><div class="legend-dot ld-i"></div><strong>Important</strong> — creates significant operational risk if missing</div>
+      <div class="legend-item"><div class="legend-dot ld-s"></div><strong>Strategic</strong> — needed for scale, sustainability and ecosystem integration</div>
+    </div>
+  </div>
+
+  <!-- CRITICAL GAPS -->
+  <div class="section" style="padding-top:24px;">
+    <div class="eyebrow" style="color:#C00000;">🔴 Critical Blockers</div>
+    <h2 class="section-title">Without these, the fund cannot operate soundly</h2>
+
+    <div class="gap-card critical">
+      <div class="gap-header"><div class="gap-title">Financial projections table is entirely empty</div><span class="badge badge-amber">Critical</span></div>
+      <div class="gap-desc">The fund document includes a well-structured financial projections table (Year 1/2/3: capital disbursed, interest income, recovery rate, gross benefit, operational costs, net benefit) — but all data rows are blank. There is no financial model. It is impossible to assess fund viability, size the initial capital, or set performance benchmarks.</div>
+      <div class="gap-impact critical">Impact: No evidence base to present to donors. Cannot validate sustainability. Fund could erode silently.</div>
+    </div>
+
+    <div class="gap-card critical">
+      <div class="gap-header"><div class="gap-title">Fund initial capital amount is not stated anywhere</div><span class="badge badge-amber">Critical</span></div>
+      <div class="gap-desc">Neither the revolving fund strategy nor the strategic plan states how much capital the fund starts with. Without knowing the initial capital, it is impossible to determine how many WSSFs can be served, set the first disbursement cycle, or define growth trajectories. The SP mentions microloans targets in RWF, but does not link these to a fund capital figure.</div>
+      <div class="gap-impact critical">Impact: Fund has no defined starting point. Cannot plan Year 1 operations.</div>
+    </div>
+
+    <div class="gap-card critical">
+      <div class="gap-header"><div class="gap-title">Default management and dispute resolution: mentioned but absent</div><span class="badge badge-amber">Critical</span></div>
+      <div class="gap-desc">The fund references "default management and penalty provisions" and an "internal dispute management process" as elements of the policy manual — but neither is described in the shared document. Without clear default procedures, the fund has no recovery mechanism and no deterrent. Dispute resolution absence risks damaging community relations and WSSF retention.</div>
+      <div class="gap-impact critical">Impact: A single wave of defaults with no recovery process could destroy the fund's capital base.</div>
+    </div>
+
+    <div class="gap-card critical">
+      <div class="gap-header"><div class="gap-title">WSSF population baseline: total number unknown</div><span class="badge badge-amber">Critical</span></div>
+      <div class="gap-desc">Neither document states the total number of Women Safe Space Facilitators currently active. The SP mentions 53 grassroots women's groups and 24 WSS across 12 districts, but the number of eligible WSSFs is not defined. This makes it impossible to size the fund correctly, project demand, or define outreach priorities.</div>
+      <div class="gap-impact critical">Impact: Fund is sized arbitrarily. Risk of either under-capitalization (unmet demand) or over-capitalization (idle capital).</div>
+    </div>
+  </div>
+
+  <!-- IMPORTANT GAPS -->
+  <div class="section section-alt">
+    <div class="eyebrow" style="color:var(--amber);">⚠️ Important Gaps</div>
+    <h2 class="section-title">Significant operational risks if not addressed</h2>
+
+    <div class="gap-card important">
+      <div class="gap-header"><div class="gap-title">No digital tracking system — paper-only repayment records</div><span class="badge badge-amber">Important</span></div>
+      <div class="gap-desc">All tracking (repayment schedule, monitoring checklist) is paper-based. This creates data integrity risks, makes portfolio-level reporting difficult, and blocks evidence-based decision-making. Field staff records across 12+ districts cannot be consolidated without a digital layer.</div>
+      <div class="gap-impact">Impact: Donor reporting will be slow, audit-prone, and inconsistent. Real-time fund health impossible to assess.</div>
+    </div>
+
+    <div class="gap-card important">
+      <div class="gap-header"><div class="gap-title">Loan range rationale not explained</div><span class="badge badge-amber">Important</span></div>
+      <div class="gap-desc">RWF 300,000 minimum and RWF 916,000 maximum are stated without explanation. No analysis of IGA capital requirements, cost structures, or market conditions justifies these figures. This is particularly concerning for the maximum: is RWF 916,000 (≈€600) sufficient for meaningful business investment? Or could it be higher for group loans?</div>
+      <div class="gap-impact">Impact: Loans may be misaligned with actual business needs. Risks underfunding viable ventures or overfunding weak ones.</div>
+    </div>
+
+    <div class="gap-card important">
+      <div class="gap-header"><div class="gap-title">Re-loaning criteria: "positive impact review" undefined</div><span class="badge badge-amber">Important</span></div>
+      <div class="gap-desc">Re-loaning is eligible "after full repayment and positive impact review." What constitutes a positive impact review is not specified. No criteria, no scoring, no minimum thresholds. This creates inconsistent application across field staff and potential favoritism or exclusion without objective basis.</div>
+      <div class="gap-impact">Impact: Undermines the fairness and replicability of the fund.</div>
+    </div>
+
+    <div class="gap-card important">
+      <div class="gap-header"><div class="gap-title">Insurance mechanism: optional with no implementation detail</div><span class="badge badge-amber">Important</span></div>
+      <div class="gap-desc">Group insurance for health and emergencies is described as "optional." No insurance provider is named, no cost structure given, no mechanism for enrollment. At re-loaning stage, "group business insurance" is required — but how beneficiaries access it is not explained.</div>
+      <div class="gap-impact">Impact: WSSFs have no realistic path to insurance. Re-loaning requirement becomes a barrier rather than a safeguard.</div>
+    </div>
+
+    <div class="gap-card important">
+      <div class="gap-header"><div class="gap-title">No IGA sector analysis — what businesses do WSSFs actually run?</div><span class="badge badge-amber">Important</span></div>
+      <div class="gap-desc">No mapping of what types of income-generating activities WSSFs currently operate. Without knowing whether they are primarily in agriculture, retail, food processing, handicrafts, or services — the fund cannot calibrate loan sizes, grace periods, or capacity building to real business cycles.</div>
+      <div class="gap-impact">Impact: Generic loan terms may be inappropriate for seasonal agricultural IGAs. Grace periods may not match harvest cycles.</div>
+    </div>
+
+    <div class="gap-card important">
+      <div class="gap-header"><div class="gap-title">No graduation pathway to formal finance</div><span class="badge badge-amber">Important</span></div>
+      <div class="gap-desc">The fund describes re-loaning but has no vision for what happens after multiple cycles. There is no pathway to link successful borrowers to formal MFIs, SACCOs, or BK Umurenge for larger loans. The fund risks becoming a permanent crutch rather than a launchpad.</div>
+      <div class="gap-impact">Impact: Limits women's long-term financial independence. Keeps fund dependent on donor capital indefinitely.</div>
+    </div>
+
+    <div class="gap-card important">
+      <div class="gap-header"><div class="gap-title">No contingency for fund capital erosion</div><span class="badge badge-amber">Important</span></div>
+      <div class="gap-desc">No mechanism is described for managing inflation eroding the real value of the fund over time, or for recapitalising if defaults exceed interest income. The 2% monthly rate may not cover both operational costs and capital erosion under inflation or a significant default event.</div>
+      <div class="gap-impact">Impact: Fund could become technically insolvent while appearing operationally active on paper.</div>
+    </div>
+  </div>
+
+  <!-- STRATEGIC GAPS -->
+  <div class="section">
+    <div class="eyebrow" style="color:var(--blue);">💡 Strategic Gaps</div>
+    <h2 class="section-title">Needed for scale, sustainability and ecosystem integration</h2>
+
+    <div class="gap-card strategic">
+      <div class="gap-header"><div class="gap-title">No comparative positioning vs. existing financial solutions</div><span class="badge badge-blue">Strategic</span></div>
+      <div class="gap-desc">No mapping of alternatives: VSLAs, Umurenge SACCOs, BK Umurenge, MFIs, grants, subsidies. The fund document states it is "not exploitative" but does not demonstrate how it is better positioned than alternatives for WSSFs specifically. Without this, donors cannot assess additionality.</div>
+    </div>
+
+    <div class="gap-card strategic">
+      <div class="gap-header"><div class="gap-title">No link to Rwanda's formal financial inclusion ecosystem</div><span class="badge badge-blue">Strategic</span></div>
+      <div class="gap-desc">No reference to BNR's Financial Inclusion Strategy, the regulatory framework for non-deposit lending institutions, or cooperative law. Operating outside this framework carries compliance risk and misses partnership opportunities. An SPV structure (proposed below) would require BNR engagement.</div>
+    </div>
+
+    <div class="gap-card strategic">
+      <div class="gap-header"><div class="gap-title">Fund's revenue flow back to RWN not defined</div><span class="badge badge-blue">Strategic</span></div>
+      <div class="gap-desc">It is not stated whether interest income flows back to RWN operational budget, stays in the fund for recapitalisation, or is split. This is a key sustainability and governance question — especially if RWN intends to reduce donor dependency through the fund.</div>
+    </div>
+
+    <div class="gap-card strategic">
+      <div class="gap-header"><div class="gap-title">No demand-side data: how many WSSFs want a loan?</div><span class="badge badge-blue">Strategic</span></div>
+      <div class="gap-desc">No survey or consultation results on actual loan demand among WSSFs. What business purposes? What amounts? What repayment capacity? Without demand data, the fund is supply-driven rather than need-driven.</div>
+    </div>
+
+    <div class="gap-card strategic">
+      <div class="gap-header"><div class="gap-title">No link between the fund and Environmental Justice (SO7)</div><span class="badge badge-blue">Strategic</span></div>
+      <div class="gap-desc">The fund document mentions green IGAs and environmental resilience in its introduction, but no green lending criteria, no preferred rates for green businesses, and no link to Rwanda's Climate and Nature Finance Strategy are made explicit. This is a missed opportunity for concessional green finance.</div>
+    </div>
+
+    <div class="gap-card strategic">
+      <div class="gap-header"><div class="gap-title">Exclusion of the most vulnerable: the eligibility gap</div><span class="badge badge-blue">Strategic</span></div>
+      <div class="gap-desc">The eligibility criteria (bank account, running IGA, business plan) exclude WSSFs who are not yet economically active enough to qualify. No pathway is described for pre-eligibility support — financial literacy, IGA start-up, bank account opening assistance — to bring the most vulnerable into the funnel.</div>
+    </div>
+  </div>
+
+  <!-- SWOT -->
+  <div class="section section-alt">
+    <div class="eyebrow">SWOT Analysis</div>
+    <h2 class="section-title">Revolving Fund — grounded in source documents</h2>
+    <div class="swot-quad">
+      <div class="sq sq-s">
+        <div class="sq-label">💪 Strengths</div>
+        <ul class="sq-list">
+          <li>Embedded in existing trusted community infrastructure (WSS, 53 groups)</li>
+          <li>Two-tier governance with internal audit — accountability structure exists</li>
+          <li>Community-based collateral removes main barrier for low-income women</li>
+          <li>Integrated capacity building (pre- and post-loan) — not just credit</li>
+          <li>2% monthly rate competitive vs. commercial MFIs (3–5%+ in Rwanda)</li>
+          <li>Full set of operational templates (business plan, repayment tracker, checklist)</li>
+          <li>Aligned to RWN Strategic Plan and national frameworks (NST2, Vision 2050)</li>
+          <li>RWN's strong national and regional network and advocacy reputation</li>
+        </ul>
+      </div>
+      <div class="sq sq-w">
+        <div class="sq-label">⚠️ Weaknesses</div>
+        <ul class="sq-list">
+          <li>Financial projections entirely empty — no financial model</li>
+          <li>Fund capitalization amount not stated</li>
+          <li>Default management and dispute resolution absent</li>
+          <li>No digital tracking — paper-based, fragmented across districts</li>
+          <li>Insurance mechanism optional with no implementation path</li>
+          <li>WSSF population size unknown — fund cannot be sized correctly</li>
+          <li>Loan range rationale unexplained</li>
+          <li>No graduation pathway to formal financial sector</li>
+          <li>Most vulnerable WSSFs excluded by eligibility criteria</li>
+        </ul>
+      </div>
+      <div class="sq sq-o">
+        <div class="sq-label">💡 Opportunities</div>
+        <ul class="sq-list">
+          <li>Rwanda's strong financial inclusion agenda (BNR, Umurenge SACCOs)</li>
+          <li>NST2 goal of 1.25 million productive jobs — political alignment</li>
+          <li>Blended finance and impact investing trends for women's economic empowerment</li>
+          <li>Rwanda Climate and Nature Finance Strategy (green IGA angle for concessional capital)</li>
+          <li>Potential to license/replicate model to other NGOs (stated in fund doc)</li>
+          <li>AI tools for business plan support and market access (no comparable solution exists)</li>
+          <li>Three-sided marketplace (buy/sell/finance) — significant innovation gap in Rwanda</li>
+          <li>SPV structure could unlock institutional and impact investment capital</li>
+        </ul>
+      </div>
+      <div class="sq sq-t">
+        <div class="sq-label">🔴 Threats</div>
+        <ul class="sq-list">
+          <li>ODA contraction (USAID freeze context) — highly competitive funding environment</li>
+          <li>RWF inflation eroding real value of fund over time</li>
+          <li>Default risk with no insurance mandate and no diversification</li>
+          <li>WSSFs are volunteers — economic stress could prioritize survival over repayment</li>
+          <li>Risk of mission drift if fund grows beyond monitoring capacity</li>
+          <li>Competition with existing Umurenge SACCO network if not well differentiated</li>
+          <li>Regulatory risk if SPV structure not properly structured with BNR</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- NAV FOOTER -->
+  <div class="section" style="padding-top:20px;padding-bottom:20px;background:var(--surface-1);border-top:1px solid var(--border-lt);">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
+      <span style="font-size:13px;"><a href="what-is-there.html" style="color:var(--g-deep);font-weight:600;text-decoration:none;">← ✅ What Is There</a></span>
+      <span style="font-size:13px;"><a href="fund-structure.html" style="color:var(--blue);font-weight:600;text-decoration:none;">🏗️ Fund Structure →</a></span>
+    </div>
+  </div>
+
+  <footer class="rwn-footer">
+    <div class="footer-brand">Rwanda Women's <span>Network</span></div>
+    <div class="footer-meta">Page 02 — What Is Missing · Based on source documents only · May 2026</div>
+  </footer>
+</div>
+
+<script src="nav.js"></script>
+</body>
+</html>

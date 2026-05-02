@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RWN — What Is There · Page 1</title>
+<link rel="stylesheet" href="shared.css">
+<style>
+.finding-block { margin-bottom: 36px; }
+.finding-block h3 { font-family: var(--font-d); font-size: 18px; font-weight: 700; color: var(--text-head); margin-bottom: 12px; display: flex; align-items: center; gap: 10px; }
+.finding-block h3 .badge { font-family: var(--font-b); }
+.src-legend { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 32px; }
+.src-legend-item { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--text-muted); }
+.loan-param-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 14px; }
+@media(max-width:860px){ .loan-param-grid { grid-template-columns: 1fr 1fr; } }
+.lp { background: #FFFFFF; border: 1px solid var(--border-lt); border-radius: var(--radius); padding: 18px; text-align: center; }
+.lp-val { font-family: var(--font-d); font-size: 22px; font-weight: 700; color: var(--g-deep); margin-bottom: 4px; }
+.lp-lbl { font-size: 12px; color: var(--text-muted); }
+.step-row { display: flex; gap: 12px; padding: 14px 0; border-bottom: 1px solid var(--border-lt); align-items: flex-start; }
+.step-row:last-child { border-bottom: none; }
+.step-num { width: 28px; height: 28px; background: var(--g-deep); color: #FFFFFF; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+.step-body { flex: 1; }
+.step-label { font-size: 13px; font-weight: 600; color: var(--text-head); margin-bottom: 3px; }
+.step-desc  { font-size: 13px; color: var(--text-muted); }
+.link-row { display: flex; gap: 12px; padding: 14px 0; border-bottom: 1px solid var(--border-lt); align-items: flex-start; }
+.link-row:last-child { border-bottom: none; }
+.link-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+.link-body  { flex: 1; }
+.link-label { font-size: 13px; font-weight: 600; color: var(--text-head); margin-bottom: 3px; }
+.link-desc  { font-size: 13px; color: var(--text-muted); line-height: 1.55; }
+.eligibility-list { list-style: none; }
+.eligibility-list li { display: flex; align-items: flex-start; gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--border-lt); font-size: 13px; color: var(--text-body); }
+.eligibility-list li:last-child { border-bottom: none; }
+.eligibility-list li::before { content: '✓'; color: var(--g-deep); font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+.cap-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+@media(max-width:860px){ .cap-grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<div class="sb-topbar" id="sb-topbar">
+  <div class="sb-topbar-logo">RWN</div>
+  <div class="sb-topbar-title">What Is There</div>
+  <button class="sb-hamburger" id="sb-hbg" onclick="sbMobileToggle()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</div>
+<div class="sb-overlay" id="sb-overlay" onclick="sbMobileClose()"></div>
+
+<nav class="rwn-sidebar" id="rwn-sidebar">
+  <div class="sb-logo-block">
+    <div class="sb-logo">RWN</div>
+    <div><div class="sb-brand-main">Revolving Fund</div><div class="sb-brand-sub">Concept Platform</div></div>
+  </div>
+  <div class="sb-nav">
+    <span class="sb-section-label">Navigation</span>
+    <a href="index.html">🏠 Overview</a>
+    <div class="sb-divider"></div>
+    <span class="sb-section-label">Analysis</span>
+    <a href="what-is-there.html" class="active">✅ What Is There</a>
+    <a href="what-is-missing.html">⚠️ What Is Missing</a>
+    <a href="fund-structure.html">🏗️ Fund Structure</a>
+    <div class="sb-divider"></div>
+    <span class="sb-section-label">Innovation</span>
+    <a href="ecosystem.html" class="sb-mag">🌐 Ecosystem &amp; Marketplace</a>
+    <div class="sb-divider"></div>
+    <span class="sb-section-label">Reference</span>
+    <a href="abbreviations.html">📖 Abbreviations</a>
+    <a href="https://rwandawomensnetwork.org" target="_blank">🔗 RWN Website</a>
+  </div>
+</nav>
+
+<div class="page-wrap">
+
+  <div class="hero">
+    <div class="hero-bg-mesh"></div>
+    <div class="hero-grid"></div>
+    <div class="hero-content">
+      <div class="eyebrow fade-up au-1">Page 01 of 04</div>
+      <h1 class="hero-title fade-up au-2">✅ What Is <span class="accent">Already There</span></h1>
+      <p class="hero-lead fade-up au-3">Everything documented in the two source documents — with precise references. Nothing invented. This is the foundation on which the revolving fund is built.</p>
+      <div class="src-legend fade-up au-4">
+        <div class="src-legend-item"><span class="src">SP</span> RWN Strategic Plan 2020–2030</div>
+        <div class="src-legend-item"><span class="src src-rf">RF</span> RWN Revolving Fund Strategy (Aug 2025)</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 1: STRATEGIC OBJECTIVES -->
+  <div class="section">
+    <div class="eyebrow">1 · Strategic Objectives</div>
+    <h2 class="section-title">What the fund is trying to achieve</h2>
+    <p class="section-lead">The revolving fund strategy does not state numbered strategic objectives, but the following purposes are explicitly stated in the text.</p>
+    <div class="finding-block">
+      <div class="callout callout-green">
+        <div class="callout-title">Link to Strategic Plan <span class="src">SP</span> — SO3</div>
+        <div class="callout-body">"To enhance socio-economic empowerment and education of vulnerable women, their families and communities towards gender equality." The fund is also linked to Output 2.2: <em>Amount of seed funding or microloans distributed.</em></div>
+      </div>
+      <div class="table-wrap"><table class="data-table" style="margin-top:16px;">
+        <thead><tr><th>Stated Purpose</th><th>Source</th></tr></thead>
+        <tbody>
+          <tr><td>Deepen RWN's Social and Economic Transformation Program</td><td><span class="src src-rf">RF</span></td></tr>
+          <tr><td>Empower WSSFs to lead and grow income-generating activities (IGAs)</td><td><span class="src src-rf">RF</span></td></tr>
+          <tr><td>Promote business-oriented mindsets among frontline community women</td><td><span class="src src-rf">RF</span></td></tr>
+          <tr><td>Champion environmental resilience through sustainable IGAs</td><td><span class="src src-rf">RF</span></td></tr>
+          <tr><td>Ensure sustainability of the Women Safe Spaces themselves</td><td><span class="src src-rf">RF</span></td></tr>
+          <tr><td>Promote local ownership of community development</td><td><span class="src src-rf">RF</span></td></tr>
+          <tr><td>Strengthen women's leadership at grassroots level</td><td><span class="src src-rf">RF</span></td></tr>
+        </tbody>
+      </table></div>
+    </div>
+  </div>
+
+  <!-- SECTION 2: TARGET POPULATION -->
+  <div class="section section-alt">
+    <div class="eyebrow">2 · Target Population</div>
+    <h2 class="section-title">Who, where, eligibility</h2>
+    <div class="finding-block">
+      <h3><span class="badge badge-green">WHO</span> Eligible beneficiaries</h3>
+      <p style="font-size:14px;color:var(--text-muted);margin-bottom:16px;">Women Safe Space Facilitators (WSSFs) — frontline volunteers who run the WSS model at community level, described as "agents of protection and advocacy" and "role models and changemakers." <span class="src src-rf">RF</span></p>
+      <ul class="eligibility-list">
+        <li>Have a valid business plan</li>
+        <li>Have a bank account (personal or group)</li>
+        <li>Have signed a formal agreement with RWN</li>
+        <li>Be operating a functioning income-generating activity (IGA)</li>
+      </ul>
+    </div>
+    <div class="finding-block">
+      <h3><span class="badge badge-green">WHERE</span> Geographic scope from SP</h3>
+      <div class="grid-3" style="margin-top:8px;">
+        <div class="card"><div class="card-title">24 Women Safe Spaces</div><div class="card-body">Across 12 districts <span class="src">SP</span> (from RWN website data)</div></div>
+        <div class="card"><div class="card-title">53 Grassroots groups</div><div class="card-body">Membership base referenced in the Strategic Plan SWOT <span class="src">SP</span></div></div>
+        <div class="card"><div class="card-title">30 Districts target</div><div class="card-body">SP 2030 ambition: reach all districts by 2030 <span class="src">SP</span></div></div>
+      </div>
+    </div>
+    <div class="finding-block" style="margin-top:28px;">
+      <h3><span class="badge badge-green">CONTEXT</span> Why this population needs the fund</h3>
+      <p style="font-size:14px;color:var(--text-muted);margin-bottom:16px;">From the SP's socio-economic analysis: <span class="src">SP</span></p>
+      <div class="table-wrap"><table class="data-table">
+        <thead><tr><th>Need / Challenge</th><th>Data point from SP</th></tr></thead>
+        <tbody>
+          <tr><td>Limited access to formal financial services</td><td>32.2% of women vs. 22.4% of men have no access to any financial service</td></tr>
+          <tr><td>Lower business earnings</td><td>Women-owned enterprises earn ~USD 12.75/month less than men's</td></tr>
+          <tr><td>In-kind rather than cash earnings</td><td>81.2% of employed women receive earnings in-kind (vs. 63.8% men)</td></tr>
+          <tr><td>Informal sector dominance</td><td>Women head 58% of enterprises in the informal sector</td></tr>
+          <tr><td>Low education levels</td><td>22% of women have no education vs. 15.5% of men</td></tr>
+          <tr><td>Unpaid care burden</td><td>Explicitly named as blocking business and leadership participation</td></tr>
+          <tr><td>GBV impact on economic life</td><td>Women employed for cash experience more physical violence (47.3%)</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+  </div>
+
+  <!-- SECTION 3: LOAN DESIGN -->
+  <div class="section">
+    <div class="eyebrow">3 · Loan Design</div>
+    <h2 class="section-title">Financial parameters — as documented</h2>
+    <div class="loan-param-grid" style="margin-bottom:28px;">
+      <div class="lp"><div class="lp-val">300K</div><div class="lp-lbl">Minimum loan (RWF)</div></div>
+      <div class="lp"><div class="lp-val">916K</div><div class="lp-lbl">Maximum loan (RWF)</div></div>
+      <div class="lp"><div class="lp-val">2%</div><div class="lp-lbl">Monthly interest</div></div>
+      <div class="lp"><div class="lp-val">3–6 mo</div><div class="lp-lbl">Grace period</div></div>
+    </div>
+    <div class="callout callout-green">
+      <div class="callout-title">Interest accrual — as stated <span class="src src-rf">RF</span></div>
+      <div class="callout-body">Interest accrues from the date of disbursement. Principal repayment begins after the grace period. Maximum repayment: 12 months.</div>
+    </div>
+    <div style="margin-top:20px;">
+      <h3 style="font-family:var(--font-d);font-size:16px;font-weight:700;margin-bottom:12px;color:var(--text-head);">Collateral <span class="src src-rf">RF</span></h3>
+      <div class="grid-2">
+        <div class="card"><div class="card-title">Group guarantee</div><div class="card-body">Signed commitment in front of local authorities — replaces traditional collateral requirements, making the fund accessible for low-income women.</div></div>
+        <div class="card"><div class="card-title">Business proposal</div><div class="card-body">A clear and feasible business plan is required as part of the collateral package. Encourages trust and collective responsibility.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 4: LOAN CYCLE -->
+  <div class="section section-alt">
+    <div class="eyebrow">4 · Loan Cycle</div>
+    <h2 class="section-title">7-step documented process <span class="src src-rf">RF</span></h2>
+    <div>
+      <div class="step-row"><div class="step-num">1</div><div class="step-body"><div class="step-label">Application</div><div class="step-desc">Submission of loan request + simple business plan. Can be by template, hard copy, email, online signed copy, or in-person/phone presentation.</div></div></div>
+      <div class="step-row"><div class="step-num">2</div><div class="step-body"><div class="step-label">Appraisal</div><div class="step-desc">Verification by RWN Field Staff in the targeted area — within 1 week.</div></div></div>
+      <div class="step-row"><div class="step-num">3</div><div class="step-body"><div class="step-label">Approval</div><div class="step-desc">Loan Committee decision — within 1 week. Two-level approval: Field Staff (Level 1) then Program &amp; Finance Team (Level 2).</div></div></div>
+      <div class="step-row"><div class="step-num">4</div><div class="step-body"><div class="step-label">Disbursement</div><div class="step-desc">Transfer to beneficiary's bank account.</div></div></div>
+      <div class="step-row"><div class="step-num">5</div><div class="step-body"><div class="step-label">Follow-up</div><div class="step-desc">Monthly monitoring visits and business coaching by field staff.</div></div></div>
+      <div class="step-row"><div class="step-num">6</div><div class="step-body"><div class="step-label">Repayment</div><div class="step-desc">Scheduled repayments tracked with receipts or payslips.</div></div></div>
+      <div class="step-row"><div class="step-num">7</div><div class="step-body"><div class="step-label">Re-loaning</div><div class="step-desc">Eligible after full repayment and positive impact review. Requires new business plan + achievement of milestones + group business insurance.</div></div></div>
+    </div>
+  </div>
+
+  <!-- SECTION 5: GOVERNANCE -->
+  <div class="section">
+    <div class="eyebrow">5 · Governance Structure</div>
+    <h2 class="section-title">Management and oversight <span class="src src-rf">RF</span></h2>
+    <div class="grid-2">
+      <div>
+        <h3 style="font-family:var(--font-d);font-size:16px;font-weight:700;margin-bottom:12px;color:var(--text-head);">Management Body</h3>
+        <div class="card">
+          <div class="card-body">Multi-disciplinary team composed of: <strong>Program Manager</strong>, <strong>M&amp;E Officer</strong>, <strong>Project Coordinator Representative</strong>, <strong>Field Staff Representative</strong>.</div>
+        </div>
+      </div>
+      <div>
+        <h3 style="font-family:var(--font-d);font-size:16px;font-weight:700;margin-bottom:12px;color:var(--text-head);">Oversight Body</h3>
+        <div class="card">
+          <div class="card-body"><strong>Internal Audit Team</strong>: Finance Manager + 2 Finance Officers. <strong>External Evaluator</strong> if needed (quarterly). Upholds accountability and transparency, builds donor and community confidence.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 6: CAPACITY BUILDING -->
+  <div class="section section-alt">
+    <div class="eyebrow">6 · Capacity Building</div>
+    <h2 class="section-title">Pre- and post-loan support <span class="src src-rf">RF</span></h2>
+    <div class="cap-grid">
+      <div class="innov-card green">
+        <div class="innov-icon">📚</div>
+        <div class="innov-title">Pre-loan Training</div>
+        <div class="innov-body">Refresher training on: financial literacy, record keeping, savings culture, and business planning. Required before loan disbursement.</div>
+      </div>
+      <div class="innov-card green">
+        <div class="innov-icon">🤝</div>
+        <div class="innov-title">Post-loan Mentorship</div>
+        <div class="innov-body">Quarterly peer-learning and group coaching sessions. Ongoing mentorship from field staff through monthly monitoring visits.</div>
+      </div>
+      <div class="innov-card green">
+        <div class="innov-icon">🔗</div>
+        <div class="innov-title">Market Linkage</div>
+        <div class="innov-body">Access to market linkage and skills improvement via partnerships with RWN stakeholders. (Mechanism not yet specified.)</div>
+      </div>
+      <div class="innov-card green">
+        <div class="innov-icon">🛡️</div>
+        <div class="innov-title">Loan Insurance</div>
+        <div class="innov-body">Optional group insurance for health and emergencies affecting business continuity. Group business insurance required at re-loaning stage.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 7: TOOLS -->
+  <div class="section">
+    <div class="eyebrow">7 · Operational Tools</div>
+    <h2 class="section-title">Templates provided in annexes <span class="src src-rf">RF</span></h2>
+    <div class="grid-3">
+      <div class="card"><div class="card-title">📋 Business Plan Template</div><div class="card-body">7 sections: Personal/Group Info, Business Description, Financial Details, Loan Utilization, Repayment Plan, Social Impact, Endorsement (incl. local authority signature).</div></div>
+      <div class="card"><div class="card-title">📝 Loan Application Form</div><div class="card-body">Fields: applicant name, Safe Space affiliation, business type, loan amount, purpose, repayment schedule, signature, date. For digital or print submission.</div></div>
+      <div class="card"><div class="card-title">📅 Repayment Schedule</div><div class="card-body">12-month tracker with: payment due, amount paid, balance, receipt number, signature. Paper-based.</div></div>
+      <div class="card"><div class="card-title">🗂️ Monitoring Checklist</div><div class="card-body">For field staff: date, facilitator visited, business observed, progress since last visit, challenges, support provided, next steps, field staff signature.</div></div>
+      <div class="card"><div class="card-title">📊 Financial Projections Table</div><div class="card-body">Structure exists with correct columns: capital disbursed, interest income, recovery rate, gross benefit, operational costs, net benefit. <strong style="color:var(--amber);">Rows are empty — no figures.</strong></div></div>
+      <div class="card"><div class="card-title">📖 Policy Manual</div><div class="card-body">Referenced as governing document covering eligibility, loan cycle, interest, defaults, disputes, re-loaning. Not included in the shared document.</div></div>
+    </div>
+  </div>
+
+  <!-- SECTION 8: REPORTING -->
+  <div class="section section-alt">
+    <div class="eyebrow">8 · Reporting &amp; Accountability</div>
+    <h2 class="section-title">Accountability framework as stated <span class="src src-rf">RF</span></h2>
+    <div class="grid-3">
+      <div class="card"><div class="card-title">📆 Quarterly Reports</div><div class="card-body">Submitted to RWN management and donors. Covers repayments, usage, and outcomes — done by Field Officers.</div></div>
+      <div class="card"><div class="card-title">🔍 Annual Audits</div><div class="card-body">To assess financial health and evaluate social impact of the fund.</div></div>
+      <div class="card"><div class="card-title">📖 Success Stories</div><div class="card-body">Documented to inform advocacy, visibility, and potential replication or scale-up to other WSS or NGOs.</div></div>
+    </div>
+  </div>
+
+  <!-- SECTION 9: SP LINKAGES -->
+  <div class="section">
+    <div class="eyebrow">9 · Links to Strategic Plan</div>
+    <h2 class="section-title">Where the fund appears in the SP <span class="src">SP</span></h2>
+    <div>
+      <div class="link-row"><div class="link-icon">🎯</div><div class="link-body"><div class="link-label">SO3 — Socio-economic empowerment</div><div class="link-desc">Primary strategic objective: "To enhance socio-economic empowerment and education of vulnerable women, their families and communities towards gender equality."</div></div></div>
+      <div class="link-row"><div class="link-icon">📈</div><div class="link-body"><div class="link-label">Output 2.2 — Microloans</div><div class="link-desc">Targets: 26M RWF (2025) → 35M (2026) → 45M (2027) → 90M (2028) → 100M (2029) → 150M (2030). Amount of seed funding or microloans distributed (in RWF).</div></div></div>
+      <div class="link-row"><div class="link-icon">🏦</div><div class="link-body"><div class="link-label">Women's Entrepreneurship Fund</div><div class="link-desc">Named explicitly in the Results Framework under Strategic Result 2: "Women's Entrepreneurship Fund" as a key output of the Socio-Economic Empowerment pillar.</div></div></div>
+      <div class="link-row"><div class="link-icon">💡</div><div class="link-body"><div class="link-label">Output 2.1 — Financial literacy</div><div class="link-desc">1,000 women trained in 2025 → 10,000 by 2030 in financial literacy and small business management. Foundation for fund eligibility.</div></div></div>
+      <div class="link-row"><div class="link-icon">🌍</div><div class="link-body"><div class="link-label">NST2 &amp; Vision 2050 alignment</div><div class="link-desc">SP links women's economic empowerment to Rwanda's national goal of creating 1.25 million productive jobs and achieving upper-middle-income status by 2035.</div></div></div>
+    </div>
+  </div>
+
+  <!-- NAV FOOTER -->
+  <div class="section" style="padding-top:20px;padding-bottom:20px;background:var(--surface-1);border-top:1px solid var(--border-lt);">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
+      <span style="font-size:13px;color:var(--text-muted);">← <a href="index.html" style="color:var(--g-deep);font-weight:600;text-decoration:none;">Overview</a></span>
+      <span style="font-size:13px;color:var(--text-muted);"><a href="what-is-missing.html" style="color:var(--mag);font-weight:600;text-decoration:none;">⚠️ What Is Missing →</a></span>
+    </div>
+  </div>
+
+  <footer class="rwn-footer">
+    <div class="footer-brand">Rwanda Women's <span>Network</span></div>
+    <div class="footer-meta">Page 01 — What Is There · Based on source documents only · May 2026</div>
+  </footer>
+</div>
+
+<script src="nav.js"></script>
+</body>
+</html>

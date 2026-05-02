@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RWN — Business Case Demo</title>
+<link rel="stylesheet" href="shared.css">
+<style>
+.product-tabs{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:32px;}
+.ptab{display:flex;align-items:center;gap:10px;padding:14px 20px;border-radius:10px;cursor:pointer;border:2px solid var(--border-lt);background:#FFF;transition:all .22s;box-shadow:var(--shadow-sm);flex:1;min-width:200px;}
+.ptab:hover{border-color:var(--g-lt);box-shadow:var(--shadow-md);transform:translateY(-2px);}
+.ptab.active{border-color:var(--g-deep);background:var(--g-xpale);box-shadow:var(--shadow-md);}
+.ptab-icon{font-size:28px;flex-shrink:0;} .ptab-label{font-size:13px;font-weight:700;color:var(--text-head);line-height:1.3;}
+.ptab-sub{font-size:11px;color:var(--text-muted);margin-top:2px;} .ptab.active .ptab-label{color:var(--g-deep);}
+.product-panel{display:none;} .product-panel.active{display:block;}
+.kpi-row{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:28px;}
+@media(max-width:860px){.kpi-row{grid-template-columns:1fr 1fr;}}
+.kpi{background:#FFF;border:1px solid var(--border-lt);border-radius:var(--radius);padding:16px 14px;text-align:center;box-shadow:var(--shadow-sm);}
+.kpi-val{font-family:var(--font-d);font-size:20px;font-weight:700;color:var(--g-deep);line-height:1;margin-bottom:4px;}
+.kpi-val.mag{color:var(--mag);} .kpi-val.blue{color:var(--blue);}
+.kpi-lbl{font-size:11px;color:var(--text-muted);line-height:1.3;}
+/* Cost table with qty/unit/price */
+.cost-table{width:100%;border-collapse:collapse;font-size:12.5px;min-width:700px;}
+.cost-table th{padding:9px 10px;background:var(--surface-1);font-family:var(--font-m);font-size:10px;letter-spacing:.8px;text-transform:uppercase;color:var(--text-muted);font-weight:600;border-bottom:2px solid var(--border-md);white-space:nowrap;}
+.cost-table td{padding:8px 10px;border-bottom:1px solid var(--border-lt);font-size:12px;}
+.cost-table .num{text-align:right;font-family:var(--font-m);} .cost-table .unit{font-family:var(--font-m);font-size:11px;color:var(--text-muted);}
+.cost-table tr.cat-head td{background:var(--g-pale);font-weight:700;color:var(--g-deep);font-size:11px;text-transform:uppercase;letter-spacing:.5px;}
+.cost-table tr.sub td:first-child{padding-left:24px;color:var(--text-muted);}
+.cost-table tr.subtot td{font-weight:700;background:var(--surface-1);border-top:2px solid var(--border-md);}
+.cost-table tr.grandtot td{font-weight:700;color:#FFF;background:var(--g-deep);}
+.cost-table tr.grandtot td:last-child{color:#A8EFCA;}
+.cost-table tr.warn-row td{background:#FFF8E1;color:var(--amber);}
+/* P&L */
+.pl-table{width:100%;border-collapse:collapse;font-size:13px;min-width:560px;}
+.pl-table th{padding:10px 12px;background:var(--surface-1);font-family:var(--font-m);font-size:10px;letter-spacing:.9px;text-transform:uppercase;color:var(--text-muted);font-weight:600;border-bottom:2px solid var(--border-md);}
+.pl-table td{padding:9px 12px;border-bottom:1px solid var(--border-lt);}
+.pl-table .num{text-align:right;font-family:var(--font-m);font-size:12px;}
+.pl-table tr.hd td{background:var(--g-pale);font-weight:700;color:var(--g-deep);font-size:11px;text-transform:uppercase;letter-spacing:.5px;}
+.pl-table tr.sub td:first-child{padding-left:24px;color:var(--text-muted);}
+.pl-table tr.subtot td{font-weight:700;background:var(--surface-1);border-top:2px solid var(--border-md);}
+.pl-table tr.kpi-pl td{background:var(--g-xpale);font-style:italic;}
+/* RWN model column */
+.col-rwn{background:rgba(26,107,58,0.07)!important;border-left:3px solid var(--g-deep)!important;}
+.col-rwn-head{background:var(--g-deep)!important;color:#FFF!important;border-left:3px solid var(--g-deep)!important;}
+.col-rwn-sub{font-size:10px;color:#A8EFCA;font-weight:400;display:block;}
+.pl-table tr.grand td{font-weight:700;font-size:14px;border-top:3px solid var(--border-md);}
+.pl-table tr.grand td:not(.col-rwn){background:#2D3E35;color:#FFF;}
+.pl-table tr.grand .col-rwn{background:var(--g-deep)!important;color:#A8EFCA!important;}
+.neg{color:#C00000;} .pos{color:var(--g-deep);}
+.pl-pct{font-size:10px;color:var(--text-light);font-family:var(--font-m);}
+/* Key ratios */
+.ratio-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:20px;}
+@media(max-width:700px){.ratio-grid{grid-template-columns:1fr;}}
+.ratio-card{background:#FFF;border:1px solid var(--border-lt);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow-sm);}
+.ratio-card.featured{border-top:3px solid var(--g-deep);}
+.ratio-card.mag{border-top:3px solid var(--mag);}
+.ratio-title{font-size:10px;font-family:var(--font-m);letter-spacing:.8px;text-transform:uppercase;color:var(--text-muted);margin-bottom:6px;}
+.ratio-val{font-family:var(--font-d);font-size:22px;font-weight:700;color:var(--g-deep);margin-bottom:4px;}
+.ratio-val.mag{color:var(--mag);}
+.ratio-sub{font-size:12px;color:var(--text-muted);line-height:1.5;}
+.ratio-table{width:100%;border-collapse:collapse;font-size:12.5px;}
+.ratio-table th{padding:8px 12px;background:var(--surface-1);font-family:var(--font-m);font-size:10px;letter-spacing:.7px;text-transform:uppercase;color:var(--text-muted);font-weight:600;border-bottom:2px solid var(--border-md);}
+.ratio-table td{padding:9px 12px;border-bottom:1px solid var(--border-lt);font-size:12px;}
+.ratio-table td:not(:first-child){text-align:right;font-family:var(--font-m);}
+/* Sensitivity */
+.sens-table{width:100%;border-collapse:collapse;font-size:12px;min-width:540px;}
+.sens-table th{padding:8px 10px;background:var(--surface-1);font-family:var(--font-m);font-size:10px;letter-spacing:.7px;text-transform:uppercase;color:var(--text-muted);font-weight:600;text-align:center;border-bottom:2px solid var(--border-md);}
+.sens-table th:first-child{text-align:left;}
+.sens-table td{padding:8px 10px;border-bottom:1px solid var(--border-lt);text-align:center;font-family:var(--font-m);font-size:11.5px;}
+.sens-table td:first-child{text-align:left;font-family:var(--font-b);font-weight:600;font-size:12px;}
+.cell-green{background:#E8F5EE;color:var(--g-deep);font-weight:700;}
+.cell-yellow{background:#FFF8E1;color:#7A4000;}
+.cell-red{background:#FFEBEE;color:#C00000;font-weight:700;}
+/* Marketplace */
+.mkt-link{display:flex;gap:12px;align-items:flex-start;padding:14px;background:#FFF;border:1px solid var(--border-lt);border-radius:var(--radius);margin-bottom:10px;box-shadow:var(--shadow-sm);}
+.mkt-link-icon{width:38px;height:38px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;}
+.ml-buy{background:var(--g-pale);} .ml-sell{background:var(--blue-lt);}
+.ml-proc{background:var(--amber-lt);} .ml-fin{background:var(--mag-lt);}
+.mkt-link-title{font-size:13px;font-weight:700;color:var(--text-head);margin-bottom:3px;}
+.mkt-link-desc{font-size:12px;color:var(--text-muted);line-height:1.5;}
+.mkt-link-tag{font-size:10px;font-family:var(--font-m);color:var(--text-light);margin-top:4px;}
+/* Financing */
+.fin-compare{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;}
+@media(max-width:700px){.fin-compare{grid-template-columns:1fr;}}
+.fin-box{border-radius:var(--radius);padding:18px 14px;text-align:center;}
+.fin-box.no-rwn{background:#FFEBEE;border:2px solid #FFCDD2;}
+.fin-box.rwn{background:var(--g-pale);border:3px solid var(--g-deep);}
+.fin-box.ideal{background:var(--blue-lt);border:2px solid #BBDEFB;}
+.fin-box-label{font-size:10px;font-family:var(--font-m);letter-spacing:.7px;text-transform:uppercase;margin-bottom:8px;}
+.fin-box.no-rwn .fin-box-label{color:#C00000;} .fin-box.rwn .fin-box-label{color:var(--g-deep);} .fin-box.ideal .fin-box-label{color:var(--blue);}
+.fin-box-rate{font-family:var(--font-d);font-size:26px;font-weight:900;margin-bottom:4px;}
+.fin-box.no-rwn .fin-box-rate{color:#C00000;} .fin-box.rwn .fin-box-rate{color:var(--g-deep);} .fin-box.ideal .fin-box-rate{color:var(--blue);}
+.fin-box-cost{font-size:12px;color:var(--text-muted);}
+.fin-box-net{font-size:12px;font-weight:700;margin-top:10px;padding-top:10px;border-top:1px solid rgba(0,0,0,.08);}
+/* Conclusion */
+.conclusion{background:var(--g-deep);border-radius:var(--radius);padding:22px 26px;color:#FFF;margin-top:24px;}
+.conclusion h4{font-family:var(--font-d);font-size:16px;color:#A8EFCA;margin-bottom:10px;}
+.conclusion ul{list-style:none;}
+.conclusion ul li{font-size:13px;color:rgba(255,255,255,.78);padding:5px 0;border-bottom:1px solid rgba(255,255,255,.08);display:flex;gap:8px;}
+.conclusion ul li:last-child{border-bottom:none;}
+.conclusion ul li::before{content:'→';color:#A8EFCA;flex-shrink:0;}
+/* Analysis tabs */
+.analysis-tabs{display:flex;gap:3px;flex-wrap:wrap;border-bottom:2px solid var(--border-lt);margin-bottom:22px;}
+.atab{padding:8px 14px;font-size:12px;font-weight:600;color:var(--text-muted);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;border-radius:4px 4px 0 0;background:none;border-left:none;border-right:none;border-top:none;font-family:var(--font-b);transition:all .18s;}
+.atab:hover{color:var(--g-deep);background:var(--g-xpale);}
+.atab.active{color:var(--g-deep);border-bottom-color:var(--g-deep);font-weight:700;}
+.atab-panel{display:none;} .atab-panel.active{display:block;}
+/* Input bars */
+.input-bar-wrap{margin-bottom:8px;}
+.input-bar-label{display:flex;justify-content:space-between;font-size:12px;margin-bottom:3px;}
+.input-bar-label .iname{color:var(--text-head);font-weight:600;}
+.input-bar-label .ipct{font-family:var(--font-m);color:var(--text-muted);}
+.input-bar{height:9px;border-radius:5px;background:var(--g-lt);overflow:hidden;}
+.input-bar-fill{height:100%;border-radius:5px;transition:width .5s;}
+.input-bar-fill.high{background:#C00000;} .input-bar-fill.med{background:var(--amber);} .input-bar-fill.low{background:var(--g-deep);}
+</style>
+</head>
+<body>
+<div class="sb-topbar" id="sb-topbar">
+  <div class="sb-topbar-logo">RWN</div>
+  <div class="sb-topbar-title">Business Cases</div>
+  <button class="sb-hamburger" id="sb-hbg" onclick="sbMobileToggle()" aria-label="Menu"><span></span><span></span><span></span></button>
+</div>
+<div class="sb-overlay" id="sb-overlay" onclick="sbMobileClose()"></div>
+<nav class="rwn-sidebar" id="rwn-sidebar">
+  <div class="sb-logo-block">
+    <div class="sb-logo">RWN</div>
+    <div><div class="sb-brand-main">Revolving Fund</div><div class="sb-brand-sub">Concept Platform</div></div>
+  </div>
+  <div class="sb-nav">
+    <span class="sb-section-label">Navigation</span>
+    <a href="index.html">🏠 Overview</a>
+    <div class="sb-divider"></div>
+    <span class="sb-section-label">Analysis</span>
+    <a href="what-is-there.html">✅ What Is There</a>
+    <a href="what-is-missing.html">⚠️ What Is Missing</a>
+    <a href="fund-structure.html">🏗️ Fund Structure</a>
+    <div class="sb-divider"></div>
+    <span class="sb-section-label">Innovation</span>
+    <a href="ecosystem.html" class="sb-mag">🌐 Ecosystem &amp; Marketplace</a>
+    <a href="business-demo.html" class="active sb-mag">📊 Business Case Demo</a>
+    <div class="sb-divider"></div>
+    <span class="sb-section-label">Reference</span>
+    <a href="abbreviations.html">📖 Abbreviations</a>
+    <a href="https://rwandawomensnetwork.org" target="_blank">🔗 RWN Website</a>
+  </div>
+</nav>
+<div class="page-wrap">
+  <div class="hero">
+    <div class="hero-bg-mesh"></div><div class="hero-grid"></div>
+    <div class="hero-content">
+      <div class="eyebrow mag fade-up au-1">Demo · Prototype</div>
+      <h1 class="hero-title fade-up au-2">📊 Business Case <span class="accent">Analysis</span> — <span class="mag-accent">RWN Fund in Action</span></h1>
+      <p class="hero-lead fade-up au-3">Three worked examples: detailed cost structure (qty · unit · price), full P&amp;L down to net profit after tax, key ratios, financing impact, sensitivity, and marketplace linkages. Select a product to explore.</p>
+      <p class="hero-meta fade-up au-4">Illustrative Rwandan market estimates · For discussion · RWF (1 USD ≈ 1,300 RWF) · Rwanda CIT: 28%</p>
+    </div>
+  </div>
+
+  <div class="section" style="padding-bottom:0;">
+    <div class="eyebrow">Select a product</div>
+    <h2 class="section-title">Three production models — pick one to explore</h2>
+    <div class="product-tabs">
+      <div class="ptab active" onclick="selectProduct('maize',this)"><div class="ptab-icon">🌽</div><div><div class="ptab-label">Maize → Milled Flour</div><div class="ptab-sub">Agribusiness · Processing · Seasonal</div></div></div>
+      <div class="ptab" onclick="selectProduct('tomato',this)"><div class="ptab-icon">🍅</div><div><div class="ptab-label">Tomato → Tomato Paste</div><div class="ptab-sub">Agribusiness · Perishable · Value-add</div></div></div>
+      <div class="ptab" onclick="selectProduct('soap',this)"><div class="ptab-icon">🧼</div><div><div class="ptab-label">Soap Making</div><div class="ptab-sub">Manufacturing · Non-agribusiness · Year-round</div></div></div>
+    </div>
+  </div>
+
+  <!-- ═══ MAIZE ═══ -->
+  <div class="section product-panel active" id="panel-maize">
+    <div style="display:flex;align-items:center;gap:14px;margin-bottom:8px;flex-wrap:wrap;">
+      <span style="font-size:36px;">🌽</span>
+      <div><h2 class="section-title" style="margin-bottom:4px;">Maize Farming → Milled Flour</h2>
+      <p style="font-size:13px;color:var(--text-muted);">0.5 ha · 4-month cycle · Loan: RWF 300,000 · Without milling = loss. With RWN model = profitable.</p></div>
+    </div>
+    <div class="callout callout-green" style="margin-bottom:20px;"><div class="callout-title">Key insight</div><div class="callout-body">Raw maize: RWF 250/kg → Milled flour: RWF 600/kg. Same production, 140% price uplift. The strategic processing partner (miller) is the single most value-creating intervention.</div></div>
+    <div class="kpi-row">
+      <div class="kpi"><div class="kpi-val">500 kg</div><div class="kpi-lbl">Yield (grain/season)</div></div>
+      <div class="kpi"><div class="kpi-val">RWF 314K</div><div class="kpi-lbl">Total cost incl. financing</div></div>
+      <div class="kpi"><div class="kpi-val mag">RWF 300K</div><div class="kpi-lbl">RWN loan</div></div>
+      <div class="kpi"><div class="kpi-val blue">RWF 147.6K</div><div class="kpi-lbl">Net profit after 28% tax</div></div>
+      <div class="kpi"><div class="kpi-val">58.6%</div><div class="kpi-lbl">Net margin after tax</div></div>
+    </div>
+    <div class="analysis-tabs">
+      <button class="atab active" onclick="switchTab('maize','costs',this)">📋 Cost Structure</button>
+      <button class="atab" onclick="switchTab('maize','pl',this)">📈 P&amp;L Statement</button>
+      <button class="atab" onclick="switchTab('maize','ratios',this)">📐 Key Ratios</button>
+      <button class="atab" onclick="switchTab('maize','financing',this)">💳 Financing Impact</button>
+      <button class="atab" onclick="switchTab('maize','sensitivity',this)">⚡ Sensitivity</button>
+      <button class="atab" onclick="switchTab('maize','marketplace',this)">🌐 Marketplace</button>
+    </div>
+    <div class="atab-panel active" id="maize-costs">
+      <div class="grid-2">
+        <div>
+          <h3 style="font-family:var(--font-d);font-size:15px;font-weight:700;margin-bottom:12px;">Detailed cost breakdown — 0.5 ha, one season</h3>
+          <div class="table-wrap"><table class="cost-table">
+            <thead><tr><th>Item</th><th class="num">Qty</th><th>Unit</th><th class="num">Unit price (RWF)</th><th class="num">Total (RWF)</th><th class="num">% cost</th></tr></thead>
+            <tbody>
+              <tr class="cat-head"><td colspan="6">🌱 Direct inputs</td></tr>
+              <tr class="sub"><td>Certified maize seed</td><td class="num">5</td><td class="unit">kg</td><td class="num">5,000</td><td class="num">25,000</td><td class="num">8.0%</td></tr>
+              <tr class="sub"><td>Fertiliser DAP</td><td class="num">2</td><td class="unit">50 kg bag</td><td class="num">35,000</td><td class="num">70,000</td><td class="num">22.3%</td></tr>
+              <tr class="sub"><td>Fertiliser Urea</td><td class="num">1</td><td class="unit">25 kg bag</td><td class="num">30,000</td><td class="num">30,000</td><td class="num">9.6%</td></tr>
+              <tr class="sub"><td>Pesticide / herbicide</td><td class="num">1</td><td class="unit">lot</td><td class="num">15,000</td><td class="num">15,000</td><td class="num">4.8%</td></tr>
+              <tr class="subtot"><td colspan="4"><strong>Subtotal Inputs</strong></td><td class="num"><strong>140,000</strong></td><td class="num">44.6%</td></tr>
+              <tr class="cat-head"><td colspan="6">👷 Labour</td></tr>
+              <tr class="sub"><td>Land preparation</td><td class="num">3</td><td class="unit">man-days</td><td class="num">10,000</td><td class="num">30,000</td><td class="num">9.6%</td></tr>
+              <tr class="sub"><td>Planting</td><td class="num">2</td><td class="unit">man-days</td><td class="num">10,000</td><td class="num">20,000</td><td class="num">6.4%</td></tr>
+              <tr class="sub"><td>Weeding (×2)</td><td class="num">5</td><td class="unit">man-days</td><td class="num">5,000</td><td class="num">25,000</td><td class="num">8.0%</td></tr>
+              <tr class="sub"><td>Harvesting &amp; drying</td><td class="num">5</td><td class="unit">man-days</td><td class="num">5,000</td><td class="num">25,000</td><td class="num">8.0%</td></tr>
+              <tr class="subtot"><td colspan="4"><strong>Subtotal Labour</strong></td><td class="num"><strong>100,000</strong></td><td class="num">31.8%</td></tr>
+              <tr class="cat-head"><td colspan="6">🏭 Processing &amp; logistics</td></tr>
+              <tr class="sub"><td>Milling (strategic partner)</td><td class="num">500</td><td class="unit">kg grain</td><td class="num">50</td><td class="num">25,000</td><td class="num">8.0%</td></tr>
+              <tr class="sub"><td>Packaging bags + labels</td><td class="num">42</td><td class="unit">10 kg bags</td><td class="num">250</td><td class="num">10,500</td><td class="num">3.3%</td></tr>
+              <tr class="sub"><td>Transport to market</td><td class="num">1</td><td class="unit">trip</td><td class="num">10,000</td><td class="num">10,000</td><td class="num">3.2%</td></tr>
+              <tr class="subtot"><td colspan="4"><strong>Subtotal Processing</strong></td><td class="num"><strong>45,500</strong></td><td class="num">14.5%</td></tr>
+              <tr class="cat-head"><td colspan="6">💳 Financing</td></tr>
+              <tr class="sub"><td>RWN interest 2%/mo × 4 months</td><td class="num">4</td><td class="unit">months</td><td class="num">6,000</td><td class="num">24,000</td><td class="num">7.6%</td></tr>
+              <tr class="warn-row"><td colspan="4">⚠️ Contingency (2%)</td><td class="num">4,500</td><td class="num">1.4%</td></tr>
+              <tr class="grandtot"><td colspan="4"><strong>TOTAL COST OF PRODUCTION</strong></td><td class="num"><strong>314,000</strong></td><td class="num">100%</td></tr>
+            </tbody>
+          </table></div>
+          <p style="font-size:11px;color:var(--text-light);margin-top:6px;">Milling yield: 500 kg grain → 420 kg flour (16% milling loss). Prices: Rwandan market estimates 2025.</p>
+        </div>
+        <div><div id="maize-bars"></div>
+          <div class="callout callout-amber" style="margin-top:16px;"><div class="callout-title">🔴 Highest-risk: Fertiliser DAP+Urea (31.9% of cost)</div><div class="callout-body">A 20% fertiliser price increase compresses net margin by ~7 pp. Priority item for BUY-SIDE collective purchasing — 20+ WSSFs can unlock 10–15% discount from agro-dealers.</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="atab-panel" id="maize-pl">
+      <p style="font-size:12px;color:var(--text-muted);margin-bottom:14px;">Rwanda CIT: 28% · Without milling vs. <strong style="color:var(--g-deep);">✅ RWN model (milled flour)</strong></p>
+      <div class="table-wrap"><table class="pl-table">
+        <thead><tr><th style="width:45%;">Line item</th><th class="num" style="width:25%;">Without milling<br><small style="font-weight:400;color:var(--text-light);">(raw grain sale)</small></th><th class="num col-rwn-head" style="width:25%;">✅ RWN Model<span class="col-rwn-sub">Milled flour + 2% loan + marketplace</span></th></tr></thead>
+        <tbody>
+          <tr class="hd"><td colspan="3">1. REVENUE</td></tr>
+          <tr class="sub"><td>Quantity sold</td><td class="num">500 kg grain</td><td class="num col-rwn">420 kg flour</td></tr>
+          <tr class="sub"><td>Selling price / unit</td><td class="num">RWF 250/kg</td><td class="num col-rwn">RWF 600/kg</td></tr>
+          <tr class="subtot"><td><strong>Gross Revenue</strong></td><td class="num pos">125,000</td><td class="num col-rwn pos"><strong>252,000</strong></td></tr>
+          <tr class="hd"><td colspan="3">2. COST OF GOODS SOLD (COGS)</td></tr>
+          <tr class="sub"><td>Direct inputs</td><td class="num neg">(140,000)</td><td class="num col-rwn neg">(140,000)</td></tr>
+          <tr class="sub"><td>Direct labour</td><td class="num neg">(100,000)</td><td class="num col-rwn neg">(100,000)</td></tr>
+          <tr class="sub"><td>Milling cost</td><td class="num">—</td><td class="num col-rwn neg">(25,000)</td></tr>
+          <tr class="subtot"><td><strong>Total COGS</strong></td><td class="num neg">(240,000)</td><td class="num col-rwn neg"><strong>(265,000)</strong></td></tr>
+          <tr class="subtot" style="background:var(--g-xpale);"><td><strong>GROSS PROFIT</strong></td><td class="num neg">(115,000)</td><td class="num col-rwn pos"><strong>254,000 ← 101% of COGS</strong></td></tr>
+          <tr class="kpi-pl"><td class="pl-pct">Gross margin</td><td class="num pl-pct neg">−92%</td><td class="num col-rwn pl-pct pos" style="background:rgba(26,107,58,0.08);">101%</td></tr>
+          <tr class="hd"><td colspan="3">3. OTHER OPERATING COSTS</td></tr>
+          <tr class="sub"><td>Packaging &amp; transport</td><td class="num neg">(15,000)</td><td class="num col-rwn neg">(20,500)</td></tr>
+          <tr class="sub"><td>Contingency</td><td class="num neg">(4,800)</td><td class="num col-rwn neg">(4,500)</td></tr>
+          <tr class="subtot"><td><strong>EBITDA</strong></td><td class="num neg">(134,800)</td><td class="num col-rwn pos"><strong>229,000</strong></td></tr>
+          <tr class="kpi-pl"><td class="pl-pct">EBITDA margin</td><td class="num pl-pct neg">−108%</td><td class="num col-rwn pl-pct pos" style="background:rgba(26,107,58,0.08);">91%</td></tr>
+          <tr class="hd"><td colspan="3">4. FINANCING COSTS</td></tr>
+          <tr class="sub"><td>RWN loan interest (2%/mo × 4 mo on 300K)</td><td class="num">— (no loan)</td><td class="num col-rwn neg">(24,000)</td></tr>
+          <tr class="subtot"><td><strong>EBT (Earnings Before Tax)</strong></td><td class="num neg">(134,800)</td><td class="num col-rwn pos"><strong>205,000</strong></td></tr>
+          <tr class="hd"><td colspan="3">5. INCOME TAX (Rwanda 28%)</td></tr>
+          <tr class="sub"><td>Corporate income tax</td><td class="num">— (loss, no tax)</td><td class="num col-rwn neg">(57,400)</td></tr>
+          <tr class="grand"><td><strong>NET PROFIT AFTER TAX</strong></td><td class="num neg" style="color:#FFCDD2;">(134,800)</td><td class="num col-rwn pos"><strong>RWF 147,600</strong></td></tr>
+          <tr class="kpi-pl" style="background:var(--g-xpale);"><td class="pl-pct">Net margin after tax</td><td class="num pl-pct neg">—</td><td class="num col-rwn pl-pct pos" style="background:rgba(26,107,58,0.12);font-weight:700;color:var(--g-deep);">58.6%</td></tr>
+        </tbody>
+      </table></div>
+      <div class="callout callout-green" style="margin-top:12px;"><div class="callout-title">Tax note — Rwanda micro-enterprise regime</div><div class="callout-body">WSSFs with annual turnover below RWF 20M typically qualify as micro-enterprises subject to lump-sum tax — lower than 28% CIT. The 28% rate is shown for completeness and for WSSFs who formalise as registered businesses. Actual net profit may be higher.</div></div>
+    </div>
+    <div class="atab-panel" id="maize-ratios">
+      <h3 style="font-family:var(--font-d);font-size:15px;font-weight:700;margin-bottom:16px;">Key management ratios — RWN model (milled flour, after 28% tax)</h3>
+      <div class="ratio-grid">
+        <div class="ratio-card featured"><div class="ratio-title">Revenue per kg fertiliser used</div><div class="ratio-val">RWF 2,520</div><div class="ratio-sub">252,000 revenue ÷ 100 kg total fertiliser. A 20% fertiliser price increase (+RWF 20K) = 7.9% of revenue — absorbed by current margin.</div></div>
+        <div class="ratio-card featured"><div class="ratio-title">Gross profit per man-day</div><div class="ratio-val">RWF 16,933</div><div class="ratio-sub">254,000 gross profit ÷ 15 man-days. Milling adds RWF 129,000 gross profit with zero additional farm labour.</div></div>
+        <div class="ratio-card featured"><div class="ratio-title">Net profit per kg flour</div><div class="ratio-val">RWF 351</div><div class="ratio-sub">147,600 net profit ÷ 420 kg flour. Key per-unit metric for scaling and re-loaning decisions.</div></div>
+        <div class="ratio-card mag"><div class="ratio-title">Return on loan (RoL)</div><div class="ratio-val mag">49%</div><div class="ratio-sub">147,600 ÷ 300,000 loan. WSSF generates RWF 149 for every RWF 100 lent — net profit covers loan repayment 49% above principal in one season.</div></div>
+        <div class="ratio-card mag"><div class="ratio-title">Loan repayment coverage</div><div class="ratio-val mag">2.2×</div><div class="ratio-sub">147,600 net ÷ ~66,000 annual repayment obligation. One 4-month season generates 2.2× the full-year repayment.</div></div>
+        <div class="ratio-card"><div class="ratio-title">Break-even flour price</div><div class="ratio-val" style="color:var(--amber);">RWF 398/kg</div><div class="ratio-sub">Price at net profit = 0. Current price (RWF 600) is 51% above breakeven — strong buffer against price decline.</div></div>
+      </div>
+      <h3 style="font-family:var(--font-d);font-size:14px;font-weight:700;margin:20px 0 12px;">Cost and profitability per unit of key direct inputs</h3>
+      <div class="table-wrap"><table class="ratio-table">
+        <thead><tr><th>Input</th><th>Quantity</th><th>Total cost (RWF)</th><th>Cost per kg flour output</th><th>% of flour revenue</th></tr></thead>
+        <tbody>
+          <tr><td>Fertiliser DAP + Urea</td><td>100 kg</td><td class="neg">100,000</td><td>RWF 238/kg flour</td><td>39.7%</td></tr>
+          <tr><td>Labour (all)</td><td>15 man-days</td><td class="neg">100,000</td><td>RWF 238/kg flour</td><td>39.7%</td></tr>
+          <tr><td>Milling (processing partner)</td><td>500 kg grain</td><td class="neg">25,000</td><td>RWF 60/kg flour</td><td>9.9%</td></tr>
+          <tr><td>Seed</td><td>5 kg</td><td class="neg">25,000</td><td>RWF 60/kg flour</td><td>9.9%</td></tr>
+          <tr><td>RWN financing cost</td><td>4 months</td><td class="neg">24,000</td><td>RWF 57/kg flour</td><td>9.5%</td></tr>
+          <tr style="font-weight:700;background:var(--g-xpale);"><td>Total cost</td><td>—</td><td class="neg">314,000</td><td>RWF 748/kg flour</td><td>—</td></tr>
+          <tr style="font-weight:700;color:var(--g-deep);background:var(--g-pale);"><td>Net profit after tax</td><td>—</td><td class="pos">147,600</td><td><strong>RWF 351/kg flour</strong></td><td>58.6% of cost</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+    <div class="atab-panel" id="maize-financing">
+      <h3 style="font-family:var(--font-d);font-size:15px;font-weight:700;margin-bottom:14px;">How financing cost impacts net profit (after 28% Rwanda tax)</h3>
+      <div class="fin-compare">
+        <div class="fin-box no-rwn"><div class="fin-box-label">Commercial MFI</div><div class="fin-box-rate">5%/mo</div><div class="fin-box-cost">RWF 60,000 interest / 4 months</div><div class="fin-box-net" style="color:#C00000;">EBT: 169,000 · Tax: 47,320<br><strong>Net: RWF 121,680</strong></div></div>
+        <div class="fin-box rwn"><div class="fin-box-label">✅ RWN Revolving Fund</div><div class="fin-box-rate">2%/mo</div><div class="fin-box-cost">RWF 24,000 interest / 4 months<br>Saves RWF 36K gross vs. MFI</div><div class="fin-box-net" style="color:var(--g-deep);">EBT: 205,000 · Tax: 57,400<br><strong>Net: RWF 147,600</strong></div></div>
+        <div class="fin-box ideal"><div class="fin-box-label">0% / Grant</div><div class="fin-box-rate">0%</div><div class="fin-box-cost">No interest cost (unsustainable)</div><div class="fin-box-net" style="color:var(--blue);">EBT: 229,000 · Tax: 64,120<br><strong>Net: RWF 164,880</strong></div></div>
+      </div>
+      <div class="callout callout-green" style="margin-top:16px;"><div class="callout-title">RWN saves RWF 25,920 net (after tax) vs. MFI = 2 bags of fertiliser for next season</div><div class="callout-body">Gross saving: RWF 36,000. After 28% tax: net benefit of RWF 25,920. This compounding effect — financing savings fund next-season inputs — builds WSSF resilience across loan cycles.</div></div>
+    </div>
+    <div class="atab-panel" id="maize-sensitivity">
+      <p style="font-size:12px;color:var(--text-muted);margin-bottom:14px;">Base: flour RWF 600/kg · current fertiliser · RWN 2%/mo · <strong>All figures after 28% Rwanda tax.</strong></p>
+      <div class="table-wrap"><table class="sens-table">
+        <thead><tr><th>Scenario</th><th>Flour price</th><th>Fertiliser Δ</th><th>Net profit (after tax)</th><th>Net margin</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td>🟢 RWN base case</td><td>600</td><td>0%</td><td class="cell-green">147,600</td><td class="cell-green">58.6%</td><td class="cell-green">✅ Healthy</td></tr>
+          <tr><td>Flour −10%</td><td>540</td><td>0%</td><td class="cell-green">129,384</td><td class="cell-green">53.4%</td><td class="cell-green">✅ Viable</td></tr>
+          <tr><td>Flour −20%</td><td>480</td><td>0%</td><td class="cell-yellow">111,168</td><td class="cell-yellow">47.3%</td><td class="cell-yellow">⚠️ Monitor</td></tr>
+          <tr><td>Flour −35%</td><td>390</td><td>0%</td><td class="cell-yellow">83,844</td><td class="cell-yellow">38.8%</td><td class="cell-yellow">⚠️ Monitor</td></tr>
+          <tr><td>Fertiliser +20%</td><td>600</td><td>+20%</td><td class="cell-yellow">126,360</td><td class="cell-yellow">50.1%</td><td class="cell-yellow">⚠️ Monitor</td></tr>
+          <tr><td>Fertiliser +40%</td><td>600</td><td>+40%</td><td class="cell-yellow">105,120</td><td class="cell-yellow">41.7%</td><td class="cell-yellow">⚠️ Monitor</td></tr>
+          <tr><td>Flour −20% + Fert +30%</td><td>480</td><td>+30%</td><td class="cell-red">75,384</td><td class="cell-red">31.2%</td><td class="cell-red">🔴 Stress zone</td></tr>
+          <tr><td>🔴 No milling (raw grain)</td><td>250</td><td>0%</td><td class="cell-red">(134,800)</td><td class="cell-red">—</td><td class="cell-red">❌ Loss / default</td></tr>
+          <tr><td>✅ Buy-side input −15%</td><td>600</td><td>−15%</td><td class="cell-green">161,784</td><td class="cell-green">64.2%</td><td class="cell-green">✅ Best case</td></tr>
+        </tbody>
+      </table></div>
+      <div class="callout callout-amber" style="margin-top:12px;"><div class="callout-title">Early warning: flour −20% OR fertiliser +30% → activate resilience protocols (grace period, supplier switch, milling renegotiation)</div></div>
+    </div>
+    <div class="atab-panel" id="maize-marketplace">
+      <div class="mkt-link"><div class="mkt-link-icon ml-buy">🛒</div><div><div class="mkt-link-title">BUY SIDE — Collective fertiliser purchasing</div><div class="mkt-link-desc">20+ WSSFs buying DAP+Urea together. Target: RAB agro-dealers. Estimated 10–15% discount. On RWF 100K spend → saves RWF 10–15K per season, covering half the milling cost.</div><div class="mkt-link-tag">Partners: MINIMEX, RAB agro-dealers · Angle: volume + committed monthly schedule</div></div></div>
+      <div class="mkt-link"><div class="mkt-link-icon ml-sell">🏪</div><div><div class="mkt-link-title">SELL SIDE — Branded flour to institutions</div><div class="mkt-link-desc">Bakeries, school feeding, supermarkets, hospitals. Digital catalogue enables advance orders so WSSFs can plan production. "Women-produced" label = price premium.</div><div class="mkt-link-tag">Buyers: Kigali supermarkets, school canteens, WFP/UNICEF · Angle: local sourcing, certified quality</div></div></div>
+      <div class="mkt-link"><div class="mkt-link-icon ml-proc">🏭</div><div><div class="mkt-link-title">STRATEGIC PARTNER — Miller (critical — without this, the loan finances a loss)</div><div class="mkt-link-desc">RWN negotiates preferential milling rate per district. Revenue-sharing option: miller processes for free, takes 10% of flour sales — fully aligned incentive. Priority access for RWN network.</div><div class="mkt-link-tag">Partners: MINIMEX, district cooperatives · Key term: guaranteed processing slots</div></div></div>
+      <div class="mkt-link"><div class="mkt-link-icon ml-fin">💰</div><div><div class="mkt-link-title">FINANCE SIDE — Production as collateral</div><div class="mkt-link-desc">After 2 seasons, confirmed buyer contracts serve as collateral for larger BDF loan. Institutional buyers pre-pay 30% upfront for next season supply = working capital without borrowing.</div><div class="mkt-link-tag">Partners: BDF, Inkomoko, Village Capital · Path: RWN fund → BDF → commercial bank</div></div></div>
+      <div class="conclusion"><h4>Conclusions — Maize → Flour</h4><ul>
+        <li>Business ONLY viable with milling partner. Without it: loan finances a loss-making activity (−RWF 134,800).</li>
+        <li>Fertiliser (31.9% of cost) is the highest-risk input → priority for BUY-SIDE collective purchasing.</li>
+        <li>RWN 2%/mo saves RWF 25,920 net vs. MFI = 2 bags of fertiliser for next season.</li>
+        <li>Net margin of 58.6% after tax. Business absorbs flour −35% or fertiliser +40% and remains profitable (stress, not default).</li>
+        <li>After 2 cycles, buyer contracts = collateral to graduate to BDF and scale beyond RWN's loan ceiling.</li>
+      </ul></div>
+    </div>
+  </div>
+
+  <!-- ═══ TOMATO ═══ -->
+  <div class="section product-panel" id="panel-tomato">
+    <div style="display:flex;align-items:center;gap:14px;margin-bottom:8px;flex-wrap:wrap;">
+      <span style="font-size:36px;">🍅</span>
+      <div><h2 class="section-title" style="margin-bottom:4px;">Tomato Farming → Tomato Paste</h2>
+      <p style="font-size:13px;color:var(--text-muted);">0.25 ha · 3-month cycle · Loan: RWF 400,000 · Post-harvest loss is the business killer — processing is the solution.</p></div>
+    </div>
+    <div class="callout callout-amber" style="margin-bottom:20px;"><div class="callout-title">⚠️ Best proof of concept for strategic processing partnerships</div><div class="callout-body">Fresh tomatoes at harvest peak: RWF 150/kg (crashed). Tomato paste: RWF 4,200/kg, storable 12+ months. Revenue multiplier: ×4.2. Without processing within 48h: 40–60% losses. The processing partner determines viability or loss.</div></div>
+    <div class="kpi-row">
+      <div class="kpi"><div class="kpi-val">2,000 kg</div><div class="kpi-lbl">Fresh tomato yield</div></div>
+      <div class="kpi"><div class="kpi-val">180 kg</div><div class="kpi-lbl">Paste output (10:1, 10% loss)</div></div>
+      <div class="kpi"><div class="kpi-val mag">RWF 400K</div><div class="kpi-lbl">RWN loan</div></div>
+      <div class="kpi"><div class="kpi-val blue">RWF 272.5K</div><div class="kpi-lbl">Net profit after 28% tax</div></div>
+      <div class="kpi"><div class="kpi-val">36%</div><div class="kpi-lbl">Net margin after tax</div></div>
+    </div>
+    <div class="analysis-tabs">
+      <button class="atab active" onclick="switchTab('tomato','costs',this)">📋 Cost Structure</button>
+      <button class="atab" onclick="switchTab('tomato','pl',this)">📈 P&amp;L Statement</button>
+      <button class="atab" onclick="switchTab('tomato','ratios',this)">📐 Key Ratios</button>
+      <button class="atab" onclick="switchTab('tomato','financing',this)">💳 Financing Impact</button>
+      <button class="atab" onclick="switchTab('tomato','sensitivity',this)">⚡ Sensitivity</button>
+      <button class="atab" onclick="switchTab('tomato','marketplace',this)">🌐 Marketplace</button>
+    </div>
+    <div class="atab-panel active" id="tomato-costs">
+      <div class="grid-2">
+        <div>
+          <div class="table-wrap"><table class="cost-table">
+            <thead><tr><th>Item</th><th class="num">Qty</th><th>Unit</th><th class="num">Unit price (RWF)</th><th class="num">Total (RWF)</th><th class="num">%</th></tr></thead>
+            <tbody>
+              <tr class="cat-head"><td colspan="6">🌱 Inputs</td></tr>
+              <tr class="sub"><td>Grafted tomato seedlings</td><td class="num">1,000</td><td class="unit">seedlings</td><td class="num">60</td><td class="num">60,000</td><td class="num">15.9%</td></tr>
+              <tr class="sub"><td>Fertiliser NPK + CAN</td><td class="num">3</td><td class="unit">50 kg bag</td><td class="num">17,000</td><td class="num">51,000</td><td class="num">13.5%</td></tr>
+              <tr class="sub"><td>Fungicide (×3 applications)</td><td class="num">3</td><td class="unit">kg</td><td class="num">8,000</td><td class="num">24,000</td><td class="num">6.4%</td></tr>
+              <tr class="sub"><td>Insecticide (×2 applications)</td><td class="num">2</td><td class="unit">L</td><td class="num">6,000</td><td class="num">12,000</td><td class="num">3.2%</td></tr>
+              <tr class="sub"><td>Irrigation (pump fuel)</td><td class="num">20</td><td class="unit">L fuel</td><td class="num">1,000</td><td class="num">20,000</td><td class="num">5.3%</td></tr>
+              <tr class="subtot"><td colspan="4"><strong>Subtotal Inputs</strong></td><td class="num"><strong>167,000</strong></td><td class="num">44.3%</td></tr>
+              <tr class="cat-head"><td colspan="6">👷 Labour</td></tr>
+              <tr class="sub"><td>Seedbed prep + transplanting</td><td class="num">3</td><td class="unit">man-days</td><td class="num">10,000</td><td class="num">30,000</td><td class="num">8.0%</td></tr>
+              <tr class="sub"><td>Staking, pruning, disease mgmt</td><td class="num">4</td><td class="unit">man-days</td><td class="num">10,000</td><td class="num">40,000</td><td class="num">10.6%</td></tr>
+              <tr class="sub"><td>Harvesting + collection</td><td class="num">3</td><td class="unit">man-days</td><td class="num">8,000</td><td class="num">24,000</td><td class="num">6.4%</td></tr>
+              <tr class="subtot"><td colspan="4"><strong>Subtotal Labour</strong></td><td class="num"><strong>94,000</strong></td><td class="num">24.9%</td></tr>
+              <tr class="cat-head"><td colspan="6">🏭 Processing &amp; logistics</td></tr>
+              <tr class="sub"><td>Processing fee (paste factory)</td><td class="num">2,000</td><td class="unit">kg fresh</td><td class="num">20</td><td class="num">40,000</td><td class="num">10.6%</td></tr>
+              <tr class="sub"><td>Packaging (jars / pouches)</td><td class="num">180</td><td class="unit">units</td><td class="num">120</td><td class="num">21,600</td><td class="num">5.7%</td></tr>
+              <tr class="sub"><td>Labels + branding</td><td class="num">180</td><td class="unit">units</td><td class="num">30</td><td class="num">5,400</td><td class="num">1.4%</td></tr>
+              <tr class="sub"><td>Transport (farm→processor→market)</td><td class="num">2</td><td class="unit">trips</td><td class="num">8,000</td><td class="num">16,000</td><td class="num">4.2%</td></tr>
+              <tr class="subtot"><td colspan="4"><strong>Subtotal Processing</strong></td><td class="num"><strong>83,000</strong></td><td class="num">22.0%</td></tr>
+              <tr class="cat-head"><td colspan="6">💳 Financing</td></tr>
+              <tr class="sub"><td>RWN interest 2%/mo × 3 months on 400K</td><td class="num">3</td><td class="unit">months</td><td class="num">8,000</td><td class="num">24,000</td><td class="num">6.4%</td></tr>
+              <tr class="warn-row"><td colspan="4">⚠️ Post-harvest loss contingency (10%)</td><td class="num">9,500</td><td class="num">2.5%</td></tr>
+              <tr class="grandtot"><td colspan="4"><strong>TOTAL COST</strong></td><td class="num"><strong>377,500</strong></td><td class="num">100%</td></tr>
+            </tbody>
+          </table></div>
+        </div>
+        <div><div id="tomato-bars"></div>
+          <div class="callout callout-amber" style="margin-top:16px;"><div class="callout-title">🔴 Seedlings + fungicide = highest-risk combination</div><div class="callout-body">Tomato blight destroys 100% of crop in 7 days without fungicide. Grafted seedlings (3× more expensive, disease-resistant) are essential. RWN buy-side marketplace must prioritise certified nurseries + guaranteed fungicide supply.</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="atab-panel" id="tomato-pl">
+      <p style="font-size:12px;color:var(--text-muted);margin-bottom:14px;">Rwanda CIT: 28% · Fresh tomato sale vs. <strong style="color:var(--g-deep);">✅ RWN model (processed paste)</strong></p>
+      <div class="table-wrap"><table class="pl-table">
+        <thead><tr><th style="width:43%;">Line item</th><th class="num" style="width:26%;">Fresh tomato<br><small style="font-weight:400;color:var(--text-light);">(no processing)</small></th><th class="num col-rwn-head" style="width:26%;">✅ RWN Model<span class="col-rwn-sub">Processed paste + 2% loan</span></th></tr></thead>
+        <tbody>
+          <tr class="hd"><td colspan="3">1. REVENUE</td></tr>
+          <tr class="sub"><td>Quantity sold</td><td class="num">1,200 kg (40% loss)</td><td class="num col-rwn">180 kg paste</td></tr>
+          <tr class="sub"><td>Selling price</td><td class="num">RWF 150/kg</td><td class="num col-rwn">RWF 4,200/kg paste</td></tr>
+          <tr class="subtot"><td><strong>Gross Revenue</strong></td><td class="num pos">180,000</td><td class="num col-rwn pos"><strong>756,000</strong></td></tr>
+          <tr class="hd"><td colspan="3">2. COGS</td></tr>
+          <tr class="sub"><td>Inputs</td><td class="num neg">(167,000)</td><td class="num col-rwn neg">(167,000)</td></tr>
+          <tr class="sub"><td>Labour</td><td class="num neg">(94,000)</td><td class="num col-rwn neg">(94,000)</td></tr>
+          <tr class="sub"><td>Processing fee</td><td class="num">—</td><td class="num col-rwn neg">(40,000)</td></tr>
+          <tr class="subtot"><td><strong>Total COGS</strong></td><td class="num neg">(261,000)</td><td class="num col-rwn neg"><strong>(301,000)</strong></td></tr>
+          <tr class="subtot" style="background:var(--g-xpale);"><td><strong>GROSS PROFIT</strong></td><td class="num neg">(81,000)</td><td class="num col-rwn pos"><strong>455,000 ← 151% of COGS</strong></td></tr>
+          <tr class="kpi-pl"><td class="pl-pct">Gross margin</td><td class="num pl-pct neg">−45%</td><td class="num col-rwn pl-pct pos" style="background:rgba(26,107,58,0.08);">60%</td></tr>
+          <tr class="hd"><td colspan="3">3. OTHER OPERATING COSTS</td></tr>
+          <tr class="sub"><td>Packaging + transport</td><td class="num neg">(10,000)</td><td class="num col-rwn neg">(43,000)</td></tr>
+          <tr class="sub"><td>Post-harvest loss contingency</td><td class="num neg">(20,000)</td><td class="num col-rwn neg">(9,500)</td></tr>
+          <tr class="subtot"><td><strong>EBITDA</strong></td><td class="num neg">(111,000)</td><td class="num col-rwn pos"><strong>402,500</strong></td></tr>
+          <tr class="kpi-pl"><td class="pl-pct">EBITDA margin</td><td class="num pl-pct neg">−62%</td><td class="num col-rwn pl-pct pos" style="background:rgba(26,107,58,0.08);">53%</td></tr>
+          <tr class="hd"><td colspan="3">4. FINANCING COSTS</td></tr>
+          <tr class="sub"><td>RWN loan interest</td><td class="num">—</td><td class="num col-rwn neg">(24,000)</td></tr>
+          <tr class="subtot"><td><strong>EBT</strong></td><td class="num neg">(111,000)</td><td class="num col-rwn pos"><strong>378,500</strong></td></tr>
+          <tr class="hd"><td colspan="3">5. INCOME TAX (28%)</td></tr>
+          <tr class="sub"><td>Corporate income tax</td><td class="num">—</td><td class="num col-rwn neg">(105,980)</td></tr>
+          <tr class="grand"><td><strong>NET PROFIT AFTER TAX</strong></td><td class="num neg" style="color:#FFCDD2;">(111,000)</td><td class="num col-rwn pos"><strong>RWF 272,520</strong></td></tr>
+          <tr class="kpi-pl" style="background:var(--g-xpale);"><td class="pl-pct">Net margin</td><td class="num pl-pct neg">—</td><td class="num col-rwn pl-pct pos" style="background:rgba(26,107,58,0.12);font-weight:700;color:var(--g-deep);">36%</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+    <div class="atab-panel" id="tomato-ratios">
+      <div class="ratio-grid">
+        <div class="ratio-card featured"><div class="ratio-title">Revenue per kg paste</div><div class="ratio-val">RWF 4,200</div><div class="ratio-sub">vs. RWF 150/kg fresh. Processing multiplies revenue per unit by 28×. This is the most powerful ratio in this model.</div></div>
+        <div class="ratio-card featured"><div class="ratio-title">Net profit per man-day</div><div class="ratio-val">RWF 27,252</div><div class="ratio-sub">272,520 ÷ 10 man-days. Processing adds RWF 363,520 gross profit with zero additional farm labour.</div></div>
+        <div class="ratio-card featured"><div class="ratio-title">Return on loan</div><div class="ratio-val">68%</div><div class="ratio-sub">272,520 ÷ 400,000 loan. For every RWF 100 lent, WSSF generates RWF 168 — one 3-month season covers loan + 68% net return.</div></div>
+        <div class="ratio-card mag"><div class="ratio-title">Revenue multiplier (processing)</div><div class="ratio-val mag">×4.2</div><div class="ratio-sub">756,000 paste revenue ÷ 180,000 fresh sale revenue. Processing partner cost: RWF 40,000 → creates RWF 576,000 in additional revenue.</div></div>
+        <div class="ratio-card mag"><div class="ratio-title">Break-even paste price</div><div class="ratio-val mag">RWF 2,097/kg</div><div class="ratio-sub">Current price (RWF 4,200) is 100% above breakeven. Even a 50% price collapse still leaves the business profitable.</div></div>
+        <div class="ratio-card"><div class="ratio-title">Post-harvest loss break-even</div><div class="ratio-val" style="color:var(--amber);">72% loss</div><div class="ratio-sub">The business breaks even even if 72% of production is lost to spoilage. Illustrates how processing transforms risk tolerance vs. fresh sale.</div></div>
+      </div>
+      <div class="table-wrap" style="margin-top:16px;"><table class="ratio-table">
+        <thead><tr><th>Input</th><th>Qty</th><th>Total cost (RWF)</th><th>Cost per kg paste</th><th>% of paste revenue</th></tr></thead>
+        <tbody>
+          <tr><td>Inputs (seeds, fert., chemicals, irrigation)</td><td>—</td><td class="neg">167,000</td><td>RWF 928/kg</td><td>22.1%</td></tr>
+          <tr><td>Labour</td><td>10 man-days</td><td class="neg">94,000</td><td>RWF 522/kg</td><td>12.4%</td></tr>
+          <tr><td>Processing fee</td><td>2,000 kg fresh</td><td class="neg">40,000</td><td>RWF 222/kg</td><td>5.3%</td></tr>
+          <tr><td>Packaging + transport</td><td>180 units</td><td class="neg">43,000</td><td>RWF 239/kg</td><td>5.7%</td></tr>
+          <tr><td>RWN financing</td><td>3 months</td><td class="neg">24,000</td><td>RWF 133/kg</td><td>3.2%</td></tr>
+          <tr style="font-weight:700;background:var(--g-xpale);"><td>Total cost per kg paste</td><td>—</td><td class="neg">377,500</td><td>RWF 2,097/kg</td><td>—</td></tr>
+          <tr style="font-weight:700;color:var(--g-deep);background:var(--g-pale);"><td>Net profit per kg paste (after tax)</td><td>—</td><td class="pos">272,520</td><td><strong>RWF 1,514/kg paste</strong></td><td>36%</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+    <div class="atab-panel" id="tomato-financing">
+      <div class="fin-compare">
+        <div class="fin-box no-rwn"><div class="fin-box-label">Commercial MFI (5%/mo)</div><div class="fin-box-rate">5%/mo</div><div class="fin-box-cost">RWF 60,000 interest / 3 months</div><div class="fin-box-net" style="color:#C00000;">EBT: 342,500 · Tax: 95,900<br><strong>Net: RWF 246,600</strong></div></div>
+        <div class="fin-box rwn"><div class="fin-box-label">✅ RWN Revolving Fund</div><div class="fin-box-rate">2%/mo</div><div class="fin-box-cost">RWF 24,000 interest / 3 months<br>Net saving vs MFI: RWF 25,920</div><div class="fin-box-net" style="color:var(--g-deep);">EBT: 378,500 · Tax: 105,980<br><strong>Net: RWF 272,520</strong></div></div>
+        <div class="fin-box ideal"><div class="fin-box-label">0% / Grant</div><div class="fin-box-rate">0%</div><div class="fin-box-cost">No interest cost</div><div class="fin-box-net" style="color:var(--blue);">EBT: 402,500 · Tax: 112,700<br><strong>Net: RWF 289,800</strong></div></div>
+      </div>
+      <div class="callout callout-green" style="margin-top:14px;"><div class="callout-title">Net saving vs. MFI: RWF 25,920 — covers full cost of fungicide for next season</div><div class="callout-body">The financing saving (RWF 36K gross, RWF 25,920 after tax) covers the entire fungicide budget (RWF 24K). Cheaper financing directly reduces the most critical crop-failure risk in the next cycle.</div></div>
+    </div>
+    <div class="atab-panel" id="tomato-sensitivity">
+      <p style="font-size:12px;color:var(--text-muted);margin-bottom:12px;">All net profit after 28% Rwanda tax.</p>
+      <div class="table-wrap"><table class="sens-table">
+        <thead><tr><th>Scenario</th><th>Paste price</th><th>Post-harvest loss</th><th>Net profit (after tax)</th><th>Margin</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td>🟢 RWN base</td><td>4,200</td><td>10%</td><td class="cell-green">272,520</td><td class="cell-green">36%</td><td class="cell-green">✅ Healthy</td></tr>
+          <tr><td>Paste −15%</td><td>3,570</td><td>10%</td><td class="cell-green">199,642</td><td class="cell-green">29%</td><td class="cell-green">✅ Viable</td></tr>
+          <tr><td>Paste −30%</td><td>2,940</td><td>10%</td><td class="cell-yellow">126,763</td><td class="cell-yellow">22%</td><td class="cell-yellow">⚠️ Monitor</td></tr>
+          <tr><td>Post-harvest loss 30%</td><td>4,200</td><td>30%</td><td class="cell-green">224,064</td><td class="cell-green">36%</td><td class="cell-green">✅ Viable</td></tr>
+          <tr><td>Post-harvest loss 50%</td><td>4,200</td><td>50%</td><td class="cell-yellow">148,320</td><td class="cell-yellow">26%</td><td class="cell-yellow">⚠️ Monitor</td></tr>
+          <tr><td>Price −30% + Loss 30%</td><td>2,940</td><td>30%</td><td class="cell-red">42,638</td><td class="cell-red">8%</td><td class="cell-red">🔴 Stress</td></tr>
+          <tr><td>No processing (fresh)</td><td>150</td><td>40%</td><td class="cell-red">(111,000)</td><td class="cell-red">—</td><td class="cell-red">❌ Loss</td></tr>
+          <tr><td>✅ Input discount −15%</td><td>4,200</td><td>10%</td><td class="cell-green">292,542</td><td class="cell-green">39%</td><td class="cell-green">✅ Best case</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+    <div class="atab-panel" id="tomato-marketplace">
+      <div class="mkt-link"><div class="mkt-link-icon ml-buy">🛒</div><div><div class="mkt-link-title">BUY SIDE — Certified seedlings + fungicide</div><div class="mkt-link-desc">Grafted disease-resistant seedlings from RAB-certified nurseries. Collective fungicide purchase. Quality assurance that individual WSSFs cannot provide alone — a bad seedling batch destroys an entire season.</div><div class="mkt-link-tag">Partners: RAB nurseries, PROAGRI, Kirehe agro-dealers</div></div></div>
+      <div class="mkt-link"><div class="mkt-link-icon ml-sell">🏪</div><div><div class="mkt-link-title">SELL SIDE — Branded paste to institutions</div><div class="mkt-link-desc">Hotels, restaurants, school canteens. Year-round supply because paste stores 12+ months. "Women-produced" label adds 5–10% price premium with socially conscious buyers.</div><div class="mkt-link-tag">Buyers: Kigali hotels, NGO kitchens, Gorillas supermarket</div></div></div>
+      <div class="mkt-link"><div class="mkt-link-icon ml-proc">🏭</div><div><div class="mkt-link-title">STRATEGIC PARTNER — Processing (non-negotiable)</div><div class="mkt-link-desc">Guaranteed processing slot within 24h of harvest. Revenue-share model: processor takes 10% of paste output (zero upfront cost for WSSF). Cold chain included. Seasonal harvest calendars shared 4–6 weeks ahead.</div><div class="mkt-link-tag">Partners: Inyange Industries, MINIMEX, NAEB processors in Burera/Musanze</div></div></div>
+      <div class="mkt-link"><div class="mkt-link-icon ml-fin">💰</div><div><div class="mkt-link-title">FINANCE SIDE — Pre-purchase &amp; green finance</div><div class="mkt-link-desc">Institutional buyers pre-pay 30% for next season's paste = working capital. After 2 cycles, confirmed contracts serve as collateral for Inkomoko or BDF financing of a shared cooperative processing unit.</div><div class="mkt-link-tag">Partners: Inkomoko, BDF, USAID Feed the Future · Exit: cooperative processing unit</div></div></div>
+      <div class="conclusion"><h4>Conclusions — Tomato → Paste</h4><ul>
+        <li>Revenue ×4.2 with processing. Without: loss of RWF 111K. With RWN model: net profit of RWF 272.5K after tax.</li>
+        <li>Post-harvest loss is the #1 risk — entirely controlled by processing partner reliability. Guaranteed 24h slots are non-negotiable.</li>
+        <li>Revenue-share model: processor only earns when WSSF earns — fully aligned incentives, zero upfront cost at harvest.</li>
+        <li>Break-even paste price RWF 2,097/kg. Current price (RWF 4,200) is 100% above it — enormous buffer.</li>
+        <li>After 2 cycles, 5–10 WSSF tomato farmers can co-invest in their own pasteurisation unit.</li>
+      </ul></div>
+    </div>
+  </div>
+
+  <!-- ═══ SOAP ═══ -->
+  <div class="section product-panel" id="panel-soap">
+    <div style="display:flex;align-items:center;gap:14px;margin-bottom:8px;flex-wrap:wrap;">
+      <span style="font-size:36px;">🧼</span>
+      <div><h2 class="section-title" style="margin-bottom:4px;">Soap Making</h2>
+      <p style="font-size:13px;color:var(--text-muted);">100 bars/month · Continuous / monthly · No seasonal risk · Loan: RWF 300,000 (equipment + 3 months inputs)</p></div>
+    </div>
+    <div class="callout callout-blue" style="background:var(--blue-lt);border-color:var(--blue);margin-bottom:20px;"><div class="callout-title" style="color:var(--blue);">Non-agribusiness · Year-round · WSSF is the processor</div><div class="callout-body">Most stable IGA for loan repayment. Monthly production matches monthly repayment cycle. No weather risk, no post-harvest loss, no processing partner needed. Ideal as first-loan IGA and as complementary income alongside seasonal agriculture.</div></div>
+    <div class="kpi-row">
+      <div class="kpi"><div class="kpi-val">100 bars</div><div class="kpi-lbl">Production / month</div></div>
+      <div class="kpi"><div class="kpi-val">RWF 92K</div><div class="kpi-lbl">Monthly cost (incl. financing)</div></div>
+      <div class="kpi"><div class="kpi-val mag">RWF 300K</div><div class="kpi-lbl">Initial loan</div></div>
+      <div class="kpi"><div class="kpi-val blue">RWF 40.3K</div><div class="kpi-lbl">Net profit/month after 28% tax</div></div>
+      <div class="kpi"><div class="kpi-val">26.9%</div><div class="kpi-lbl">Net margin/month after tax</div></div>
+    </div>
+    <div class="analysis-tabs">
+      <button class="atab active" onclick="switchTab('soap','costs',this)">📋 Cost Structure</button>
+      <button class="atab" onclick="switchTab('soap','pl',this)">📈 P&amp;L Statement</button>
+      <button class="atab" onclick="switchTab('soap','ratios',this)">📐 Key Ratios</button>
+      <button class="atab" onclick="switchTab('soap','financing',this)">💳 Financing Impact</button>
+      <button class="atab" onclick="switchTab('soap','sensitivity',this)">⚡ Sensitivity</button>
+      <button class="atab" onclick="switchTab('soap','marketplace',this)">🌐 Marketplace</button>
+    </div>
+    <div class="atab-panel active" id="soap-costs">
+      <div class="grid-2">
+        <div>
+          <div class="table-wrap"><table class="cost-table">
+            <thead><tr><th>Item</th><th class="num">Qty</th><th>Unit</th><th class="num">Unit price (RWF)</th><th class="num">Total/mo (RWF)</th><th class="num">%</th></tr></thead>
+            <tbody>
+              <tr class="cat-head"><td colspan="6">🧪 Raw materials</td></tr>
+              <tr class="sub"><td>Caustic soda (NaOH)</td><td class="num">5</td><td class="unit">kg</td><td class="num">3,000</td><td class="num">15,000</td><td class="num">16.3%</td></tr>
+              <tr class="sub"><td>Palm oil / coconut oil</td><td class="num">8</td><td class="unit">litres</td><td class="num">2,500</td><td class="num">20,000</td><td class="num">21.7%</td></tr>
+              <tr class="sub"><td>Fragrance / essential oils</td><td class="num">80</td><td class="unit">ml</td><td class="num">100</td><td class="num">8,000</td><td class="num">8.7%</td></tr>
+              <tr class="sub"><td>Colouring agents</td><td class="num">1</td><td class="unit">lot</td><td class="num">3,000</td><td class="num">3,000</td><td class="num">3.3%</td></tr>
+              <tr class="sub"><td>Water + salt</td><td class="num">1</td><td class="unit">lot</td><td class="num">2,000</td><td class="num">2,000</td><td class="num">2.2%</td></tr>
+              <tr class="subtot"><td colspan="4"><strong>Subtotal Raw Materials</strong></td><td class="num"><strong>48,000</strong></td><td class="num">52.2%</td></tr>
+              <tr class="cat-head"><td colspan="6">📦 Packaging</td></tr>
+              <tr class="sub"><td>Branded wrapping + labels</td><td class="num">100</td><td class="unit">units</td><td class="num">100</td><td class="num">10,000</td><td class="num">10.9%</td></tr>
+              <tr class="sub"><td>Carton boxes (bulk)</td><td class="num">5</td><td class="unit">boxes</td><td class="num">600</td><td class="num">3,000</td><td class="num">3.3%</td></tr>
+              <tr class="subtot"><td colspan="4"><strong>Subtotal Packaging</strong></td><td class="num"><strong>13,000</strong></td><td class="num">14.1%</td></tr>
+              <tr class="cat-head"><td colspan="6">👷 Labour &amp; overhead</td></tr>
+              <tr class="sub"><td>WSSF own labour (opportunity cost)</td><td class="num">3</td><td class="unit">days</td><td class="num">5,000</td><td class="num">15,000</td><td class="num">16.3%</td></tr>
+              <tr class="sub"><td>Utilities (charcoal/gas for heating)</td><td class="num">20</td><td class="unit">kg charcoal</td><td class="num">400</td><td class="num">8,000</td><td class="num">8.7%</td></tr>
+              <tr class="sub"><td>Transport to market</td><td class="num">1</td><td class="unit">trip/month</td><td class="num">2,000</td><td class="num">2,000</td><td class="num">2.2%</td></tr>
+              <tr class="subtot"><td colspan="4"><strong>Subtotal Labour/Overhead</strong></td><td class="num"><strong>25,000</strong></td><td class="num">27.2%</td></tr>
+              <tr class="cat-head"><td colspan="6">💳 Financing</td></tr>
+              <tr class="sub"><td>RWN interest 2%/mo on RWF 300K</td><td class="num">1</td><td class="unit">month</td><td class="num">6,000</td><td class="num">6,000</td><td class="num">6.5%</td></tr>
+              <tr class="grandtot"><td colspan="4"><strong>TOTAL MONTHLY COST</strong></td><td class="num"><strong>92,000</strong></td><td class="num">100%</td></tr>
+            </tbody>
+          </table></div>
+          <p style="font-size:11px;color:var(--text-light);margin-top:6px;">Loan covers: equipment RWF 150K + 3mo raw materials RWF 144K + buffer RWF 6K. Equipment amortisation not in monthly cost above.</p>
+        </div>
+        <div><div id="soap-bars"></div>
+          <div class="callout callout-amber" style="margin-top:16px;"><div class="callout-title">🔴 Palm oil + Caustic soda: 38% of cost, both imported, USD-priced</div><div class="callout-body">A 20% USD/RWF move adds ~7.7% to total monthly cost. RWN should negotiate 3-month fixed-price contracts — eliminating short-term FX volatility. Collective ordering with 15+ soap WSSFs enables this.</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="atab-panel" id="soap-pl">
+      <p style="font-size:12px;color:var(--text-muted);margin-bottom:14px;">Monthly P&amp;L · Rwanda CIT 28% · Informal / unbranded vs. <strong style="color:var(--g-deep);">✅ RWN model (branded, institutional)</strong></p>
+      <div class="table-wrap"><table class="pl-table">
+        <thead><tr><th style="width:43%;">Line item</th><th class="num" style="width:26%;">Unbranded / informal<br><small style="font-weight:400;color:var(--text-light);">(tontine at 10%/mo)</small></th><th class="num col-rwn-head" style="width:26%;">✅ RWN Model<span class="col-rwn-sub">Branded + institutional + 2% loan</span></th></tr></thead>
+        <tbody>
+          <tr class="hd"><td colspan="3">1. REVENUE</td></tr>
+          <tr class="sub"><td>Bars produced</td><td class="num">100</td><td class="num col-rwn">100</td></tr>
+          <tr class="sub"><td>Selling price / bar</td><td class="num">RWF 1,000</td><td class="num col-rwn">RWF 1,500 (+50%)</td></tr>
+          <tr class="subtot"><td><strong>Monthly Revenue</strong></td><td class="num pos">100,000</td><td class="num col-rwn pos"><strong>150,000</strong></td></tr>
+          <tr class="hd"><td colspan="3">2. COGS</td></tr>
+          <tr class="sub"><td>Raw materials</td><td class="num neg">(48,000)</td><td class="num col-rwn neg">(48,000)</td></tr>
+          <tr class="sub"><td>Packaging (plain vs. branded)</td><td class="num neg">(5,000)</td><td class="num col-rwn neg">(13,000)</td></tr>
+          <tr class="sub"><td>Labour + utilities</td><td class="num neg">(25,000)</td><td class="num col-rwn neg">(25,000)</td></tr>
+          <tr class="subtot"><td><strong>Total COGS</strong></td><td class="num neg">(78,000)</td><td class="num col-rwn neg"><strong>(86,000)</strong></td></tr>
+          <tr class="subtot" style="background:var(--g-xpale);"><td><strong>GROSS PROFIT</strong></td><td class="num pos">22,000</td><td class="num col-rwn pos"><strong>64,000</strong></td></tr>
+          <tr class="kpi-pl"><td class="pl-pct">Gross margin</td><td class="num pl-pct">22%</td><td class="num col-rwn pl-pct pos" style="background:rgba(26,107,58,0.08);">43%</td></tr>
+          <tr class="hd"><td colspan="3">3. OTHER OPERATING COSTS</td></tr>
+          <tr class="sub"><td>Transport to market</td><td class="num neg">(2,000)</td><td class="num col-rwn neg">(2,000)</td></tr>
+          <tr class="subtot"><td><strong>EBITDA</strong></td><td class="num pos">20,000</td><td class="num col-rwn pos"><strong>62,000</strong></td></tr>
+          <tr class="kpi-pl"><td class="pl-pct">EBITDA margin</td><td class="num pl-pct">20%</td><td class="num col-rwn pl-pct pos" style="background:rgba(26,107,58,0.08);">41%</td></tr>
+          <tr class="hd"><td colspan="3">4. FINANCING COSTS</td></tr>
+          <tr class="sub"><td>Tontine interest (10%/mo on 300K)</td><td class="num neg">(30,000)</td><td class="num col-rwn neg">(6,000)</td></tr>
+          <tr class="subtot"><td><strong>EBT</strong></td><td class="num neg">(10,000)</td><td class="num col-rwn pos"><strong>56,000</strong></td></tr>
+          <tr class="hd"><td colspan="3">5. INCOME TAX (28%)</td></tr>
+          <tr class="sub"><td>Income tax</td><td class="num">— (loss, no tax)</td><td class="num col-rwn neg">(15,680)</td></tr>
+          <tr class="grand"><td><strong>NET MONTHLY PROFIT AFTER TAX</strong></td><td class="num neg" style="color:#FFCDD2;">(10,000)</td><td class="num col-rwn pos"><strong>RWF 40,320</strong></td></tr>
+          <tr class="kpi-pl" style="background:var(--g-xpale);"><td class="pl-pct">Net margin</td><td class="num pl-pct neg">—</td><td class="num col-rwn pl-pct pos" style="background:rgba(26,107,58,0.12);font-weight:700;color:var(--g-deep);">26.9%</td></tr>
+        </tbody>
+      </table></div>
+      <div class="callout callout-green" style="margin-top:12px;"><div class="callout-title">RWN model: net profit per month 4× higher — despite paying tax</div><div class="callout-body">Informal model (tontine 10%/mo + unbranded): EBT of −RWF 10,000 = loss-making despite selling 100 bars. RWN model: EBT of RWF 56,000 → net RWF 40,320 after 28% tax. The combination of 2% financing + branded institutional contracts completely transforms the business economics.</div></div>
+    </div>
+    <div class="atab-panel" id="soap-ratios">
+      <div class="ratio-grid">
+        <div class="ratio-card featured"><div class="ratio-title">Revenue per kg palm oil</div><div class="ratio-val">RWF 18,750</div><div class="ratio-sub">150,000 ÷ 8L oil. A 20% oil price increase (+RWF 4,000/month) = 2.7% of revenue — absorbed by 43% gross margin.</div></div>
+        <div class="ratio-card featured"><div class="ratio-title">Net profit per bar</div><div class="ratio-val">RWF 403</div><div class="ratio-sub">40,320 ÷ 100 bars. Each bar carries RWF 403 net profit after all costs and tax. Institutional price adds RWF 368 net vs. unbranded.</div></div>
+        <div class="ratio-card featured"><div class="ratio-title">Monthly repayment coverage</div><div class="ratio-val">1.7×</div><div class="ratio-sub">40,320 net ÷ ~24,000 monthly repayment (12-mo schedule). WSSF generates 1.7× repayment every month — comfortable coverage with household income surplus.</div></div>
+        <div class="ratio-card mag"><div class="ratio-title">Annual return on loan</div><div class="ratio-val mag">161%</div><div class="ratio-sub">40,320 × 12 = RWF 483,840 annual net profit ÷ 300,000 loan. Annual net income exceeds the loan amount by 61% — after tax and all costs.</div></div>
+        <div class="ratio-card mag"><div class="ratio-title">Scale to 200 bars/month</div><div class="ratio-val mag">~RWF 88K/mo</div><div class="ratio-sub">At 200 bars, overhead barely increases. Net profit nearly doubles. Second-cycle loan (buy a soap press) is the clear graduation path.</div></div>
+        <div class="ratio-card"><div class="ratio-title">Break-even selling price</div><div class="ratio-val" style="color:var(--amber);">RWF 978/bar</div><div class="ratio-sub">Current price (RWF 1,500) is 53% above breakeven. Even at market price (RWF 1,000), business stays profitable if financed at 2%/mo (unlike tontine).</div></div>
+      </div>
+      <div class="table-wrap" style="margin-top:16px;"><table class="ratio-table">
+        <thead><tr><th>Input</th><th>Qty/month</th><th>Monthly cost (RWF)</th><th>Cost per bar</th><th>% of bar revenue (RWF 1,500)</th></tr></thead>
+        <tbody>
+          <tr><td>Palm/coconut oil</td><td>8 L</td><td class="neg">20,000</td><td>RWF 200</td><td>13.3%</td></tr>
+          <tr><td>Caustic soda</td><td>5 kg</td><td class="neg">15,000</td><td>RWF 150</td><td>10.0%</td></tr>
+          <tr><td>Own labour</td><td>3 days</td><td class="neg">15,000</td><td>RWF 150</td><td>10.0%</td></tr>
+          <tr><td>Packaging (branded)</td><td>100 units</td><td class="neg">13,000</td><td>RWF 130</td><td>8.7%</td></tr>
+          <tr><td>Fragrance + colour</td><td>—</td><td class="neg">11,000</td><td>RWF 110</td><td>7.3%</td></tr>
+          <tr><td>RWN financing</td><td>1 month</td><td class="neg">6,000</td><td>RWF 60</td><td>4.0%</td></tr>
+          <tr style="font-weight:700;background:var(--g-xpale);"><td>Total cost per bar</td><td>—</td><td class="neg">92,000</td><td>RWF 920</td><td>61.3%</td></tr>
+          <tr style="font-weight:700;color:var(--g-deep);background:var(--g-pale);"><td>Net profit per bar (after tax)</td><td>—</td><td class="pos">40,320</td><td><strong>RWF 403</strong></td><td>26.9%</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+    <div class="atab-panel" id="soap-financing">
+      <div class="fin-compare">
+        <div class="fin-box no-rwn"><div class="fin-box-label">Tontine / informal (10%/mo)</div><div class="fin-box-rate">10%/mo</div><div class="fin-box-cost">RWF 30,000/month interest = 48% of gross profit!</div><div class="fin-box-net" style="color:#C00000;">EBT: (10,000) — loss<br>Tax: none<br><strong>Net: RWF (10,000) LOSS</strong></div></div>
+        <div class="fin-box rwn"><div class="fin-box-label">✅ RWN Revolving Fund</div><div class="fin-box-rate">2%/mo</div><div class="fin-box-cost">RWF 6,000/month = only 9.4% of gross profit</div><div class="fin-box-net" style="color:var(--g-deep);">EBT: 56,000 · Tax: 15,680<br><strong>Net: RWF 40,320/month</strong></div></div>
+        <div class="fin-box ideal"><div class="fin-box-label">0% / Grant</div><div class="fin-box-rate">0%</div><div class="fin-box-cost">No interest cost</div><div class="fin-box-net" style="color:var(--blue);">EBT: 62,000 · Tax: 17,360<br><strong>Net: RWF 44,640/month</strong></div></div>
+      </div>
+      <div class="callout callout-amber" style="margin-top:14px;"><div class="callout-title">⚠️ Tontine at 10%/mo turns a viable business into a LOSS-MAKING activity</div><div class="callout-body">The informal borrower pays RWF 30,000/month interest — consuming 48% of gross profit (RWF 62,000). Even at maximum efficiency, the business generates a net loss of RWF 10,000/month. RWN's 2%/month (RWF 6,000/month) keeps 90.6% of gross profit in the WSSF's hands — unlocking the surplus that powers growth, savings, and scaling.</div></div>
+    </div>
+    <div class="atab-panel" id="soap-sensitivity">
+      <p style="font-size:12px;color:var(--text-muted);margin-bottom:12px;">Monthly figures · All net profit after 28% Rwanda tax.</p>
+      <div class="table-wrap"><table class="sens-table">
+        <thead><tr><th>Scenario</th><th>Price/bar</th><th>Oil cost Δ</th><th>Net profit/mo (after tax)</th><th>Margin</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td>🟢 RWN base (branded)</td><td>1,500</td><td>0%</td><td class="cell-green">40,320</td><td class="cell-green">26.9%</td><td class="cell-green">✅ Healthy</td></tr>
+          <tr><td>Price −10%</td><td>1,350</td><td>0%</td><td class="cell-green">29,376</td><td class="cell-green">21.8%</td><td class="cell-green">✅ Viable</td></tr>
+          <tr><td>Price −20%</td><td>1,200</td><td>0%</td><td class="cell-yellow">18,432</td><td class="cell-yellow">15.4%</td><td class="cell-yellow">⚠️ Monitor</td></tr>
+          <tr><td>Oil price +20%</td><td>1,500</td><td>+20%</td><td class="cell-yellow">35,424</td><td class="cell-yellow">23.6%</td><td class="cell-yellow">⚠️ Monitor</td></tr>
+          <tr><td>Oil +40% + price −10%</td><td>1,350</td><td>+40%</td><td class="cell-red">16,358</td><td class="cell-red">12.1%</td><td class="cell-red">🔴 Stress</td></tr>
+          <tr><td>Unbranded (market price)</td><td>1,000</td><td>0%</td><td class="cell-yellow">5,184</td><td class="cell-yellow">5.2%</td><td class="cell-yellow">⚠️ Low margin</td></tr>
+          <tr><td>✅ Input discount −15%</td><td>1,500</td><td>−15%</td><td class="cell-green">42,624</td><td class="cell-green">28.4%</td><td class="cell-green">✅ Best case</td></tr>
+          <tr><td>✅ Scale: 200 bars/month</td><td>1,500</td><td>0%</td><td class="cell-green">87,840</td><td class="cell-green">29.3%</td><td class="cell-green">✅ Scale benefit</td></tr>
+        </tbody>
+      </table></div>
+      <div class="callout callout-green" style="margin-top:12px;"><div class="callout-title">Scaling to 200 bars/month nearly doubles net profit — fixed cost leverage</div><div class="callout-body">Transport, utilities, and own labour barely increase at 200 bars. Variable costs (raw materials + packaging) double, but fixed overhead leverage means net profit grows to ~RWF 88K/month. The second-cycle loan (soap press + equipment) is the clearest ROI case in the revolving fund portfolio.</div></div>
+    </div>
+    <div class="atab-panel" id="soap-marketplace">
+      <div class="mkt-link"><div class="mkt-link-icon ml-buy">🛒</div><div><div class="mkt-link-title">BUY SIDE — Bulk chemical purchasing</div><div class="mkt-link-desc">Palm oil and caustic soda: imported, USD-priced. Collective purchase with 15+ soap WSSFs: 3-month fixed-price contracts (eliminate FX risk), 10–15% volume discount. RWN vets supplier quality — purity of caustic soda directly affects soap quality.</div><div class="mkt-link-tag">Partners: Kigali chemical distributors, NAEB oil suppliers · Key: fixed monthly order schedule</div></div></div>
+      <div class="mkt-link"><div class="mkt-link-icon ml-sell">🏪</div><div><div class="mkt-link-title">SELL SIDE — Institutional supply contracts</div><div class="mkt-link-desc">Monthly supply to clinics, schools, NGOs, hotels. Confirmed orders eliminate production uncertainty. "Women-produced" + RBS-certified label = sustainable premium price.</div><div class="mkt-link-tag">Buyers: MOH facilities, UNICEF/WFP, Kigali hotels, school networks · RBS certification: quality mark</div></div></div>
+      <div class="mkt-link"><div class="mkt-link-icon ml-proc" style="background:var(--blue-lt);">🎨</div><div><div class="mkt-link-title">STRATEGIC PARTNER — Branding &amp; packaging (non-agri equivalent of processing)</div><div class="mkt-link-desc">RWN owns the brand, licenses to WSSFs. One collective branding contract covers all soap WSSFs. The branded label unlocks the RWF 500/bar premium — far cheaper via RWN collective contract than individual branding.</div><div class="mkt-link-tag">Partners: Kigali design studios, RBS-certified packaging suppliers, MINICOM SME programme</div></div></div>
+      <div class="mkt-link"><div class="mkt-link-icon ml-fin">💰</div><div><div class="mkt-link-title">FINANCE SIDE — Equipment leasing &amp; cooperative</div><div class="mkt-link-desc">After 12 months, confirmed supply contracts serve as collateral for soap press leasing (RWF 800K–1.2M). 5+ WSSFs pool to create a cooperative unit — shared costs reduce per-bar cost 20–30%.</div><div class="mkt-link-tag">Partners: BDF, Inkomoko · Exit: cooperative unit → RBS certification → DRC/Uganda export</div></div></div>
+      <div class="conclusion"><h4>Conclusions — Soap Making</h4><ul>
+        <li>Tontine at 10%/mo turns a viable business into a loss (−RWF 10,000/month). RWN's 2%/mo generates RWF 40,320/month net profit after tax.</li>
+        <li>Branding is the key value driver: +50% revenue (RWF 1,500 vs 1,000) with only RWF 8K additional packaging cost.</li>
+        <li>Scales efficiently: 200 bars/month nearly doubles net profit — fixed cost leverage is powerful here.</li>
+        <li>Year-round stability makes soap the ideal first-loan IGA and complementary income alongside agricultural IGAs.</li>
+        <li>After 12 months, supply contracts + track record enable graduation to equipment leasing and cooperative production.</li>
+      </ul></div>
+    </div>
+  </div>
+
+  <div class="section" style="padding-top:18px;padding-bottom:18px;background:var(--surface-1);border-top:1px solid var(--border-lt);">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
+      <a href="ecosystem.html" style="color:var(--mag);font-weight:600;text-decoration:none;font-size:13px;">← 🌐 Ecosystem</a>
+      <a href="abbreviations.html" style="color:var(--g-deep);font-weight:600;text-decoration:none;font-size:13px;">📖 Abbreviations →</a>
+    </div>
+  </div>
+  <footer class="rwn-footer">
+    <div class="footer-brand">Rwanda Women's <span>Network</span></div>
+    <div class="footer-meta">Business Case Demo · Illustrative · Rwanda CIT 28% · May 2026</div>
+  </footer>
+</div>
+<script src="nav.js"></script>
+<script>
+function selectProduct(id,el){document.querySelectorAll('.ptab').forEach(t=>t.classList.remove('active'));document.querySelectorAll('.product-panel').forEach(p=>p.classList.remove('active'));el.classList.add('active');document.getElementById('panel-'+id).classList.add('active');}
+function switchTab(product,tab,el){const panel=document.getElementById('panel-'+product);panel.querySelectorAll('.atab').forEach(t=>t.classList.remove('active'));panel.querySelectorAll('.atab-panel').forEach(p=>p.classList.remove('active'));el.classList.add('active');document.getElementById(product+'-'+tab).classList.add('active');}
+const inputData={maize:[{name:'Fertiliser DAP+Urea',pct:31.9,cls:'high'},{name:'Labour (all)',pct:31.8,cls:'med'},{name:'Milling cost',pct:8.0,cls:'low'},{name:'Seed',pct:8.0,cls:'low'},{name:'Packaging+Transport',pct:6.5,cls:'low'},{name:'Financing cost',pct:7.6,cls:'low'},{name:'Pesticide',pct:4.8,cls:'low'}],tomato:[{name:'Labour (all)',pct:24.9,cls:'med'},{name:'Seedlings (grafted)',pct:15.9,cls:'high'},{name:'Fertiliser',pct:13.5,cls:'high'},{name:'Processing fee',pct:10.6,cls:'med'},{name:'Packaging+Transport',pct:11.3,cls:'low'},{name:'Fungicide',pct:6.4,cls:'high'},{name:'Financing cost',pct:6.4,cls:'low'},{name:'Irrigation',pct:5.3,cls:'low'}],soap:[{name:'Palm/Coconut oil',pct:21.7,cls:'high'},{name:'Own labour',pct:16.3,cls:'med'},{name:'Caustic soda',pct:16.3,cls:'high'},{name:'Packaging (branded)',pct:14.1,cls:'med'},{name:'Fragrance',pct:8.7,cls:'low'},{name:'Utilities',pct:8.7,cls:'low'},{name:'Financing cost',pct:6.5,cls:'low'},{name:'Colouring/other',pct:5.5,cls:'low'}]};
+function renderBars(p){const el=document.getElementById(p+'-bars');if(!el)return;el.innerHTML='<h3 style="font-family:var(--font-d);font-size:15px;font-weight:700;margin-bottom:12px;">Input ranking by cost impact</h3>'+inputData[p].map(d=>`<div class="input-bar-wrap"><div class="input-bar-label"><span class="iname">${d.name}</span><span class="ipct">${d.pct}%</span></div><div class="input-bar"><div class="input-bar-fill ${d.cls}" style="width:${Math.min(d.pct*2.8,100)}%"></div></div></div>`).join('');}
+document.addEventListener('DOMContentLoaded',()=>{renderBars('maize');renderBars('tomato');renderBars('soap');});
+</script>
+</body>
+</html>

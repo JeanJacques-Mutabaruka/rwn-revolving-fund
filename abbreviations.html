@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RWN — Abbreviations &amp; Glossary</title>
+<link rel="stylesheet" href="shared.css">
+<style>
+.abbr-filter { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 24px; }
+.abbr-letter-btn {
+  width: 32px; height: 32px; border-radius: 6px; border: 1px solid var(--border-md);
+  background: #FFFFFF; font-family: var(--font-m); font-size: 12px; font-weight: 700;
+  color: var(--text-muted); cursor: pointer; transition: all 0.18s;
+  display: flex; align-items: center; justify-content: center;
+}
+.abbr-letter-btn:hover, .abbr-letter-btn.active { background: var(--g-deep); color: #FFFFFF; border-color: var(--g-deep); }
+.abbr-search {
+  flex: 1; min-width: 200px; padding: 8px 14px; border: 1px solid var(--border-md);
+  border-radius: 6px; font-family: var(--font-b); font-size: 13px; color: var(--text-body);
+  outline: none; transition: border-color 0.2s;
+}
+.abbr-search:focus { border-color: var(--g-deep); }
+.abbr-group { margin-bottom: 32px; }
+.abbr-letter { font-family: var(--font-d); font-size: 28px; font-weight: 900; color: var(--g-deep); margin-bottom: 10px; padding-bottom: 6px; border-bottom: 2px solid var(--g-lt); }
+.abbr-row { display: grid; grid-template-columns: 140px 1fr auto; gap: 16px; align-items: baseline; padding: 10px 0; border-bottom: 1px solid var(--border-lt); }
+.abbr-row:last-child { border-bottom: none; }
+.abbr-code { font-family: var(--font-m); font-size: 13px; font-weight: 700; color: var(--g-deep); }
+.abbr-full { font-size: 14px; color: var(--text-body); font-weight: 500; }
+.abbr-desc { font-size: 13px; color: var(--text-muted); grid-column: 2 / -1; margin-top: -4px; line-height: 1.5; }
+.abbr-tag  { font-size: 10px; }
+.abbr-row.hidden { display: none; }
+@media(max-width:600px){ .abbr-row { grid-template-columns: 100px 1fr; } .abbr-tag { display: none; } }
+</style>
+</head>
+<body>
+
+<div class="sb-topbar" id="sb-topbar">
+  <div class="sb-topbar-logo">RWN</div>
+  <div class="sb-topbar-title">Abbreviations</div>
+  <button class="sb-hamburger" id="sb-hbg" onclick="sbMobileToggle()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</div>
+<div class="sb-overlay" id="sb-overlay" onclick="sbMobileClose()"></div>
+
+<nav class="rwn-sidebar" id="rwn-sidebar">
+  <div class="sb-logo-block">
+    <div class="sb-logo">RWN</div>
+    <div><div class="sb-brand-main">Revolving Fund</div><div class="sb-brand-sub">Concept Platform</div></div>
+  </div>
+  <div class="sb-nav">
+    <span class="sb-section-label">Navigation</span>
+    <a href="index.html">🏠 Overview</a>
+    <div class="sb-divider"></div>
+    <span class="sb-section-label">Analysis</span>
+    <a href="what-is-there.html">✅ What Is There</a>
+    <a href="what-is-missing.html">⚠️ What Is Missing</a>
+    <a href="fund-structure.html">🏗️ Fund Structure</a>
+    <div class="sb-divider"></div>
+    <span class="sb-section-label">Innovation</span>
+    <a href="ecosystem.html" class="sb-mag">🌐 Ecosystem &amp; Marketplace</a>
+    <div class="sb-divider"></div>
+    <span class="sb-section-label">Reference</span>
+    <a href="abbreviations.html" class="active">📖 Abbreviations</a>
+    <a href="https://rwandawomensnetwork.org" target="_blank">🔗 RWN Website</a>
+  </div>
+</nav>
+
+<div class="page-wrap">
+
+  <div class="hero">
+    <div class="hero-bg-mesh"></div>
+    <div class="hero-grid"></div>
+    <div class="hero-content">
+      <div class="eyebrow fade-up au-1">Reference</div>
+      <h1 class="hero-title fade-up au-2">📖 Abbreviations &amp; <span class="accent">Glossary</span></h1>
+      <p class="hero-lead fade-up au-3">All abbreviations and acronyms used across this platform — with full names, context descriptions, and document source tags. Use the search or letter filters to navigate quickly.</p>
+      <div class="stats-bar fade-up au-4">
+        <div class="stat"><div class="stat-n">35+</div><div class="stat-l">Abbreviations listed</div></div>
+        <div class="stat"><div class="stat-n">3</div><div class="stat-l">Source categories</div></div>
+        <div class="stat"><div class="stat-n">2</div><div class="stat-l">Source documents</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SOURCE LEGEND -->
+  <div class="section" style="padding-bottom:0;">
+    <div style="display:flex;gap:16px;flex-wrap:wrap;margin-bottom:8px;">
+      <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text-muted);"><span class="src">SP</span> Strategic Plan 2020–2030</div>
+      <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text-muted);"><span class="src src-rf">RF</span> Revolving Fund Strategy (Aug 2025)</div>
+      <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text-muted);"><span class="badge badge-blue">ECO</span> Ecosystem Proposal</div>
+    </div>
+  </div>
+
+  <div class="section" style="padding-top:24px;">
+    <!-- SEARCH + FILTER -->
+    <div class="abbr-filter">
+      <input class="abbr-search" type="text" id="abbr-search" placeholder="Search abbreviation or full name…" oninput="abbrFilter()">
+      <button class="abbr-letter-btn active" onclick="abbrLetter('ALL', this)">All</button>
+      <button class="abbr-letter-btn" onclick="abbrLetter('A', this)">A</button>
+      <button class="abbr-letter-btn" onclick="abbrLetter('B', this)">B</button>
+      <button class="abbr-letter-btn" onclick="abbrLetter('C', this)">C</button>
+      <button class="abbr-letter-btn" onclick="abbrLetter('D', this)">D</button>
+      <button class="abbr-letter-btn" onclick="abbrLetter('E', this)">E</button>
+      <button class="abbr-letter-btn" onclick="abbrLetter('F', this)">F</button>
+      <button class="abbr-letter-btn" onclick="abbrLetter('G', this)">G</button>
+      <button class="abbr-letter-btn" onclick="abbrLetter('I', this)">I</button>
+      <button class="abbr-letter-btn" onclick="abbrLetter('M', this)">M</button>
+      <button class="abbr-letter-btn" onclick="abbrLetter('N', this)">N</button>
+      <button class="abbr-letter-btn" onclick="abbrLetter('O', this)">O</button>
+      <button class="abbr-letter-btn" onclick="abbrLetter('R', this)">R</button>
+      <button class="abbr-letter-btn" onclick="abbrLetter('S', this)">S</button>
+      <button class="abbr-letter-btn" onclick="abbrLetter('V', this)">V</button>
+      <button class="abbr-letter-btn" onclick="abbrLetter('W', this)">W</button>
+    </div>
+
+    <!-- A -->
+    <div class="abbr-group" data-letter="A">
+      <div class="abbr-letter">A</div>
+      <div class="abbr-row" data-code="AfCFTA" data-full="African Continental Free Trade Area">
+        <div class="abbr-code">AfCFTA</div>
+        <div><div class="abbr-full">African Continental Free Trade Area</div><div class="abbr-desc">Trade agreement progressively opening markets across 55 African Union member states. Relevant to the sell-side marketplace for WSSF products.</div></div>
+        <span class="badge badge-blue abbr-tag">ECO</span>
+      </div>
+      <div class="abbr-row" data-code="AfDB" data-full="African Development Bank">
+        <div class="abbr-code">AfDB</div>
+        <div><div class="abbr-full">African Development Bank</div><div class="abbr-desc">Multilateral development finance institution. Potential source of concessional financing for the RWN SPV.</div></div>
+        <span class="badge badge-blue abbr-tag">ECO</span>
+      </div>
+      <div class="abbr-row" data-code="AU" data-full="African Union">
+        <div class="abbr-code">AU</div>
+        <div><div class="abbr-full">African Union</div><div class="abbr-desc">Continental body whose Agenda 2063 frames inclusive development goals. Referenced in the RWN Strategic Plan alignment section.</div></div>
+        <span class="badge badge-green abbr-tag">SP</span>
+      </div>
+    </div>
+
+    <!-- B -->
+    <div class="abbr-group" data-letter="B">
+      <div class="abbr-letter">B</div>
+      <div class="abbr-row" data-code="BDF" data-full="Business Development Fund">
+        <div class="abbr-code">BDF</div>
+        <div><div class="abbr-full">Business Development Fund</div><div class="abbr-desc">Rwandan government fund supporting SME development. Relevant as a potential partner or co-financier for WSSF businesses in the finance-side marketplace.</div></div>
+        <span class="badge badge-blue abbr-tag">ECO</span>
+      </div>
+      <div class="abbr-row" data-code="BNR" data-full="Banque Nationale du Rwanda">
+        <div class="abbr-code">BNR</div>
+        <div><div class="abbr-full">Banque Nationale du Rwanda (National Bank of Rwanda)</div><div class="abbr-desc">Rwanda's central bank and financial regulator. The SPV must engage BNR for non-deposit lending institution licensing.</div></div>
+        <span class="badge badge-blue abbr-tag">ECO</span>
+      </div>
+      <div class="abbr-row" data-code="BP" data-full="Business Plan">
+        <div class="abbr-code">BP</div>
+        <div><div class="abbr-full">Business Plan</div><div class="abbr-desc">Required document for revolving fund loan eligibility. A structured template is provided in the fund strategy annexes.</div></div>
+        <span class="badge badge-mag abbr-tag">RF</span>
+      </div>
+    </div>
+
+    <!-- C -->
+    <div class="abbr-group" data-letter="C">
+      <div class="abbr-letter">C</div>
+      <div class="abbr-row" data-code="CNFS" data-full="Climate and Nature Finance Strategy">
+        <div class="abbr-code">CNFS</div>
+        <div><div class="abbr-full">Climate and Nature Finance Strategy (2024–2030)</div><div class="abbr-desc">Rwanda's national strategy for mobilising climate and nature finance. RWN's Environmental Justice Program aligns with this; relevant for green IGA financing on the finance-side marketplace.</div></div>
+        <span class="badge badge-green abbr-tag">SP</span>
+      </div>
+      <div class="abbr-row" data-code="CSO" data-full="Civil Society Organisation">
+        <div class="abbr-code">CSO</div>
+        <div><div class="abbr-full">Civil Society Organisation</div><div class="abbr-desc">Non-governmental, non-profit organisations. RWN operates as a CSO and leads the Rwanda CSO SDG5 Forum.</div></div>
+        <span class="badge badge-green abbr-tag">SP</span>
+      </div>
+      <div class="abbr-row" data-code="CSR" data-full="Corporate Social Responsibility">
+        <div class="abbr-code">CSR</div>
+        <div><div class="abbr-full">Corporate Social Responsibility</div><div class="abbr-desc">Corporate programmes that may provide sponsorship or pre-purchase agreements for WSSF products on the finance-side marketplace.</div></div>
+        <span class="badge badge-blue abbr-tag">ECO</span>
+      </div>
+    </div>
+
+    <!-- D -->
+    <div class="abbr-group" data-letter="D">
+      <div class="abbr-letter">D</div>
+      <div class="abbr-row" data-code="DFI" data-full="Development Finance Institution">
+        <div class="abbr-code">DFI</div>
+        <div><div class="abbr-full">Development Finance Institution</div><div class="abbr-desc">Institutions like IFC, AfDB, Proparco that provide concessional loans and equity to development-oriented vehicles. The SPV is designed to attract DFI capital.</div></div>
+        <span class="badge badge-blue abbr-tag">ECO</span>
+      </div>
+    </div>
+
+    <!-- E -->
+    <div class="abbr-group" data-letter="E">
+      <div class="abbr-letter">E</div>
+      <div class="abbr-row" data-code="EJP" data-full="Environmental Justice Program">
+        <div class="abbr-code">EJP</div>
+        <div><div class="abbr-full">Environmental Justice Program</div><div class="abbr-desc">RWN's programme addressing environmental degradation, climate change, and GBV. Strategic objective SO7. Closely linked to green IGA opportunities in the revolving fund.</div></div>
+        <span class="badge badge-green abbr-tag">SP</span>
+      </div>
+    </div>
+
+    <!-- F -->
+    <div class="abbr-group" data-letter="F">
+      <div class="abbr-letter">F</div>
+      <div class="abbr-row" data-code="FP" data-full="Family Planning">
+        <div class="abbr-code">FP</div>
+        <div><div class="abbr-full">Family Planning</div><div class="abbr-desc">Access to contraception and reproductive health services. Mentioned in the SP as a core health service gap for rural Rwandan women.</div></div>
+        <span class="badge badge-green abbr-tag">SP</span>
+      </div>
+    </div>
+
+    <!-- G -->
+    <div class="abbr-group" data-letter="G">
+      <div class="abbr-letter">G</div>
+      <div class="abbr-row" data-code="GBV" data-full="Gender-Based Violence">
+        <div class="abbr-code">GBV</div>
+        <div><div class="abbr-full">Gender-Based Violence</div><div class="abbr-desc">Violence directed at individuals based on gender. A core focus area of RWN across all programmes. Economic vulnerability linked to GBV is a key rationale for the revolving fund.</div></div>
+        <span class="badge badge-green abbr-tag">SP</span>
+      </div>
+      <div class="abbr-row" data-code="GGCRS" data-full="Green Growth and Climate Resilience Strategy">
+        <div class="abbr-code">GGCRS</div>
+        <div><div class="abbr-full">Green Growth and Climate Resilience Strategy</div><div class="abbr-desc">Rwanda's national strategy for mainstreaming climate resilience. RWN's EJP aligns with this strategy.</div></div>
+        <span class="badge badge-green abbr-tag">SP</span>
+      </div>
+    </div>
+
+    <!-- I -->
+    <div class="abbr-group" data-letter="I">
+      <div class="abbr-letter">I</div>
+      <div class="abbr-row" data-code="IFC" data-full="International Finance Corporation">
+        <div class="abbr-code">IFC</div>
+        <div><div class="abbr-full">International Finance Corporation</div><div class="abbr-desc">World Bank Group's private sector arm. Active in East African microfinance and women's economic empowerment financing. Potential DFI partner for RWN's SPV.</div></div>
+        <span class="badge badge-blue abbr-tag">ECO</span>
+      </div>
+      <div class="abbr-row" data-code="IGA" data-full="Income-Generating Activity">
+        <div class="abbr-code">IGA</div>
+        <div><div class="abbr-full">Income-Generating Activity</div><div class="abbr-desc">Any business or economic activity that generates income. WSSFs must have a functioning IGA to be eligible for revolving fund loans.</div></div>
+        <span class="badge badge-mag abbr-tag">RF</span>
+      </div>
+      <div class="abbr-row" data-code="INGO" data-full="International Non-Governmental Organisation">
+        <div class="abbr-code">INGO</div>
+        <div><div class="abbr-full">International Non-Governmental Organisation</div><div class="abbr-desc">International civil society organisations. RWN strategy mentions building consortia with INGOs to access back-donor funding.</div></div>
+        <span class="badge badge-green abbr-tag">SP</span>
+      </div>
+    </div>
+
+    <!-- M -->
+    <div class="abbr-group" data-letter="M">
+      <div class="abbr-letter">M</div>
+      <div class="abbr-row" data-code="M&E" data-full="Monitoring and Evaluation">
+        <div class="abbr-code">M&amp;E</div>
+        <div><div class="abbr-full">Monitoring and Evaluation</div><div class="abbr-desc">Systems for tracking programme performance and outcomes. The M&amp;E Officer sits on the revolving fund management body.</div></div>
+        <span class="badge badge-mag abbr-tag">RF</span>
+      </div>
+      <div class="abbr-row" data-code="MEAL" data-full="Monitoring, Evaluation, Accountability and Learning">
+        <div class="abbr-code">MEAL</div>
+        <div><div class="abbr-full">Monitoring, Evaluation, Accountability and Learning</div><div class="abbr-desc">RWN's integrated performance management framework. Identified as a weakness in the SWOT: "Weak MEAL system at organization level."</div></div>
+        <span class="badge badge-green abbr-tag">SP</span>
+      </div>
+      <div class="abbr-row" data-code="MFI" data-full="Microfinance Institution">
+        <div class="abbr-code">MFI</div>
+        <div><div class="abbr-full">Microfinance Institution</div><div class="abbr-desc">Financial institutions providing small loans to low-income clients. Commercial MFIs in Rwanda charge 3–5%+ per month — higher than RWN's proposed 2%. The graduation pathway should link WSSFs to MFIs after multiple fund cycles.</div></div>
+        <span class="badge badge-blue abbr-tag">ECO</span>
+      </div>
+      <div class="abbr-row" data-code="MoMo" data-full="Mobile Money">
+        <div class="abbr-code">MoMo</div>
+        <div><div class="abbr-full">Mobile Money (MTN / Airtel)</div><div class="abbr-desc">Mobile-based payment and transfer system widely used in Rwanda. The digital fund management platform integrates with MoMo APIs for repayment tracking.</div></div>
+        <span class="badge badge-blue abbr-tag">ECO</span>
+      </div>
+    </div>
+
+    <!-- N -->
+    <div class="abbr-group" data-letter="N">
+      <div class="abbr-letter">N</div>
+      <div class="abbr-row" data-code="NCD" data-full="Non-Communicable Disease">
+        <div class="abbr-code">NCD</div>
+        <div><div class="abbr-full">Non-Communicable Disease</div><div class="abbr-desc">Chronic diseases such as breast and cervical cancer. Emerging health challenge for Rwandan women identified in the SP.</div></div>
+        <span class="badge badge-green abbr-tag">SP</span>
+      </div>
+      <div class="abbr-row" data-code="NDC" data-full="Nationally Determined Contribution">
+        <div class="abbr-code">NDC</div>
+        <div><div class="abbr-full">Nationally Determined Contribution</div><div class="abbr-desc">Rwanda's climate commitments under the Paris Agreement. RWN's EJP aligns with NDC targets on renewable energy and sustainable agriculture.</div></div>
+        <span class="badge badge-green abbr-tag">SP</span>
+      </div>
+      <div class="abbr-row" data-code="NGO" data-full="Non-Governmental Organisation">
+        <div class="abbr-code">NGO</div>
+        <div><div class="abbr-full">Non-Governmental Organisation</div><div class="abbr-desc">RWN's legal category. The SP notes the enabling legal environment for RWN to operate both as a CSO and a social enterprise.</div></div>
+        <span class="badge badge-green abbr-tag">SP</span>
+      </div>
+      <div class="abbr-row" data-code="NST1" data-full="National Strategy for Transformation 1">
+        <div class="abbr-code">NST1</div>
+        <div><div class="abbr-full">National Strategy for Transformation 1 (2017–2024)</div><div class="abbr-desc">Rwanda's first national transformation strategy, covering economic, social, and governance transformation. RWN's SP 2020–2030 aligns its pillars to NST1 and NST2.</div></div>
+        <span class="badge badge-green abbr-tag">SP</span>
+      </div>
+      <div class="abbr-row" data-code="NST2" data-full="National Strategy for Transformation 2">
+        <div class="abbr-code">NST2</div>
+        <div><div class="abbr-full">National Strategy for Transformation 2 (2024–2029)</div><div class="abbr-desc">Rwanda's current national transformation strategy. Targets creation of 1.25 million productive jobs. RWN's revolving fund and marketplace directly support this goal.</div></div>
+        <span class="badge badge-green abbr-tag">SP</span>
+      </div>
+    </div>
+
+    <!-- O -->
+    <div class="abbr-group" data-letter="O">
+      <div class="abbr-letter">O</div>
+      <div class="abbr-row" data-code="ODA" data-full="Official Development Assistance">
+        <div class="abbr-code">ODA</div>
+        <div><div class="abbr-full">Official Development Assistance</div><div class="abbr-desc">Government-to-government or government-to-multilateral aid flows. Current global contraction (USAID freeze) is a key threat to RWN's donor-dependent funding model.</div></div>
+        <span class="badge badge-blue abbr-tag">ECO</span>
+      </div>
+    </div>
+
+    <!-- R -->
+    <div class="abbr-group" data-letter="R">
+      <div class="abbr-letter">R</div>
+      <div class="abbr-row" data-code="RDB" data-full="Rwanda Development Board">
+        <div class="abbr-code">RDB</div>
+        <div><div class="abbr-full">Rwanda Development Board</div><div class="abbr-desc">Government agency supporting investment and business development in Rwanda. Potential partner for SME support programmes linked to the revolving fund.</div></div>
+        <span class="badge badge-blue abbr-tag">ECO</span>
+      </div>
+      <div class="abbr-row" data-code="RF" data-full="Revolving Fund Strategy">
+        <div class="abbr-code">RF</div>
+        <div><div class="abbr-full">Revolving Fund Strategy (document)</div><div class="abbr-desc">Source document tag used throughout this platform: "RWN Revolving Fund Strategy for Economic Empowerment of Women Safe Space Facilitators" (August 2025).</div></div>
+        <span class="badge badge-mag abbr-tag">RF</span>
+      </div>
+      <div class="abbr-row" data-code="RWF" data-full="Rwandan Franc">
+        <div class="abbr-code">RWF</div>
+        <div><div class="abbr-full">Rwandan Franc</div><div class="abbr-desc">Rwanda's national currency. All loan amounts in the fund are denominated in RWF. Min: RWF 300,000 / Max: RWF 916,000.</div></div>
+        <span class="badge badge-mag abbr-tag">RF</span>
+      </div>
+      <div class="abbr-row" data-code="RWN" data-full="Rwanda Women's Network">
+        <div class="abbr-code">RWN</div>
+        <div><div class="abbr-full">Rwanda Women's Network</div><div class="abbr-desc">Non-governmental organisation established in 1995, dedicated to promoting and strengthening strategies that empower Rwandan women. Fund owner and manager.</div></div>
+        <span class="badge badge-green abbr-tag">SP</span>
+      </div>
+    </div>
+
+    <!-- S -->
+    <div class="abbr-group" data-letter="S">
+      <div class="abbr-letter">S</div>
+      <div class="abbr-row" data-code="SACCO" data-full="Savings and Credit Cooperative Organisation">
+        <div class="abbr-code">SACCO</div>
+        <div><div class="abbr-full">Savings and Credit Cooperative Organisation</div><div class="abbr-desc">Member-owned financial cooperative. Umurenge SACCOs are Rwanda's government-backed grassroots financial institutions. The revolving fund must differentiate itself from and complement (not compete with) SACCOs.</div></div>
+        <span class="badge badge-blue abbr-tag">ECO</span>
+      </div>
+      <div class="abbr-row" data-code="SDG" data-full="Sustainable Development Goal">
+        <div class="abbr-code">SDG</div>
+        <div><div class="abbr-full">Sustainable Development Goal</div><div class="abbr-desc">UN global goals for 2030. RWN's SP aligns with SDG 3 (Good Health), SDG 5 (Gender Equality), SDG 8 (Decent Work), SDG 10 (Reduced Inequalities), SDG 13 (Climate Action).</div></div>
+        <span class="badge badge-green abbr-tag">SP</span>
+      </div>
+      <div class="abbr-row" data-code="SO" data-full="Strategic Objective">
+        <div class="abbr-code">SO</div>
+        <div><div class="abbr-full">Strategic Objective</div><div class="abbr-desc">Numbered objectives in RWN's 2020–2030 Strategic Plan. SO1 (health/GBV), SO2 (GBV protection), SO3 (socio-economic empowerment), SO4 (knowledge/skills), SO5 (governance/leadership), SO6 (institutional development), SO7 (environmental justice).</div></div>
+        <span class="badge badge-green abbr-tag">SP</span>
+      </div>
+      <div class="abbr-row" data-code="SP" data-full="Strategic Plan">
+        <div class="abbr-code">SP</div>
+        <div><div class="abbr-full">Strategic Plan (document)</div><div class="abbr-desc">Source document tag used throughout this platform: "Rwanda Women's Network 2020–2030 Strategic Plan" (December 2022).</div></div>
+        <span class="badge badge-green abbr-tag">SP</span>
+      </div>
+      <div class="abbr-row" data-code="SPV" data-full="Special Purpose Vehicle">
+        <div class="abbr-code">SPV</div>
+        <div><div class="abbr-full">Special Purpose Vehicle</div><div class="abbr-desc">A legally separate entity created by RWN to own and manage the revolving fund capital. Ring-fences fund liabilities from RWN operations and enables institutional investment. Proposed as non-deposit lending institution regulated by BNR.</div></div>
+        <span class="badge badge-blue abbr-tag">ECO</span>
+      </div>
+      <div class="abbr-row" data-code="SRHR" data-full="Sexual and Reproductive Health Rights">
+        <div class="abbr-code">SRHR</div>
+        <div><div class="abbr-full">Sexual and Reproductive Health Rights</div><div class="abbr-desc">Rights related to sexual health, reproductive choices, and bodily autonomy. A core service area in RWN's health programme.</div></div>
+        <span class="badge badge-green abbr-tag">SP</span>
+      </div>
+      <div class="abbr-row" data-code="SWOT" data-full="Strengths, Weaknesses, Opportunities, Threats">
+        <div class="abbr-code">SWOT</div>
+        <div><div class="abbr-full">Strengths, Weaknesses, Opportunities, Threats</div><div class="abbr-desc">Strategic analysis framework. Used in the SP and in our revolving fund analysis (see "What Is Missing" page).</div></div>
+        <span class="badge badge-green abbr-tag">SP</span>
+      </div>
+    </div>
+
+    <!-- V -->
+    <div class="abbr-group" data-letter="V">
+      <div class="abbr-letter">V</div>
+      <div class="abbr-row" data-code="VSLA" data-full="Village Savings and Loan Association">
+        <div class="abbr-code">VSLA</div>
+        <div><div class="abbr-full">Village Savings and Loan Association</div><div class="abbr-desc">Community-based savings groups. Mentioned in the SP M&amp;E framework (Output 2: women in VSLAs). Complementary to but distinct from the revolving fund — VSLAs use members' own savings; the fund uses external capital.</div></div>
+        <span class="badge badge-green abbr-tag">SP</span>
+      </div>
+    </div>
+
+    <!-- W -->
+    <div class="abbr-group" data-letter="W">
+      <div class="abbr-letter">W</div>
+      <div class="abbr-row" data-code="WASH" data-full="Water, Sanitation and Hygiene">
+        <div class="abbr-code">WASH</div>
+        <div><div class="abbr-full">Water, Sanitation and Hygiene</div><div class="abbr-desc">A cross-cutting health and development domain. Mentioned in the SP's NST2 alignment section.</div></div>
+        <span class="badge badge-green abbr-tag">SP</span>
+      </div>
+      <div class="abbr-row" data-code="WSS" data-full="Women Safe Space">
+        <div class="abbr-code">WSS</div>
+        <div><div class="abbr-full">Women Safe Space</div><div class="abbr-desc">Community hubs established by RWN providing integrated services: health, GBV support, governance, and socio-economic empowerment. 24 WSS active across 12 districts. The revolving fund is designed for WSS Facilitators.</div></div>
+        <span class="badge badge-mag abbr-tag">RF</span>
+      </div>
+      <div class="abbr-row" data-code="WSSF" data-full="Women Safe Space Facilitator">
+        <div class="abbr-code">WSSF</div>
+        <div><div class="abbr-full">Women Safe Space Facilitator</div><div class="abbr-desc">Frontline volunteers who run the WSS model at community level. Primary and exclusive target group of the revolving fund. Must have a business plan, bank account, RWN agreement, and active IGA to be eligible.</div></div>
+        <span class="badge badge-mag abbr-tag">RF</span>
+      </div>
+    </div>
+
+    <div id="abbr-empty" style="display:none;text-align:center;padding:40px;color:var(--text-muted);font-size:14px;">No abbreviations match your search.</div>
+  </div>
+
+  <!-- NAV FOOTER -->
+  <div class="section" style="padding-top:20px;padding-bottom:20px;background:var(--surface-1);border-top:1px solid var(--border-lt);">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
+      <span style="font-size:13px;"><a href="ecosystem.html" style="color:var(--mag);font-weight:600;text-decoration:none;">← 🌐 Ecosystem</a></span>
+      <span style="font-size:13px;"><a href="index.html" style="color:var(--g-deep);font-weight:600;text-decoration:none;">🏠 Overview</a></span>
+    </div>
+  </div>
+
+  <footer class="rwn-footer">
+    <div class="footer-brand">Rwanda Women's <span>Network</span></div>
+    <div class="footer-meta">Abbreviations &amp; Glossary · May 2026</div>
+  </footer>
+</div>
+
+<script src="nav.js"></script>
+<script>
+function abbrFilter() {
+  const q = document.getElementById('abbr-search').value.toLowerCase();
+  let anyVisible = false;
+  document.querySelectorAll('.abbr-row').forEach(function(row) {
+    const code = (row.getAttribute('data-code') || '').toLowerCase();
+    const full = (row.getAttribute('data-full') || '').toLowerCase();
+    const desc = (row.querySelector('.abbr-desc') || {}).textContent.toLowerCase() || '';
+    const match = !q || code.includes(q) || full.includes(q) || desc.includes(q);
+    row.classList.toggle('hidden', !match);
+    if (match) anyVisible = true;
+  });
+  // Show/hide group headers
+  document.querySelectorAll('.abbr-group').forEach(function(g) {
+    const visible = g.querySelectorAll('.abbr-row:not(.hidden)').length > 0;
+    g.style.display = visible ? '' : 'none';
+    if (visible) anyVisible = true;
+  });
+  document.getElementById('abbr-empty').style.display = anyVisible ? 'none' : 'block';
+}
+
+function abbrLetter(letter, btn) {
+  document.getElementById('abbr-search').value = '';
+  document.querySelectorAll('.abbr-letter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.abbr-group').forEach(function(g) {
+    g.style.display = (letter === 'ALL' || g.getAttribute('data-letter') === letter) ? '' : 'none';
+  });
+  document.querySelectorAll('.abbr-row').forEach(r => r.classList.remove('hidden'));
+  document.getElementById('abbr-empty').style.display = 'none';
+}
+</script>
+</body>
+</html>

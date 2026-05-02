@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RWN Revolving Fund — Overview</title>
+<link rel="stylesheet" href="shared.css">
+<style>
+.pillar-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; margin: 0 -48px; }
+@media(max-width:860px){ .pillar-grid { grid-template-columns: 1fr; margin: 0; } }
+.pillar { padding: 36px 32px; position: relative; overflow: hidden; }
+.pillar-heal   { background: rgba(26,107,58,0.10); }
+.pillar-empower{ background: rgba(194,24,91,0.07); }
+.pillar-transform{ background: rgba(21,101,192,0.07); }
+.pillar::after { content:''; position:absolute; top:0; left:0; right:0; height:3px; }
+.pillar-heal::after   { background: var(--g-deep); }
+.pillar-empower::after { background: var(--mag); }
+.pillar-transform::after { background: var(--blue); }
+.pillar-num { font-family: var(--font-m); font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 12px; }
+.pillar-icon { font-size: 32px; margin-bottom: 10px; }
+.pillar-name { font-family: var(--font-d); font-size: 20px; font-weight: 700; margin-bottom: 10px; color: var(--text-head); }
+.pillar-desc { font-size: 14px; color: var(--text-muted); line-height: 1.6; }
+.link-arrow { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; color: var(--g-deep); text-decoration: none; margin-top: 14px; }
+.link-arrow:hover { color: var(--mag); }
+.page-nav-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+@media(max-width:860px){ .page-nav-grid { grid-template-columns: 1fr; } }
+.pn-card { background: #FFFFFF; border: 1px solid var(--border-lt); border-radius: var(--radius); padding: 24px; transition: all 0.22s; box-shadow: var(--shadow-sm); text-decoration: none; display: block; }
+.pn-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
+.pn-card.green { border-top: 3px solid var(--g-deep); }
+.pn-card.mag   { border-top: 3px solid var(--mag); }
+.pn-card.blue  { border-top: 3px solid var(--blue); }
+.pn-num  { font-family: var(--font-m); font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--text-light); margin-bottom: 8px; }
+.pn-title{ font-family: var(--font-d); font-size: 16px; font-weight: 700; color: var(--text-head); margin-bottom: 8px; line-height: 1.2; }
+.pn-desc { font-size: 13px; color: var(--text-muted); line-height: 1.55; }
+</style>
+</head>
+<body>
+
+<!-- MOBILE TOP BAR -->
+<div class="sb-topbar" id="sb-topbar">
+  <div class="sb-topbar-logo">RWN</div>
+  <div class="sb-topbar-title">Revolving Fund</div>
+  <button class="sb-hamburger" id="sb-hbg" onclick="sbMobileToggle()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</div>
+<div class="sb-overlay" id="sb-overlay" onclick="sbMobileClose()"></div>
+
+<!-- SIDEBAR -->
+<nav class="rwn-sidebar" id="rwn-sidebar">
+  <div class="sb-logo-block">
+    <div class="sb-logo">RWN</div>
+    <div>
+      <div class="sb-brand-main">Revolving Fund</div>
+      <div class="sb-brand-sub">Concept Platform</div>
+    </div>
+  </div>
+  <div class="sb-nav">
+    <span class="sb-section-label">Navigation</span>
+    <a href="index.html" class="active">🏠 Overview</a>
+    <div class="sb-divider"></div>
+    <span class="sb-section-label">Analysis</span>
+    <a href="what-is-there.html">✅ What Is There</a>
+    <a href="what-is-missing.html">⚠️ What Is Missing</a>
+    <a href="fund-structure.html">🏗️ Fund Structure</a>
+    <div class="sb-divider"></div>
+    <span class="sb-section-label">Innovation</span>
+    <a href="ecosystem.html" class="sb-mag">🌐 Ecosystem &amp; Marketplace</a>
+    <a href="business-demo.html" class="sb-mag">📊 Business Case Demo</a>
+    <div class="sb-divider"></div>
+    <span class="sb-section-label">Reference</span>
+    <a href="abbreviations.html">📖 Abbreviations</a>
+    <a href="https://rwandawomensnetwork.org" target="_blank">🔗 RWN Website</a>
+  </div>
+</nav>
+
+<!-- PAGE -->
+<div class="page-wrap">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-bg-mesh"></div>
+    <div class="hero-grid"></div>
+    <div class="hero-content">
+      <div class="eyebrow fade-up au-1">Rwanda Women's Network · 2025–2030</div>
+      <h1 class="hero-title fade-up au-2">
+        Revolving Fund for <span class="accent">Women's Economic</span> <span class="mag-accent">Empowerment</span>
+      </h1>
+      <p class="hero-lead fade-up au-3">
+        A structured analysis and enhancement proposal for RWN's microloan programme targeting Women Safe Space Facilitators — grounding what exists, identifying critical gaps, and designing a powerful ecosystem to maximise impact.
+      </p>
+      <p class="hero-meta fade-up au-4">Concept Document · May 2026 · Based on RWN Revolving Fund Strategy (Aug 2025) &amp; Strategic Plan 2020–2030</p>
+      <div class="fade-up au-5" style="display:flex;gap:12px;flex-wrap:wrap;">
+        <a href="what-is-there.html" class="btn btn-green">→ Start Analysis</a>
+        <a href="ecosystem.html" class="btn btn-mag">🌐 Ecosystem Proposal</a>
+      </div>
+
+      <div class="stats-bar fade-up au-5">
+        <div class="stat"><div class="stat-n">24</div><div class="stat-l">Women Safe Spaces active</div></div>
+        <div class="stat"><div class="stat-n">53</div><div class="stat-l">Grassroots women's groups</div></div>
+        <div class="stat"><div class="stat-n mag">300K–916K</div><div class="stat-l">Loan range (RWF)</div></div>
+        <div class="stat"><div class="stat-n">2%</div><div class="stat-l">Monthly interest rate</div></div>
+        <div class="stat"><div class="stat-n">5</div><div class="stat-l">Strategic pillars (SP 2030)</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RWN PILLARS -->
+  <div class="section section-alt">
+    <div class="eyebrow">Strategic Context</div>
+    <h2 class="section-title">How the Revolving Fund fits in RWN's Strategy</h2>
+    <p class="section-lead">The revolving fund is explicitly positioned under Strategic Objective SO3 of the 2020–2030 Strategic Plan. It feeds Strategic Result 2: <em>Women Socio-Economically Empowered</em>. The three pillars of RWN's theory of change frame the fund's purpose.</p>
+    <div class="pillar-grid">
+      <div class="pillar pillar-heal">
+        <div class="pillar-num">Pillar 01</div>
+        <div class="pillar-icon">💚</div>
+        <div class="pillar-name">Heal</div>
+        <div class="pillar-desc">Safe Spaces provide the trust infrastructure on which the fund is built. WSSFs are the very facilitators of healing — the fund reinforces their stability and self-sufficiency.</div>
+      </div>
+      <div class="pillar pillar-empower">
+        <div class="pillar-num">Pillar 02</div>
+        <div class="pillar-icon">💪</div>
+        <div class="pillar-name">Empower</div>
+        <div class="pillar-desc">The revolving fund is RWN's core <strong>economic empowerment vehicle</strong>: access to capital + capacity building + market linkage for frontline women leaders.</div>
+      </div>
+      <div class="pillar pillar-transform">
+        <div class="pillar-num">Pillar 03</div>
+        <div class="pillar-icon">🌱</div>
+        <div class="pillar-name">Transform</div>
+        <div class="pillar-desc">Economically empowered WSSFs become stronger community leaders, driving governance, GBV prevention, and environmental resilience in their districts.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- THREE PAGES -->
+  <div class="section">
+    <div class="eyebrow">This Platform</div>
+    <h2 class="section-title">Five analytical and design pages</h2>
+    <p class="section-lead">This site presents a rigorous, evidence-based analysis of the revolving fund — separating what is documented from what is missing, and proposing a coherent ecosystem to bridge the gaps.</p>
+    <div class="page-nav-grid">
+      <a href="what-is-there.html" class="pn-card green">
+        <div class="pn-num">Page 01</div>
+        <div class="pn-title">✅ What Is There</div>
+        <div class="pn-desc">All elements present in the two source documents — strategic objectives, target population, loan design, governance, operational tools — with precise document references.</div>
+      </a>
+      <a href="what-is-missing.html" class="pn-card mag">
+        <div class="pn-num">Page 02</div>
+        <div class="pn-title">⚠️ What Is Missing</div>
+        <div class="pn-desc">Critical gaps: empty financial projections, undefined fund capital, absent WSSF baseline, missing default management detail, no digital tracking, no graduation pathway.</div>
+      </a>
+      <a href="fund-structure.html" class="pn-card blue">
+        <div class="pn-num">Page 03</div>
+        <div class="pn-title">🏗️ Fund Structure &amp; SWOT</div>
+        <div class="pn-desc">Detailed view of the fund's operational architecture — loan cycle, governance, SPV concept — and a full SWOT analysis grounded in the documents.</div>
+      </a>
+      <a href="ecosystem.html" class="pn-card mag" style="border-top-color:var(--mag);grid-column:1/-1;">
+        <div class="pn-num">Innovation Proposal · Page 04</div>
+        <div class="pn-title">🌐 Ecosystem, Marketplace &amp; AI Tools</div>
+        <div class="pn-desc">The transformative proposal: SPV governance, AI-powered business plan builder, three-sided marketplace (buy / sell / finance), and the technology stack to make it real and scalable. This is what could make RWN's model a replicable landmark for women-led finance across Africa.</div>
+      </a>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="rwn-footer">
+    <div class="footer-brand">Rwanda Women's <span>Network</span></div>
+    <div class="footer-meta">Concept document · May 2026 · Based on RWN source documents · Not for public distribution</div>
+  </footer>
+</div>
+
+<script src="nav.js"></script>
+</body>
+</html>
